@@ -1,14 +1,27 @@
 import './App.css'
+import Signup from './pages/auth/Signup';
+import Signin from './pages/auth/Signin';
+import Explore from './pages/user/Explore';
+import Home from './pages/user/Home';
+import MoviePage from './pages/user/MoviePage';
+import Profile from './pages/user/Profile';
+import { Route, Routes } from 'react-router-dom';
 
-function App() {
-
+const App: React.FC = () => {
   return (
     <>
-      <div>
-        hello
-      </div>
+    <Routes>
+      <Route path='/signup' element={<Signup/>}/>
+      <Route path='/signin' element={<Signin/>}/>
+    </Routes>
+      <Signup/>
+      <Signin/>
+      {/* <Home/> */}
+      {/* <Explore/> */}
+      {/* <MoviePage/> */}
+      {/* <Profile/> */}
     </>
-  )
-}
+  );
+};
 
 export default App

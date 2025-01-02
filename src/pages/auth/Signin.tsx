@@ -1,10 +1,16 @@
 import logo from '../../assets/images/logo.png'
 import Glogo from '../../assets/images/GoogleLogo.png'
 import eyeOpen from '../../assets/images/eye open.png'
-// import eyeClose from '../../assets/images/eye closed.png'
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import eyeClose from '../../assets/images/eye closed.png'
 
 
 function Signin() {
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
+
   return (
     <>
     <div className="w-[1536px] h-[695px] bg-[#212121] overflow-hidden flex justify-center items-center">
@@ -16,8 +22,8 @@ function Signin() {
               <div className="w-max h-max flex flex-col mt-[40px] ml-8">
                   <img className='w-[55px] h-[45px]' src={logo} alt="logo" />
                 <div className='flex ml-2 mt-4 space-x-5'>
-                  <div className="text-[#e8e8e8] text-xl font-normal font-['Geologica']">Sign up</div>
-                  <div className="text-[#e9e9e9]/50 text-xl font-normal font-['Geologica']">Sign in</div>
+                  <button className="text-[#e8e8e8] text-xl font-semibold font-sans">Sign in</button>
+                  <button onClick={()=>navigate('/')} className="text-[#e9e9e9]/50 text-xl font-semibold font-sans">Sign up</button>
                 </div>
               </div>
               <div className="flex space-x-5 ml-10 mb-5">
@@ -44,9 +50,9 @@ function Signin() {
                 <div className='flex flex-col space-y-2'>
                   <span className="text-white/70 text-sm font-normal font-['Geologica']">YOUR PASSWORD</span>
                   <div className='flex items-center'>
-                    <input type="password" className="w-[100%] text-[#46cec2] text-2xl font-normal font-['Geologica'] border-b border-[#e9e9e9]/20 bg-transparent focus:outline-none"/>
-                    <button className='h-[100%] border-b border-[#e9e9e9]/20'>
-                      <img src={eyeOpen} className='w-5 h-[15px]' alt="" />
+                    <input type={showPassword?'text':'password'} className="w-[100%] text-[#46cec2] text-2xl font-normal font-['Geologica'] border-b border-[#e9e9e9]/20 bg-transparent focus:outline-none"/>
+                    <button onClick={()=>setShowPassword(!showPassword)} className='h-[100%] border-b border-[#e9e9e9]/20'>
+                      <img src={showPassword?eyeClose:eyeOpen} className='w-5 h-[15px]' alt="" />
                     </button>
                   </div>
                 </div>

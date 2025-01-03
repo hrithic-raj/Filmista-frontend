@@ -23,6 +23,7 @@ axiosInstance.interceptors.response.use(
                 const refreshResponse = await axios.get('/auth/refresh-token', { withCredentials: true});
                 const newAccessToken = refreshResponse.data.newAccessToken;
                 error.confiq.headers["Authorization"] = `Bearer ${newAccessToken}`;
+                localStorage.setItem("token", newAccessToken);
                 return axiosInstance(error.confiq);
             }catch(refreshError){
                 window.location.href = '/signin';

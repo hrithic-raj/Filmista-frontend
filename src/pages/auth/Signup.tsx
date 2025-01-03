@@ -12,12 +12,13 @@ const Signup: React.FC =()=> {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    nam: '',
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
+    otp: '',
   });
-  const [otp, setOtp] = useState('');
+  let otp:any;
   const [otpSent, setOtpSent] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   
@@ -30,16 +31,17 @@ const Signup: React.FC =()=> {
       alert('passwords do not match');
       return;
     }
-    dispatch(sendOtp(otp));
+    otp = await dispatch(sendOtp(formData.email));
     setOtpSent(true);
   };
   const handleManualSignUp = async () =>{
-    dispatch(signup(formData));
+    formData.otp = otp;
+    await dispatch(signup(formData));
     navigate('/home');
   }
 
-  const handleGoogleSignUp = ()=>{
-    dispatch(googleAuth());
+  const handleGoogleSignUp = async ()=>{
+    // await dispatch(googleAuth());
   }
   return (
     <>

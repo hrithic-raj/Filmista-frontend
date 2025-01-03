@@ -6,7 +6,7 @@ import { useState } from 'react';
 import eyeClose from '../../assets/images/eye closed.png'
 
 
-function Signin() {
+const Signin: React.FC =()=>{
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 

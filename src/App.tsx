@@ -6,6 +6,7 @@ import Home from './pages/user/Home';
 import MoviePage from './pages/user/MoviePage';
 import Profile from './pages/user/Profile';
 import { Route, Routes } from 'react-router-dom';
+import GoogleAuthButton from './components/GoogleAuthButton';
 
 const App: React.FC = () => {
   return (
@@ -14,6 +15,8 @@ const App: React.FC = () => {
       <Route path='/' element={<Signup/>}/>
       <Route path='/signin' element={<Signin/>}/>
       <Route path='/home' element={<Home/>}/>
+      {/* <Route path="/" element={<GoogleAuthButton/>} /> */}
+      <Route path="/auth/google/callback" element={<CallbackHandler/>} />
     </Routes>
       {/* <Signup/> */}
       {/* <Signin/> */}
@@ -23,6 +26,10 @@ const App: React.FC = () => {
       {/* <Profile/> */}
     </>
   );
+};
+
+const CallbackHandler: React.FC = () => {
+  return <p>Handling Google Authentication Callback...</p>;
 };
 
 export default App

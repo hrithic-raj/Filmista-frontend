@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from "axios";
 // import { setAccessToken } from "../redux/slices/authSlice";
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://filmista-backend.onrender.com/api",
   withCredentials: true,
 });
 

@@ -7,7 +7,7 @@ import eyeClose from '../../assets/images/eye closed.png'
 import GoogleAuthButton from '../../components/GoogleAuthButton';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { signin } from '../../redux/slices/authSlice';
-import LoadingPage from '../../components/LoadingPage';
+// import LoadingPage from '../../components/LoadingPage';
 
 
 const Signin: React.FC =()=>{

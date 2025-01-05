@@ -1,8 +1,7 @@
-import React from 'react';
-import upArrow from '../assets/images/up-arrow.png'
-import downArrow from '../assets/images/down-arrow.png'
-import hrjLogo from '../assets/images/hrjlogo.png'
-import { BellSVG, ExploreSVG, HeartSVG, HomeSVG, SearchSVG, UserSVG } from '../assets/svg/SVGs';
+// import upArrow from '../assets/images/up-arrow.png'
+// import downArrow from '../assets/images/down-arrow.png'
+// import hrjLogo from '../assets/images/hrjlogo.png'
+import { BellSVG, ExploreSVG, HomeSVG, SearchSVG, UserSVG } from '../assets/svg/SVGs';
 
 const Bottombar = () => {
   return (

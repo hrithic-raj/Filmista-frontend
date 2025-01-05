@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const GoogleAuthButton: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const {googleLoading, googleError, user} = useAppSelector((state)=> state.auth);
+    const {googleLoading} = useAppSelector((state)=> state.auth);
     const handleGoogleAuth =()=>{
         // window.location.href = "http://localhost:5000/api/auth/google";
         dispatch(googleAuth())

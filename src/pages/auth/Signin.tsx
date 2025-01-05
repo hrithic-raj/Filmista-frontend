@@ -15,7 +15,7 @@ const Signin: React.FC =()=>{
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
   const token = localStorage.getItem('token');
-  const {error, loading, user, celebrity, admin} = useAppSelector((state)=>state.auth);
+  const {error, user, celebrity, admin} = useAppSelector((state)=>state.auth);
   const [formData, setFormData] = useState({
     email: '',
     password: '',

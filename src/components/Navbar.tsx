@@ -1,4 +1,4 @@
-import upArrow from '../assets/images/up-arrow.png'
+// import upArrow from '../assets/images/up-arrow.png'
 import downArrow from '../assets/images/down-arrow.png'
 import hrjLogo from '../assets/images/hrjlogo.png'
 import { BellSVGNav, HeartSVGNav, SearchSVG } from '../assets/svg/SVGs';

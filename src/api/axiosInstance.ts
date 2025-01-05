@@ -1,4 +1,7 @@
 import axios, {AxiosInstance} from "axios";
+import { useNavigate } from "react-router-dom";
+
+const navigate = useNavigate();
 
 const axiosInstance: AxiosInstance = axios.create({
     baseURL: "http://localhost:5000/api",
@@ -26,7 +29,7 @@ axiosInstance.interceptors.response.use(
                 localStorage.setItem("token", newAccessToken);
                 return axiosInstance(error.confiq);
             }catch(refreshError){
-                window.location.href = '/signin';
+                navigate('/signin');
             }
         }
         return Promise.reject(error);

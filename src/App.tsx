@@ -1,29 +1,27 @@
 import './App.css'
-import Signup from './pages/auth/Signup';
-import Signin from './pages/auth/Signin';
-import Explore from './pages/user/Explore';
-import Home from './pages/user/Home';
-import MoviePage from './pages/user/MoviePage';
-import Profile from './pages/user/Profile';
 import { Route, Routes } from 'react-router-dom';
-import GoogleAuthButton from './components/GoogleAuthButton';
+import UserProtectedRoutes from './routes/user/UserProtectedRoute';
+import UserRoutes from './routes/user/UserRoutes';
+import AuthProtectedRoutes from './routes/auth/AuthProtectedRoute';
+import AuthRoutes from './routes/auth/AuthRoutes';
 
 const App: React.FC = () => {
+ 
   return (
     <>
     <Routes>
-      <Route path='/' element={<Signup/>}/>
-      <Route path='/signin' element={<Signin/>}/>
-      <Route path='/home' element={<Home/>}/>
-      {/* <Route path="/" element={<GoogleAuthButton/>} /> */}
+      <Route element={<AuthProtectedRoutes/>}>
+        {AuthRoutes.length>0 && AuthRoutes.map(({path, element},index)=>(
+          <Route key={index} path={path} element={element}/>
+        ))}
+      </Route>
+      <Route element={<UserProtectedRoutes/>}>
+          {UserRoutes.length>0 && UserRoutes.map(({path, element},index)=>(
+            <Route key={index} path={path} element={element}/>
+          ))}
+      </Route>
       <Route path="/auth/google/callback" element={<CallbackHandler/>} />
     </Routes>
-      {/* <Signup/> */}
-      {/* <Signin/> */}
-      {/* <Home/> */}
-      {/* <Explore/> */}
-      {/* <MoviePage/> */}
-      {/* <Profile/> */}
     </>
   );
 };

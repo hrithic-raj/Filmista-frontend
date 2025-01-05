@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import IUser from "../../interfaces/userInterface";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import IUser from "../../interfaces/UserInterface";
 import ICelebrity from "../../interfaces/CelebrityInterface";
 import IAdmin from "../../interfaces/AdminInterface";
 import axiosInstance from "../../utils/axiosInstance";
@@ -12,7 +12,9 @@ interface AuthState {
     accessToken: string| null;
     refreshToken:string | null;
     loading: boolean;
+    googleLoading: boolean;
     error: string | null;
+    googleError: string | null;
 }
 const initialState: AuthState = {
     user: null,
@@ -21,7 +23,9 @@ const initialState: AuthState = {
     accessToken: null,
     refreshToken: null,
     loading: false,
-    error: null,
+    googleLoading: false,
+    googleError: null,
+    error:null,
 };
 
 export const sendOtp = createAsyncThunk('auth/sendOtp', async (email: string, { rejectWithValue }) => {
@@ -29,6 +33,7 @@ export const sendOtp = createAsyncThunk('auth/sendOtp', async (email: string, { 
         const response = await axiosInstance.post('/auth/send-otp', { email });
         return response.data;
     }catch(error: any){
+        console.error(error.response?.data?.message)
         return rejectWithValue(error.response?.data?.message || "Failed to send OTP");
     }
 });
@@ -38,6 +43,7 @@ export const signup = createAsyncThunk('auth/signup', async (formData: { name: s
         const response = await axiosInstance.post('/auth/signup', formData);
         return response.data;
     }catch(error: any){
+        console.error(error.response?.data?.message)
         return rejectWithValue(error.response?.data?.message || "Signup failed");
     }
 })
@@ -47,15 +53,17 @@ export const signin = createAsyncThunk('auth/signin', async (formData: { email: 
         const response = await axiosInstance.post('/auth/signin', formData);
         return response.data;
     }catch(error: any){
+        console.error(error.response?.data?.message)
         return rejectWithValue(error.response?.data?.message || "Signin failed");
     }
 })
 
 export const googleAuth = createAsyncThunk("auth/googleAuth", async (_, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get("/auth/google/callback");
-      return response.data;
+        const response = await axiosInstance.get("/auth/google/callback");
+        return response.data;
     } catch (error: any) {
+        console.error(error.response?.data?.message)
       return rejectWithValue(error.response?.data?.message || "Google authentication failed");
     }
   });
@@ -68,6 +76,12 @@ const authSlice = createSlice({
             state.user = null;
             state.admin = null;
             state.celebrity = null;
+        },
+        setAccessToken: (state, action: PayloadAction<string>) => {
+            state.accessToken = action.payload;
+        },
+        clearAccessToken: (state) => {
+            state.accessToken = null;
         },
     },
     extraReducers:(builder)=>{
@@ -91,9 +105,11 @@ const authSlice = createSlice({
         })
         .addCase(signup.fulfilled, (state, action) => {
             state.loading = false;
-            state.user = action.payload;
+            state.user = action.payload.user;
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
+            localStorage.setItem('token', action.payload.accessToken);
+            localStorage.setItem('role', action.payload.role);
         })
         .addCase(signup.rejected, (state, action) => {
             state.loading = false;
@@ -106,9 +122,11 @@ const authSlice = createSlice({
         })
         .addCase(signin.fulfilled, (state, action) => {
             state.loading = false;
-            state.user = action.payload;
+            state.user = action.payload.user;
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
+            localStorage.setItem('token', action.payload.accessToken);
+            localStorage.setItem('role', action.payload.role);
         })
         .addCase(signin.rejected, (state, action) => {
             state.loading = false;
@@ -116,22 +134,25 @@ const authSlice = createSlice({
         })
         // google auth
         .addCase(googleAuth.pending, (state) => {
-            state.loading = true;
-            state.error = null;
+            state.googleLoading = true;
+            state.googleError = null;
         })
         .addCase(googleAuth.fulfilled, (state, action) => {
-            state.loading = false;
+            state.googleLoading = false;
             state.user = action.payload.user;
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
+            localStorage.setItem('token', action.payload.accessToken);
+            localStorage.setItem('role', action.payload.role);
         })
         .addCase(googleAuth.rejected, (state, action) => {
-            state.loading = false;
-            state.error = action.payload as string;
+            state.googleLoading = false;
+            state.googleError = action.payload as string;
         })
 
     }
 })
 
 
+export const { logout, setAccessToken, clearAccessToken } = authSlice.actions;
 export default authSlice.reducer;

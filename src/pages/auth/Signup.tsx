@@ -1,5 +1,5 @@
 import logo from '../../assets/images/logo.png'
-import Nlogo from '../../assets/images/NamedLOGO.png'
+import Nlogo from '../../assets/images/NamedLogo.png'
 import tick from '../../assets/images/tick.png'
 import cross from '../../assets/images/cross.png'
 import eyeOpen from '../../assets/images/eye open.png'

@@ -1,65 +1,166 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import '../../App.css';
+import MovieCard from '../../components/MovieCard';
 
+interface Movie {
+  id: number;
+  name: string;
+  description: string;
+  poster: string;
+  horizontalPoster: string;
+}
+
+const movies: Movie[] = [
+  {
+    id: 1,
+    name: "Cars 2",
+    description:
+      "Star race car Lightning McQueen and his pal Mater head overseas to compete in the World Grand Prix.",
+    poster: "https://c4.wallpaperflare.com/wallpaper/996/743/625/pascal-blanche-dune-movie-dune-series-artwork-science-fiction-hd-wallpaper-preview.jpg",
+    horizontalPoster:"https://c4.wallpaperflare.com/wallpaper/343/724/32/the-lion-king-2019-movie-poster-wallpaper-preview.jpg"
+  },
+  {
+    id: 2,
+    name: "Avatar",
+    description: "An epic journey on the planet of Pandora.",
+    poster: "https://c4.wallpaperflare.com/wallpaper/771/786/519/avatar-movie-characters-wallpaper-preview.jpg",
+    horizontalPoster:"https://c4.wallpaperflare.com/wallpaper/764/590/391/inception-leonardo-dicaprio-movie-posters-2400x3500-entertainment-movies-hd-art-wallpaper-preview.jpg"
+  },
+  {
+    id: 3,
+    name: "Joker",
+    description: "A haunting origin story of Gotham's clown prince of crime.",
+    poster: "https://c4.wallpaperflare.com/wallpaper/156/167/750/movies-thor-chris-hemsworth-black-background-wallpaper-preview.jpg",
+    horizontalPoster:"https://c4.wallpaperflare.com/wallpaper/886/365/213/joker-2019-movie-joker-smile-digital-art-poster-hd-wallpaper-preview.jpg"
+  },
+  {
+    id: 4,
+    name: "Spider-Man",
+    description: "The multiverse adventure of Spider-Man.",
+    poster: "https://c4.wallpaperflare.com/wallpaper/987/280/934/the-croods-cartoon-movie-poster-2013-wallpaper-preview.jpg",
+    horizontalPoster:"https://c4.wallpaperflare.com/wallpaper/846/216/1006/godzilla-movies-movie-poster-godzilla-king-of-the-monsters-wallpaper-preview.jpg"
+  },
+  {
+    id: 5,
+    name: "Ice Age",
+    description: "The prehistoric animals on an icy adventure.",
+    poster: "https://c4.wallpaperflare.com/wallpaper/263/88/60/ice-age-continental-drift-hd-wallpaper-preview.jpg",
+    horizontalPoster:"https://c4.wallpaperflare.com/wallpaper/624/721/234/movie-poster-aliens-sigourney-weaver-h-r-giger-wallpaper-preview.jpg"
+  },
+];
 const HomePage = () => {
-  const slides = [
-    { id: 1, title: 'The Croods 2', genre: 'Adventure, Comedy', image: 'https://via.placeholder.com/600x300' },
-    { id: 2, title: 'Avatar 2', genre: 'Sci-Fi, Fantasy', image: 'https://via.placeholder.com/600x300' },
-    { id: 3, title: 'Joker', genre: 'Drama, Thriller', image: 'https://via.placeholder.com/600x300' },
-  ];
+  const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentMovieIndex((prevIndex) =>
+        prevIndex === movies.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const handleSelectMovie = (index: number) => {
+    setCurrentMovieIndex(index);
+  };
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  const handleRate = (rating: number) => {
+    console.log(`Rated: ${rating}`);
+  };
 
+  const handleAddToWatchlist = () => {
+    console.log("Added to Watchlist");
+  };
   return (
-      <div className="p-4">
+      <div className="sm:pr-[70px] lg:pr-[150px]">
         {/* Slider */}
-          <div className='flex space-x-8'>
-            <div className="relative w-[80%]">
-            <div className=" h-64 overflow-hidden rounded-lg">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6 w-full max-h-full mb-3">
+          {/* Movie Slider */}
+          <div className="relative bg-[#2C2C2C] rounded-[36px] shadow-lg w-full mb:w-[957px] ">
               <img
-                src={slides[currentSlide].image}
-                alt={slides[currentSlide].title}
-                className="w-full h-full object-cover"
+                src={movies[currentMovieIndex].poster}
+                alt={movies[currentMovieIndex].name}
+                className="rounded-[36px] w-full h-[364px] object-cover"
               />
-            </div>
-            <button
-              onClick={prevSlide}
-              className="absolute top-1/2 left-2 -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full"
-            >
-              ❮
-            </button>
-            <button
-              onClick={nextSlide}
-              className="absolute top-1/2 right-2 -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full"
-            >
-              ❯
-            </button>
-            </div>
-            <div className='bg-white rounded-full h-64 w-16'>
+              <div className='absolute top-2 md:top-5 left-2 md:left-5 max-w-full flex justify-center items-center text-white bg-transparent rounded-[36px] backdrop-blur-md p-2'>
+                <span className="text-white text-xs font-normal font-['Joti One']">New Release</span>
+              </div>
+              <div className='absolute bottom-0 md:bottom-0 min-w-full h-full rounded-[36px] bg-gradient-to-t from-black to-transparent' />
+              <div className="absolute bottom-8 left-2 md:left-5 space-y-4 max-w-full px-4 ">
+                <div className='flex gap-1'>
+                  <div className='flex justify-center items-center text-white bg-transparent rounded-[36px] backdrop-blur-sm px-2'>
+                  Advanture
+                  </div>
+                  <div className='flex justify-center items-center text-white bg-transparent rounded-[36px] backdrop-blur-sm px-2'>
+                  Fantacy
+                  </div>
+                  <div className='flex justify-center items-center text-white bg-transparent rounded-[36px] backdrop-blur-sm px-2'>
+                  Action
+                  </div>
+                </div>
+                <h2 className="text-2xl md:text-4xl font-['Impact'] text-[#fefefe]">
+                  {movies[currentMovieIndex].name}
+                </h2>
+                <p className="text-white text-sm md:text-[13px] font-bold font-['Geologica'] max-w-[90%] md:max-w-[548px]">
+                  {movies[currentMovieIndex].description}
+                </p>
+                <button className="px-6 py-1 bg-[#fefefe] text-black rounded-[36px] font-['Geologica'] hover:text-[#5cfef0] hover:bg-[#2C2C2C]">
+                  View
+                </button>
+              </div>
+          </div>
+
+          {/* Controllers */}
+          <div className="flex md:flex-col gap-4 rounded-full bg-[#2C2C2C] items-center justify-center pt-2 pb-2">
+            {movies.map((movie, index) => (
+              <button
+                key={movie.id}
+                onClick={() => handleSelectMovie(index)}
+                className={`relative flex items-center justify-center rounded-full shadow-lg ${
+                  index === currentMovieIndex
+                    ? "w-16 h-16 border-white border-2"
+                    : "w-12 h-12 border-gray-500 border-1"
+                }`}
+              >
+                <img
+                  src={movie.poster}
+                  alt={movie.name}
+                  className="rounded-full object-cover w-full h-full"
+                />
+              </button>
+            ))}
           </div>
         </div>
 
+
         {/* New Release */}
-        <section className="mt-8">
-          <h2 className="text-xl font-bold mb-4">New Release</h2>
-          <div className="grid grid-cols-4 gap-4">
-            {['Godzilla', 'Joker', 'Avatar', 'Batman'].map((movie) => (
-              <div key={movie} className="bg-gray-800 p-4 rounded-lg">
-                <img
-                  src="https://via.placeholder.com/200"
-                  alt={movie}
-                  className="rounded-lg mb-2"
-                />
-                <h3>{movie}</h3>
-                <p className="text-sm text-gray-400">Rating: 4.5</p>
-              </div>
+        <section className="mt-8 overflow-hidden w-full">
+          <h2 className="text-xl font-bold mb-4 text-white">New Release</h2>
+          <div className="flex flex-wrap justify-center gap-2">
+            {movies.map((movie) => (
+              <MovieCard
+              image={movie.horizontalPoster}
+              title={movie.name}
+              rating={4.5}
+              genres={["Adventure", "Comedy"]}
+              onRate={handleRate}
+              onAddToWatchlist={handleAddToWatchlist}
+            />
+            ))}
+            {movies.map((movie) => (
+              <MovieCard
+              image={movie.horizontalPoster}
+              title={movie.name}
+              rating={2.5}
+              genres={["Adventure", "Comedy"]}
+              onRate={handleRate}
+              onAddToWatchlist={handleAddToWatchlist}
+            />
             ))}
           </div>
         </section>
-      </div>
+
+      </div>      
   );
-};
+};  
 
 export default HomePage;

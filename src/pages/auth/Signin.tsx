@@ -1,9 +1,9 @@
 import logo from '../../assets/images/logo.png'
 import Nlogo from '../../assets/images/NamedLogo.png'
-import eyeOpen from '../../assets/images/eye open.png'
+import eyeOpen from '../../assets/images/icons/eye open.png'
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import eyeClose from '../../assets/images/eye closed.png'
+import eyeClose from '../../assets/images/icons/eye closed.png'
 import GoogleAuthButton from '../../components/GoogleAuthButton';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { signin } from '../../redux/slices/authSlice';

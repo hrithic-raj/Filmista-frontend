@@ -23,7 +23,7 @@ const MovieCard: React.FC<CardProps> = ({
 
   return (
     <div
-      className="relative w-64 h-80 bg-gray-800 rounded-[25px] overflow-hidden shadow-lg cursor-pointer group"
+      className="relative max-w-[24.3%] flex-shrink-0 sm:min-w-[20%] max-h-80 bg-gray-800 rounded-[25px] overflow-hidden shadow-lg cursor-pointer group"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => {
         setHovered(false);
@@ -52,7 +52,9 @@ const MovieCard: React.FC<CardProps> = ({
           {!hovered && (
             <div>
               <h3 className="text-white text-lg font-bold">{title}</h3>
+              <div>
               <p className="text-gray-400 text-sm">Rating: {rating.toFixed(1)}</p>
+              </div>
             </div>
           )}
 

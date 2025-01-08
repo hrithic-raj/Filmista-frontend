@@ -71,7 +71,7 @@ const HomePage = () => {
     console.log("Added to Watchlist");
   };
   return (
-      <div className="sm:pr-[70px] lg:pr-[150px]">
+      <div className="mb-5">
         {/* Slider */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 w-full max-h-full mb-3">
           {/* Movie Slider */}
@@ -131,22 +131,24 @@ const HomePage = () => {
           </div>
         </div>
 
-
-        {/* New Release */}
-        <section className="mt-8 overflow-hidden w-full">
-          <h2 className="text-xl font-bold mb-4 text-white">New Release</h2>
-          <div className="flex flex-wrap justify-center gap-2">
-            {movies.map((movie) => (
-              <MovieCard
-              image={movie.horizontalPoster}
-              title={movie.name}
-              rating={4.5}
-              genres={["Adventure", "Comedy"]}
-              onRate={handleRate}
-              onAddToWatchlist={handleAddToWatchlist}
-            />
-            ))}
-            {movies.map((movie) => (
+        <section  className=" ">
+          <div  className="relative mt-10">
+        <h2 className="text-xl font-bold mb-4 text-white">New Release</h2>
+            <div className="overflow-hidden w-full">
+              <div
+                className="flex gap-2 overflow-x-auto custom-scrollbar"
+              >
+                {movies.map((movie) => (
+                  <MovieCard
+                  image={movie.horizontalPoster}
+                  title={movie.name}
+                  rating={2.5}
+                  genres={["Adventure", "Comedy"]}
+                  onRate={handleRate}
+                  onAddToWatchlist={handleAddToWatchlist}
+                />
+                ))}
+                {movies.map((movie) => (
               <MovieCard
               image={movie.horizontalPoster}
               title={movie.name}
@@ -156,9 +158,41 @@ const HomePage = () => {
               onAddToWatchlist={handleAddToWatchlist}
             />
             ))}
+              </div>
+            </div>
           </div>
         </section>
-
+        <section  className=" ">
+        <div  className="relative mt-10">
+        <h2 className="text-xl font-bold mb-4 text-white">Recomended for you</h2>
+            <div className="overflow-hidden w-full">
+              <div
+                className="flex gap-2 overflow-x-auto custom-scrollbar"
+              >
+                {movies.map((movie) => (
+                  <MovieCard
+                  image={movie.horizontalPoster}
+                  title={movie.name}
+                  rating={2.5}
+                  genres={["Adventure", "Comedy"]}
+                  onRate={handleRate}
+                  onAddToWatchlist={handleAddToWatchlist}
+                />
+                ))}
+                {movies.map((movie) => (
+              <MovieCard
+              image={movie.horizontalPoster}
+              title={movie.name}
+              rating={2.5}
+              genres={["Adventure", "Comedy"]}
+              onRate={handleRate}
+              onAddToWatchlist={handleAddToWatchlist}
+            />
+            ))}
+              </div>
+            </div>
+          </div>
+        </section>
       </div>      
   );
 };  

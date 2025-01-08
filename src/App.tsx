@@ -4,6 +4,8 @@ import UserProtectedRoutes from './routes/user/UserProtectedRoute';
 import UserRoutes from './routes/user/UserRoutes';
 import AuthProtectedRoutes from './routes/auth/AuthProtectedRoute';
 import AuthRoutes from './routes/auth/AuthRoutes';
+import AdminRoutes from './routes/admin/AdminRoutes';
+import AdminProtectedRoutes from './routes/admin/AdminProtectedRoute';
 
 const App: React.FC = () => {
  
@@ -17,6 +19,11 @@ const App: React.FC = () => {
       </Route>
       <Route element={<UserProtectedRoutes/>}>
           {UserRoutes.length>0 && UserRoutes.map(({path, element},index)=>(
+            <Route key={index} path={path} element={element}/>
+          ))}
+      </Route>
+      <Route element={<AdminProtectedRoutes/>}>
+          {AdminRoutes.length>0 && UserRoutes.map(({path, element},index)=>(
             <Route key={index} path={path} element={element}/>
           ))}
       </Route>

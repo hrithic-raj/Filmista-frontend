@@ -30,7 +30,11 @@ export default {
           "0%": { width: "0ch" }, // Start erasing from the full text
           "50%": { width: "9ch" }, // Erase all characters
         },
-        
+      },
+      noScrollbar: {
+        "::-webkit-scrollbar": { display: "none" },
+        "-ms-overflow-style": "none",
+        "scrollbar-width": "none",
       },
     },
   },

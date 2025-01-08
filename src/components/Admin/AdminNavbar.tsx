@@ -1,17 +1,15 @@
-// import upArrow from '../assets/images/icons/up-arrow.png'
-import downArrow from '../assets/images/icons/down-arrow.png'
-import hrjLogo from '../assets/images/hrjlogo.png'
-import { BellSVGNav, HeartSVGNav, SearchSVG } from '../assets/svg/SVGs';
+import React from 'react';
+// import upArrow from '../../assets/images/icons/up-arrow.png'
+import downArrow from '../../assets/images/icons/down-arrow.png'
+import hrjLogo from '../../assets/images/hrjlogo.png'
+import { BellSVGNav, HeartSVGNav, SearchSVG } from '../../assets/svg/SVGs';
 
-const Navbar = () => {
+
+const AdminNavbar: React.FC = () => {
   return (
     <div className='hidden sm:flex flex-col'>
     <header className="text-gray-100 sm:pl-[80px] lg:pl-[320px] z-40 flex items-center justify-between space-x-3 sm:justify-around lg:justify-between sm:pr-[70px] lg:pr-[150px]">
       <div className='flex justify-between space-x-5'>
-        <div onClick={()=>alert("hello")} className='hidden lg:flex justify-center items-center space-x-2 pl-6 pr-6 h-[50px] bg-[#2c2c2c] rounded-[408.80px]'>
-          <span className="opacity-90 text-white text-[18.84px] font-normal font-['Geologica'] hover:text-[#5CFEF0]">ALL</span>
-          <img src={downArrow} alt="" />
-        </div>
         <div className="flex justify-center items-center h-[50px] pr-5 bg-[#2c2c2c] rounded-[215.70px]">
           <input
             type="text"
@@ -20,14 +18,6 @@ const Navbar = () => {
           />
           <SearchSVG />
         </div>
-      </div>
-      <div className='hidden sm:flex justify-between lg:space-x-5 sm:space-x-2'>
-        <button className="flex justify-center items-center w-[56.18px] h-[50px] bg-[#2c2c2c] rounded-[215.70px]">
-          <HeartSVGNav/>
-        </button>
-        <button className="flex justify-center items-center w-[56.18px] h-[50px] bg-[#2c2c2c] rounded-[215.70px]">
-          <BellSVGNav/>
-        </button>
       </div>
       <div className="flex h-[50px] hover:cursor-pointer bg-[#2c2c2c] rounded-[215.70px] items-center gap-2">
           <img
@@ -43,4 +33,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default AdminNavbar;

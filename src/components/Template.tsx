@@ -8,14 +8,14 @@ interface TemplateProps {
   
   const Template: React.FC<TemplateProps> = ({ children }) => {
   return (
-    <div className="relative sm:flex pt-5 bg-[#212121] min-h-screen">
+    <div className="sm:flex pt-5 bg-[#212121] min-h-screen max-w-screen overflow-x-hidden">
       <Sidebar />
       <div className="flex-grow">
         <Navbar />
-        <main className="pt-5 sm:pl-[100px] lg:pl-[320px] bg-[#212121]">
+        <main className="pt-5 sm:ml-[100px] lg:ml-[320px] bg-[#212121] sm:pr-[70px] lg:pr-[150px]">
           {children}
         </main>
-      <Bottombar/>
+      {/* <Bottomb/ar/> */}
       </div>
     </div>
   );

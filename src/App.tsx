@@ -23,7 +23,7 @@ const App: React.FC = () => {
           ))}
       </Route>
       <Route element={<AdminProtectedRoutes/>}>
-          {AdminRoutes.length>0 && UserRoutes.map(({path, element},index)=>(
+          {AdminRoutes.length>0 && AdminRoutes.map(({path, element},index)=>(
             <Route key={index} path={path} element={element}/>
           ))}
       </Route>

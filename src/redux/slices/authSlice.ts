@@ -43,7 +43,7 @@ export const signup = createAsyncThunk('auth/signup', async (formData: { name: s
         const response = await axiosInstance.post('/auth/signup', formData);
         return response.data;
     }catch(error: any){
-        console.error(error.response?.data?.message)
+        console.error("Signup failed",error.response?.data?.message)
         return rejectWithValue(error.response?.data?.message || "Signup failed");
     }
 })
@@ -53,8 +53,18 @@ export const signin = createAsyncThunk('auth/signin', async (formData: { email: 
         const response = await axiosInstance.post('/auth/signin', formData);
         return response.data;
     }catch(error: any){
-        console.error(error.response?.data?.message)
+        console.error("Signin failed",error.response?.data?.message)
         return rejectWithValue(error.response?.data?.message || "Signin failed");
+    }
+})
+export const signout = createAsyncThunk('auth/signout', async (_, { dispatch })=>{
+    try{
+        await axiosInstance.post('/auth/signout');
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        dispatch(resetAuthState());
+    }catch(error: any){
+        console.error("Signout failed",error.response?.data?.message)
     }
 })
 
@@ -72,15 +82,17 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers:{
-        logout(state) {
+        resetAuthState(state) {
             state.user = null;
             state.admin = null;
             state.celebrity = null;
+            state.accessToken= null;
+            state.refreshToken= null;
         },
-        setAccessToken: (state, action: PayloadAction<string>) => {
+        setAccessToken(state, action: PayloadAction<string>){
             state.accessToken = action.payload;
         },
-        clearAccessToken: (state) => {
+        clearAccessToken(state){
             state.accessToken = null;
         },
     },
@@ -122,11 +134,14 @@ const authSlice = createSlice({
         })
         .addCase(signin.fulfilled, (state, action) => {
             state.loading = false;
-            state.user = action.payload.user;
+            const role = action.payload.role;
+            if(role==="admin") state.admin = action.payload.user;
+            else if(role==="celebrity") state.celebrity = action.payload.user;
+            else if(role==="user") state.user = action.payload.user;
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
             localStorage.setItem('token', action.payload.accessToken);
-            localStorage.setItem('role', action.payload.role);
+            localStorage.setItem('role', role);
         })
         .addCase(signin.rejected, (state, action) => {
             state.loading = false;
@@ -149,10 +164,9 @@ const authSlice = createSlice({
             state.googleLoading = false;
             state.googleError = action.payload as string;
         })
-
     }
 })
 
 
-export const { logout, setAccessToken, clearAccessToken } = authSlice.actions;
+export const { resetAuthState, setAccessToken, clearAccessToken } = authSlice.actions;
 export default authSlice.reducer;

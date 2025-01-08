@@ -8,8 +8,8 @@ import Dashboard from '../../pages/admin/Dashboard';
 const UserRoutes: RouteObject[] = [
   // { path: '/language-selection', element: <Signin/>},
   // { path: '/genres-selection', element: <Signin/>},
-  // { path: '/', element: <Template><Home /></Template>},
-  { path: '/', element: <AdminLayout><Dashboard /></AdminLayout>},
+  { path: '/', element: <Template><Home /></Template>},
+  // { path: '/', element: <AdminLayout><Dashboard /></AdminLayout>},
   // { path: '/', element: <Template><HomeNew /></Template>},
 ];
 

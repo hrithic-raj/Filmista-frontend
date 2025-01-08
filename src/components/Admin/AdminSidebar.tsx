@@ -1,61 +1,64 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
+import { FaHome, FaUsers, FaFilm, FaChartPie, FaCog, FaStar, FaSignOutAlt} from 'react-icons/fa';
+import { useAppDispatch } from '../../hooks/reduxHooks';
+import { signout } from '../../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../assets/images/logo.png'
-import {ExploreSVG, HeartSVG, HomeSVG, LogoSVG, SettingsSVG, UserSVG} from '../../assets/svg/SVGs';
+
 const AdminSidebar: React.FC = () => {
   const navigate = useNavigate();
+  const [isHovered, setIsHovered] = useState(false);
+  const dispatch = useAppDispatch();
+  const handleSignout = ()=>{
+    dispatch(signout());
+    navigate('/signin');
+  }
+  const links = [
+    { name: 'Dashboard', path: '/admin/dashboard', icon: <FaHome /> },
+    { name: 'Users', path: '/admin/users', icon: <FaUsers /> },
+    { name: 'Celebrities', path: '/admin/celebrities', icon: <FaStar /> },
+    { name: 'Movies', path: '/admin/movies', icon: <FaFilm /> },
+    { name: 'Analytics', path: '/admin/analytics', icon: <FaChartPie /> },
+    { name: 'Settings', path: '/admin/settings', icon: <FaCog /> },
+  ];
 
   return (
-    <div className='hidden sm:block h-screen w-[70px] lg:w-[257px] fixed  z-50 sm:ms-5 lg:ms-10'>
-      <aside className="bg-[rgb(44,44,44)] text-gray-100 h-[93%] rounded-[36px] p-4 lg:p-8">
-        <div className='flex flex-col h-full mt-4 '>
-          <div className="mb-12">
-              <div className='block lg:hidden'>
-                <LogoSVG/>
+    <div
+      className={`fixed hidden md:flex flex-col justify-center top-0 left-0 h-screen z-30 bg-[rgb(44,44,44)] text-white shadow-lg transition-all duration-300 ${
+        isHovered ? 'lg:w-64 w-20' : 'w-20'
+      }`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <nav className="mt-5 flex flex-col justify-center">
+        <ul className='flex flex-col space-y-5 items-center'>
+          {links.map((link) => (
+            <li key={link.name} className="group hover:cursor-pointer w-full flex justify-center">
+              <div
+                onClick={()=>navigate(link.path)}
+                className={`flex items-center gap-3 w-1/2 py-3 transition-colors duration-200`}
+              >
+                <div className="text-2xl group-hover:text-[#5cfef0]">{link.icon}</div>
+                {isHovered && (
+                  <span className="ml-3 hidden lg:flex group-hover:text-[#5cfef0] font-medium transition-opacity duration-300">
+                    {link.name}
+                  </span>
+                )}
               </div>
-              <div className='hidden lg:flex justify-center items-center'>
-                  <img src={logo} className='w-[45px]' alt="" />
-                  <div className="w-[169.32px] h-[39.90px] flex items-center">
-                      <span className="text-white text-2xl font-extrabold font-baloo tracking-[2.64px]">Film</span>
-                      <span className="text-white text-2xl font-thin font-baloo tracking-[2.64px]">ista</span>
-                  </div>
+            </li>
+          ))}
+          <li className="group hover:cursor-pointer w-full flex justify-center">
+              <div
+                onClick={handleSignout}
+                className={`flex items-center gap-3 w-1/2 py-3 transition-colors duration-200`}
+              >
+                <div className="text-2xl"><FaSignOutAlt/></div>
+                {isHovered &&(
+                  <span className="ml-3 hidden lg:flex group-hover:text-[#5cfef0] font-medium transition-opacity duration-300">Sign out</span>
+                )}
               </div>
-          </div>
-          <nav>   
-              <ul className='flex flex-col space-y-9'>
-                <div className='flex flex-col items-center lg:items-start space-y-9 lg:ml-2'>
-                  <li onClick={()=>navigate('/')} className="lg:flex items-center space-x-3 hover:cursor-pointer">
-                      <HomeSVG/>
-                      <span className="hidden lg:flex w-[64.30px] h-[23.63px] text-[#e9e9e9] text-base font-normal font-['Fredoka'] hover:text-[#5cfef0]">Dashboard</span>
-                  </li>
-                  <li onClick={()=>navigate('/')} className="lg:flex items-center space-x-3 hover:cursor-pointer">
-                      <UserSVG/>
-                      <span className="hidden lg:flex w-[64.30px] h-[23.63px] text-[#e9e9e9] text-base font-normal font-['Fredoka'] hover:text-[#5cfef0]">Users</span>
-                  </li>
-                  <li onClick={()=>navigate('/')} className="lg:flex items-center space-x-3 hover:cursor-pointer">
-                      <ExploreSVG/>
-                      <span className="hidden lg:flex w-[64.30px] h-[23.63px] text-[#e9e9e9] text-base font-normal font-['Fredoka'] hover:text-[#5cfef0]">Celebrities</span>
-                  </li>
-                </div>
-                <hr className='text-[#373830] opacity-20' />
-                <div className='flex flex-col space-y-9 items-center lg:items-start lg:ml-2'>
-                  <li onClick={()=>navigate('/')} className="lg:flex items-center space-x-3 hover:cursor-pointer">
-                      <HeartSVG/>
-                      <span className="hidden lg:flex w-[64.30px] h-[23.63px] text-[#e9e9e9] text-base font-normal font-['Fredoka'] hover:text-[#5cfef0]">Movies</span>
-                  </li>
-                  <li onClick={()=>navigate('/')} className="lg:flex items-center space-x-3 hover:cursor-pointer">
-                      <SettingsSVG/>
-                      <span className="hidden lg:flex w-[64.30px] h-[23.63px] text-[#e9e9e9] text-base font-normal font-['Fredoka'] hover:text-[#5cfef0]">Settings</span>
-                  </li>
-                </div>
-              </ul>
-          </nav>
-          <div className="mt-auto mb-2 hidden lg:flex lg:flex-col">
-              
-          </div>
-        </div>
-      </aside>
+            </li>
+        </ul>
+      </nav>
     </div>
   );
 };

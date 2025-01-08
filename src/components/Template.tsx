@@ -15,7 +15,7 @@ interface TemplateProps {
         <main className="pt-5 sm:ml-[100px] lg:ml-[320px] bg-[#212121] sm:pr-[70px] lg:pr-[150px]">
           {children}
         </main>
-      {/* <Bottomb/ar/> */}
+      <Bottombar />
       </div>
     </div>
   );

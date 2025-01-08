@@ -3,6 +3,7 @@ import { FaHome, FaUsers, FaFilm, FaChartPie, FaCog, FaStar, FaSignOutAlt} from 
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { signout } from '../../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const AdminSidebar: React.FC = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const AdminSidebar: React.FC = () => {
     navigate('/signin');
   }
   const links = [
-    { name: 'Dashboard', path: '/admin/dashboard', icon: <FaHome /> },
+    { name: 'Dashboard', path: '/admin', icon: <FaHome /> },
     { name: 'Users', path: '/admin/users', icon: <FaUsers /> },
     { name: 'Celebrities', path: '/admin/celebrities', icon: <FaStar /> },
     { name: 'Movies', path: '/admin/movies', icon: <FaFilm /> },
@@ -36,13 +37,23 @@ const AdminSidebar: React.FC = () => {
               <div
                 onClick={()=>navigate(link.path)}
                 className={`flex items-center gap-3 w-1/2 py-3 transition-colors duration-200`}
+                
               >
+              {/* <NavLink
+                 to={link.path}
+                 className={({ isActive }) =>
+                   `flex items-center px-4 py-3 transition-colors duration-200 ${
+                     isActive ? 'bg-indigo-500' : 'hover:bg-gray-800'
+                   }`
+                 }
+              > */}
                 <div className="text-2xl group-hover:text-[#5cfef0]">{link.icon}</div>
                 {isHovered && (
                   <span className="ml-3 hidden lg:flex group-hover:text-[#5cfef0] font-medium transition-opacity duration-300">
                     {link.name}
                   </span>
                 )}
+                {/* </NavLink> */}
               </div>
             </li>
           ))}

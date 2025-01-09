@@ -8,7 +8,7 @@ import hrjLogo from '../../assets/images/hrjlogo.png'
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { signout } from '../../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
-// import { persistor } from "../../redux/persistor";
+import { persistor } from "../../redux/persistor";
 
 const AdminNavbar: React.FC = () => {
   const [isProfile, setIsProfile] = useState(false);
@@ -16,7 +16,7 @@ const AdminNavbar: React.FC = () => {
   const navigate = useNavigate();
   const handleSignout = async()=>{
     await dispatch(signout());
-    // await persistor.purge();
+    await persistor.purge();
     navigate('/signin')
   }
   return (

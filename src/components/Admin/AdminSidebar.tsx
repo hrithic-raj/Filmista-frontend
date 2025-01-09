@@ -3,7 +3,7 @@ import { FaHome, FaUsers, FaFilm, FaChartPie, FaCog, FaStar, FaSignOutAlt} from 
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { signout } from '../../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
-// import { persistor } from '../../redux/persistor';
+import { persistor } from '../../redux/persistor';
 // import { NavLink } from 'react-router-dom';
 
 const AdminSidebar: React.FC = () => {
@@ -12,7 +12,7 @@ const AdminSidebar: React.FC = () => {
   const dispatch = useAppDispatch();
   const handleSignout = async()=>{
     await dispatch(signout());
-    // await persistor.purge();
+    await persistor.purge();
     navigate('/signin');
   }
   const links = [

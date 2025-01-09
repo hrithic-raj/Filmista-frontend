@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { signout } from '../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
-// import { persistor } from '../redux/persistor';
+import { persistor } from '../redux/persistor';
 
 const Navbar = () => {
   const [isProfile, setIsProfile] = useState(false);
@@ -14,7 +14,7 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
   const handleSignout = async()=>{
     await dispatch(signout());
-    // await persistor.purge();
+    await persistor.purge();
     navigate('/signin');
   }
   return (

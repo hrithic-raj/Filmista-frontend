@@ -5,6 +5,7 @@ interface CardProps {
     profilePicture: string;
     name: string;
     email: string;
+    isBlocked:boolean;
     viewUser:(id: string) => void;
     blockUser: (id: string) => void;
 }
@@ -14,6 +15,7 @@ const AdminUserCard: React.FC<CardProps> = ({
     profilePicture,
     name,
     email,
+    isBlocked,
     viewUser,
     blockUser,
 }) => {
@@ -26,14 +28,12 @@ const AdminUserCard: React.FC<CardProps> = ({
         setHovered(false);
       }}
     >
-      {/* Image */}
         <img
             src={profilePicture}
             alt={name}
             className="w-40 h-40 rounded-full border object-cover transition-transform duration-300 group-hover:scale-110 group-hover:opacity-40"
         />
 
-      {/* Hover Overlay */}
       <div
         className={`absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent ${
           hovered ? "h-3/4" : "h-20"
@@ -44,7 +44,6 @@ const AdminUserCard: React.FC<CardProps> = ({
             hovered ? "flex flex-col justify-center items-center space-y-3" : ""
           }`}
         >
-          {/* name */}
           {!hovered && (
             <div>
               <h3 className="text-white text-lg font-bold">{name}</h3>
@@ -56,8 +55,10 @@ const AdminUserCard: React.FC<CardProps> = ({
               <>
               <h3 className="text-white text-lg font-bold">{name}</h3>
               <h3 className="text-white font-bold">{email}</h3>
-              {/* Block User*/}
+              
               <div className='flex gap-2'>
+              
+              {/* Block User*/}
                 <button
                     onClick={(e) => {
                     e.stopPropagation();
@@ -65,8 +66,10 @@ const AdminUserCard: React.FC<CardProps> = ({
                     }}
                     className="px-2 py-2 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
                 >
-                    BLOCK
+                    {isBlocked?'UNBLOCK':'BLOCK'}
                 </button>
+
+                {/* View User */}
                 <button
                     onClick={(e) => {
                     e.stopPropagation();

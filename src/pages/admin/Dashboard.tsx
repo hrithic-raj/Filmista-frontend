@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import {
@@ -12,6 +12,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { fetchUsers } from "../../redux/slices/admin/userManagementSlice";
 
 ChartJS.register(
   CategoryScale,
@@ -25,6 +27,11 @@ ChartJS.register(
 );
 
 const Dashboard: React.FC = () => {
+  const {users, loading} = useAppSelector((state)=>state.userManagement)
+  const dispatch = useAppDispatch();
+  useEffect(()=>{
+    dispatch(fetchUsers());
+  },[dispatch])
   const lineChartData = {
     labels: ["January", "February", "March", "April", "May", "June"],
     datasets: [
@@ -89,7 +96,7 @@ const Dashboard: React.FC = () => {
       {/* Analytics Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {[
-          { title: "Total Users", value: "12,345", change: "+12%" },
+          { title: "Total Users", value: users.length, change: "+12%" },
           { title: "Movies Uploaded", value: "567", change: "+8%" },
           { title: "Revenue", value: "$123,456", change: "+15%" },
           { title: "Active Celebrities", value: "89", change: "+5%" },

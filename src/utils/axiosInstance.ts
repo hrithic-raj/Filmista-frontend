@@ -25,9 +25,9 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const { data } = await axiosInstance.post("/auth/refresh-token");
-        const newAccessToken = data.accessToken;
-
+        const res = await axiosInstance.post("/auth/refresh-token");
+        const newAccessToken = res.data.newAccessToken;
+        console.log("newAccessToken", newAccessToken);
         localStorage.setItem("token", newAccessToken);
         // store.dispatch(setAccessToken(newAccessToken));
 

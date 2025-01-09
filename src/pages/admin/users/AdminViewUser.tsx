@@ -1,5 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import hrjLogo from '../../../assets/images/hrjlogo.png'
+import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
+import { blockUserById, fetchUserById } from '../../../redux/slices/admin/userManagementSlice';
+import LoadingPage from '../../../components/LoadingPage';
 
 type User = {
     id: string;
@@ -20,13 +24,21 @@ const AdminViewUser = () => {
     // const [user, setUser] = useState<User | null>(null);
     // const [reviewedMovies, setReviewedMovies] = useState<Movie[]>([]);
     const reviewedMovies =[32,4,4,4,5,8]
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    const user ={
-        _id: "6777cae081d216a8b8389b67",
-        name: "hrithic raj",
-        email: "hrjpunda@gmail.com","otp": "909588",
+    const {id} = useParams<{id: string}>();
+    const dispatch = useAppDispatch();
+    const { selectedUser: user, loading } = useAppSelector((state) => state.userManagement);
+    useEffect(()=>{
+        if(id){
+            dispatch(fetchUserById(id))    
+        }
+    },[dispatch, id]);
+
+    const handleBlockUser= async()=>{
+        if(id){
+            await dispatch(blockUserById(id));
+        }
     }
+    
   return (
     <div className="max-w-5xl mx-auto p-6 bg-[rgb(44,44,44)] shadow-md rounded-lg">
     {/* User Info */}
@@ -43,7 +55,9 @@ const AdminViewUser = () => {
             </div>
         </div>
         <div className='flex flex-col gap-4'>
-            <button className='bg-red-200 rounded-md p-2 font-bold text-gray-800'>BLOCK</button>
+            <button onClick={handleBlockUser} className='bg-red-200 rounded-md p-2 font-bold text-gray-800'>
+                {user?.isBlocked?'UNBLOCK':'BLOCK'}
+                </button>
             <button className='bg-red-200 rounded-md p-2 font-bold text-gray-800'>BLOCK</button>
         </div>
     </div>

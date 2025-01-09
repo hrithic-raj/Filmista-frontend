@@ -3,8 +3,9 @@ import AdminUserCard from '../../../components/Admin/AdminUserCard';
 import hrjLogo from '../../../assets/images/hrjlogo.png'
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
-import { fetchUsers } from '../../../redux/slices/admin/userManagementSlice';
+import { blockUserById, fetchUsers } from '../../../redux/slices/admin/userManagementSlice';
 import { RootState } from '@reduxjs/toolkit/query';
+import LoadingPage from '../../../components/LoadingPage';
 
 // type User = {
 //     _id: string;
@@ -18,54 +19,13 @@ const AdminManageUser: React.FC = ()=>{
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const {users, loading, error} = useAppSelector((state)=> state.userManagement)
-    useEffect(()=>{
-        dispatch(fetchUsers());    
-    },[dispatch]);
-    console.log("page",users);
-    // const users = [
-    //     {
-    //         _id: "6777cae081d216a8b8389b67",
-    //         name: "hrithic raj",
-    //         email: "hrjpunda@gmail.com","otp": "909588",
-    //     },
-    //     {
-    //         _id: "6777cae081d216a8b8389b67",
-    //         name: "hrithic raj",
-    //         email: "hrjpunda@gmail.com","otp": "909588",
-    //     },
-    //     {
-    //         _id: "6777cae081d216a8b8389b67",
-    //         name: "hrithic raj",
-    //         email: "hrjpunda@gmail.com","otp": "909588",
-    //     },
-    //     {
-    //         _id: "6777cae081d216a8b8389b67",
-    //         name: "hrithic raj",
-    //         email: "hrjpunda@gmail.com","otp": "909588",
-    //     },
-    //     {
-    //         _id: "6777cae081d216a8b8389b67",
-    //         name: "hrithic raj",
-    //         email: "hrjpunda@gmail.com","otp": "909588",
-    //     },
-    //     {
-    //         _id: "6777cae081d216a8b8389b67",
-    //         name: "hrithic raj",
-    //         email: "hrjpunda@gmail.com","otp": "909588",
-    //     },
-    //     {
-    //         _id: "6777cae081d216a8b8389b67",
-    //         name: "hrithic raj",
-    //         email: "hrjpunda@gmail.com","otp": "909588",
-    //     },
-    //     {
-    //         _id: "6777cae081d216a8b8389b67",
-    //         name: "hrithic raj",
-    //         email: "hrjpunda@gmail.com","otp": "909588",
-    //     },
-    // ];
-    const handleBlockUser=(id:string)=>{
-        console.log(`User ${id} Blocked`)
+
+    // useEffect(()=>{
+    //     dispatch(fetchUsers());    
+    // },[dispatch]);
+
+    const handleBlockUser= async(id:string)=>{
+        if(id) await dispatch(blockUserById(id));
     }
     const handleViewUser=(id:string)=>{
         navigate(`/admin/users/${id}`);
@@ -80,6 +40,7 @@ const AdminManageUser: React.FC = ()=>{
                     profilePicture={hrjLogo}
                     name={user.name}
                     email={user.email}
+                    isBlocked={user.isBlocked}
                     blockUser={handleBlockUser}
                     viewUser={handleViewUser}
                 />

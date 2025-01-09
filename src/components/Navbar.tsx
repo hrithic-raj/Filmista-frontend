@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { signout } from '../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
+// import { persistor } from '../redux/persistor';
 
 const Navbar = () => {
   const [isProfile, setIsProfile] = useState(false);
@@ -13,6 +14,7 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
   const handleSignout = async()=>{
     await dispatch(signout());
+    // await persistor.purge();
     navigate('/signin');
   }
   return (
@@ -40,23 +42,25 @@ const Navbar = () => {
           <BellSVGNav/>
         </button>
       </div>
-      <div className="relative h-[50px] bg-[#2c2c2c] rounded-[215.70px] ">
+      <div className="relative h-[50px] bg-[#2c2c2c] rounded-[215.70px] pr-2">
         <div onClick={()=>setIsProfile(!isProfile)} className='flex h-[50px] items-center gap-2 hover:cursor-pointer'>
           <img
             src={hrjLogo}
             alt="User Avatar"
             className="h-[50px] rounded-[215.70px] border border-gray-100"
           />
-          <span className="hidden lg:flex h-7 text-[#e9e9e9] text-[18.84px] font-normal font-['Geologica']">Hrithic Raj</span>
-          {isProfile?(
-            <div className='w-10'>
-              <img src={upArrow} className='hidden lg:flex mr-1' alt="" />
-            </div>
-          ):(
-            <div className='w-10'>
-              <img src={downArrow} className='hidden lg:flex mr-1' alt="" />
-            </div>
-          )}
+          <div className='relative flex flex-col items-center'>
+            <span className="hidden lg:flex h-7 min-w-[100px] max-w-[150px] overflow-hidden text-[#e9e9e9] text-lg font-normal font-['Geologica'] select-none">Hrithic Raj</span>
+            {isProfile?(
+              <div className='absolute top-5 hidden lg:block w-10'>
+                <img src={upArrow} className='hidden lg:flex mr-1' alt="" />
+              </div>
+            ):(
+              <div className='absolute top-5 hidden lg:block w-10'>
+                <img src={downArrow} className='hidden lg:flex mr-1' alt="" />
+              </div>
+            )}
+          </div>
 
         </div>
           {isProfile &&(

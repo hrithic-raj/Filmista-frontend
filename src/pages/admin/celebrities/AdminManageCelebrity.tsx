@@ -11,41 +11,49 @@ const AdminManageCelebrity: React.FC = () => {
             _id: "6777cae081d216a8b8389b67",
             name: "hrithic raj",
             email: "hrjpunda@gmail.com","otp": "909588",
+            isBlocked:true
         },
         {
             _id: "6777cae081d216a8b8389b67",
             name: "hrithic raj",
             email: "hrjpunda@gmail.com","otp": "909588",
+            isBlocked:true
         },
         {
             _id: "6777cae081d216a8b8389b67",
             name: "hrithic raj",
             email: "hrjpunda@gmail.com","otp": "909588",
+            isBlocked:true
         },
         {
             _id: "6777cae081d216a8b8389b67",
             name: "hrithic raj",
             email: "hrjpunda@gmail.com","otp": "909588",
+            isBlocked:true
         },
         {
             _id: "6777cae081d216a8b8389b67",
             name: "hrithic raj",
             email: "hrjpunda@gmail.com","otp": "909588",
+            isBlocked:true
         },
         {
             _id: "6777cae081d216a8b8389b67",
             name: "hrithic raj",
             email: "hrjpunda@gmail.com","otp": "909588",
+            isBlocked:true
         },
         {
             _id: "6777cae081d216a8b8389b67",
             name: "hrithic raj",
             email: "hrjpunda@gmail.com","otp": "909588",
+            isBlocked:true
         },
         {
             _id: "6777cae081d216a8b8389b67",
             name: "hrithic raj",
             email: "hrjpunda@gmail.com","otp": "909588",
+            isBlocked:true
         },
     ];
     const handleBlockUser=(id:string)=>{
@@ -64,6 +72,7 @@ const AdminManageCelebrity: React.FC = () => {
                 profilePicture={hrjLogo}
                 name={celebrity.name}
                 email={celebrity.email}
+                isBlocked={celebrity.isBlocked}
                 blockUser={handleBlockUser}
                 viewUser={handleViewCelebrity}
             />

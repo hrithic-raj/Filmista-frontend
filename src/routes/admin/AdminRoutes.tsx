@@ -12,7 +12,7 @@ const AdminRoutes: RouteObject[] = [
     { path: '/admin/users', element: <AdminLayout ><AdminManageUser/></AdminLayout>},
     { path: '/admin/celebrities', element: <AdminLayout ><AdminManageCelebrity/></AdminLayout>},
     { path: '/admin/movies', element: <AdminLayout ><AdminManageMovies /></AdminLayout>},
-    { path: `/admin/users/:id`, element: <AdminLayout ><AdminViewUser /></AdminLayout>},
+    { path: `/admin/users/:id`, element: <AdminLayout ><AdminViewUser /></AdminLayout>}
 ];
 
 export default AdminRoutes;

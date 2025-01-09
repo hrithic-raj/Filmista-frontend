@@ -3,6 +3,8 @@ import IUser from "../../interfaces/UserInterface";
 import ICelebrity from "../../interfaces/CelebrityInterface";
 import IAdmin from "../../interfaces/AdminInterface";
 import axiosInstance from "../../utils/axiosInstance";
+// import { persistor } from "../persistor";
+
 
 
 interface AuthState {
@@ -63,6 +65,7 @@ export const signout = createAsyncThunk('auth/signout', async (_, { dispatch })=
         localStorage.removeItem('token');
         localStorage.removeItem('role');
         dispatch(resetAuthState());
+        // await persistor.purge();
     }catch(error: any){
         console.error("Signout failed",error.response?.data?.message)
     }

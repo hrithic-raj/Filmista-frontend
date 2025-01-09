@@ -89,8 +89,8 @@ const AdminNavbar: React.FC = () => {
   const [isProfile, setIsProfile] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const handleSignout = ()=>{
-    dispatch(signout());
+  const handleSignout = async()=>{
+    await dispatch(signout());
     navigate('/signin')
   }
   return (

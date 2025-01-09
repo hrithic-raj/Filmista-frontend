@@ -9,12 +9,13 @@ const axiosInstance: AxiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem("token");
   if (accessToken) {
     config.headers["Authorization"] = `Bearer ${accessToken}`;
   }
   return config;
 }, (error) => Promise.reject(error));
+
 
 axiosInstance.interceptors.response.use(
   (response) => response,
@@ -27,7 +28,7 @@ axiosInstance.interceptors.response.use(
         const { data } = await axiosInstance.post("/auth/refresh-token");
         const newAccessToken = data.accessToken;
 
-        localStorage.setItem("accessToken", newAccessToken);
+        localStorage.setItem("token", newAccessToken);
         // store.dispatch(setAccessToken(newAccessToken));
 
         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;

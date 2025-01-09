@@ -5,12 +5,15 @@ import { BellSVGNav, HeartSVGNav, SearchSVG } from '../assets/svg/SVGs';
 import { useState } from 'react';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { signout } from '../redux/slices/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isProfile, setIsProfile] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const handleSignout = ()=>{
-    dispatch(signout());
+  const handleSignout = async()=>{
+    await dispatch(signout());
+    navigate('/signin');
   }
   return (
     <div className='hidden sm:flex flex-col'>

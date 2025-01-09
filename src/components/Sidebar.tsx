@@ -19,7 +19,7 @@ const Sidebar = () => {
                   </div>
               </div>
           </div>
-          <nav>   
+          <nav>
               <ul className='flex flex-col space-y-9'>
                 <div className='flex flex-col items-center lg:items-start space-y-9 lg:ml-2'>
                   <li onClick={()=>navigate('/')} className="lg:flex items-center space-x-3 hover:cursor-pointer">

@@ -9,9 +9,10 @@ const AdminSidebar: React.FC = () => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const dispatch = useAppDispatch();
-  const handleSignout = ()=>{
-    dispatch(signout());
+  const handleSignout = async()=>{
+    await dispatch(signout());
     navigate('/signin');
+
   }
   const links = [
     { name: 'Dashboard', path: '/admin', icon: <FaHome /> },

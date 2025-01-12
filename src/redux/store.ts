@@ -1,5 +1,6 @@
 import authReducer from './slices/authSlice';
 import userManagementReducer from './slices/admin/userManagementSlice';
+import genreManagementReducer from './slices/admin/genreManagementSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -8,6 +9,7 @@ import { combineReducers } from 'redux';
 const rootReducer = combineReducers({
     auth: authReducer,
     userManagement: userManagementReducer,
+    genreManagement: genreManagementReducer,
 });
 
 const persistConfig = {

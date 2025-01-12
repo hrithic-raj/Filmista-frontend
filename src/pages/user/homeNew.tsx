@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import MovieCard from '../../components/MovieCard'
+import MovieCard from '../../components/cards/MovieCard'
 interface Movie {
     id: number;
     name: string;

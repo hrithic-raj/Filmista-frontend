@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaHome, FaUsers, FaFilm, FaChartPie, FaCog, FaStar, FaSignOutAlt} from 'react-icons/fa';
+import { FaHome, FaUsers, FaFilm, FaChartPie, FaCog, FaStar, FaSignOutAlt, FaCamera} from 'react-icons/fa';
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { signout } from '../../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +20,7 @@ const AdminSidebar: React.FC = () => {
     { name: 'Users', path: '/admin/users', icon: <FaUsers /> },
     { name: 'Celebrities', path: '/admin/celebrities', icon: <FaStar /> },
     { name: 'Movies', path: '/admin/movies', icon: <FaFilm /> },
+    { name: 'Genres', path: '/admin/genres', icon: <FaCamera/> },
     { name: 'Analytics', path: '/admin/analytics', icon: <FaChartPie /> },
     { name: 'Settings', path: '/admin/settings', icon: <FaCog /> },
   ];

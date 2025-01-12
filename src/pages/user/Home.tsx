@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../../App.css';
-import MovieCard from '../../components/MovieCard';
+import MovieCard from '../../components/cards/MovieCard';
 
 interface Movie {
   id: number;

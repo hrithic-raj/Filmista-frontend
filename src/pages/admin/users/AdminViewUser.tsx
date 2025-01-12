@@ -20,7 +20,7 @@ type Movie = {
     review?: string;
 };
 
-const AdminViewUser = () => {
+const AdminViewUser: React.FC = () => {
     // const [user, setUser] = useState<User | null>(null);
     // const [reviewedMovies, setReviewedMovies] = useState<Movie[]>([]);
     const reviewedMovies =[32,4,4,4,5,8]

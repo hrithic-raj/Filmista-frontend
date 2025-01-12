@@ -83,7 +83,7 @@ const AdminMovieCard: React.FC<CardProps> = ({
                 }}
                 className="px-4 py-2 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
               >
-                Add to Watchlist
+                View movie
               </button>
             </>
           )}

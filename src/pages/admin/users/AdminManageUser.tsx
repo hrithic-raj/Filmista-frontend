@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import AdminUserCard from '../../../components/Admin/AdminUserCard';
+import AdminUserCard from '../../../components/Admin/cards/AdminUserCard';
 import hrjLogo from '../../../assets/images/hrjlogo.png'
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';

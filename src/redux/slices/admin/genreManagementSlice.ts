@@ -25,9 +25,9 @@ interface genreManagementState {
 }
 
 const initialState: genreManagementState ={
-    genres:[],
+    genres: [],
     selectedGenre: null,
-    loading:false,
+    loading: false,
     error: null,
 };
 
@@ -41,28 +41,6 @@ export const fetchAllGenres = createAsyncThunk('userManagement/fetchAllGenres', 
     }
 })
 
-// export const addGenre = createAsyncThunk('userManagement/blockusers', async (formData: { email: string; password: string }, {rejectWithValue})=>{
-//     try{
-//         const response = await axiosInstance.post(`/genres`,formData);
-//         return response.data
-//     }catch(error: any){
-//         console.error(error.response?.data?.message)
-//         return rejectWithValue(error.response?.data?.message || "Failed to fetch users");
-//     }
-// })
-// export const updateGenre = createAsyncThunk('userManagement/blockusers', async (data, {rejectWithValue})=>{
-//     const formData = new FormData();
-//     formData.append('genre', data.genre);
-//     formData.append('isArchive', data.isArchive);  // Convert boolean to string if needed
-//     if (data.image) formData.append('poster', data.image);  // Add image file if exists
-//     try{
-//         const response = await axiosInstance.patch(`/admin/users/${genreId}`);
-//         return userId;
-//     }catch(error: any){
-//         console.error(error.response?.data?.message)
-//         return rejectWithValue(error.response?.data?.message || "Failed to fetch users");
-//     }
-// })
 export const addGenre = createAsyncThunk(
   'userManagement/addGenre',
   async (formData: FormData, { rejectWithValue }) => {
@@ -70,12 +48,12 @@ export const addGenre = createAsyncThunk(
         const response = await axiosInstance.post(`/admin/genres`,formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
         });
-        return response.data
+        return response.data.genre
     } catch (error: any) {
         console.error(error.response?.data?.message)
         return rejectWithValue(error.response?.data?.message || "Failed to add users");
     }
-  }
+}
 );
 export const updateGenre = createAsyncThunk(
     'userManagement/updateGenre',
@@ -83,13 +61,13 @@ export const updateGenre = createAsyncThunk(
         {genreId, formData}:{genreId: string; formData: FormData}, 
         { rejectWithValue }
     ) => {
-      try {
-        const response = await axiosInstance.patch(`/admin/genres/${genreId}`, formData, {
-            headers: { 'Content-Type': 'multipart/form-data' },
-        });
-        return response.data;
-      } catch (error: any) {
-        return rejectWithValue(error.message);  // Return error message if request fails
+        try {
+            const response = await axiosInstance.patch(`/admin/genres/${genreId}`, formData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+            return response.data.genre;
+        } catch (error: any) {
+            return rejectWithValue(error.message);  // Return error message if request fails
       }
     }
   );
@@ -98,7 +76,6 @@ export const updateGenre = createAsyncThunk(
 export const archiveGenre = createAsyncThunk('userManagement/blockusers', async (genreId: string, {rejectWithValue})=>{
     try{
         await axiosInstance.patch(`/admin/genres/${genreId}/archive`);
-        console.log("archive");
         return genreId;
     }catch(error: any){
         console.error(error.response?.data?.message)
@@ -109,7 +86,7 @@ export const archiveGenre = createAsyncThunk('userManagement/blockusers', async 
 export const fetchGenreById = createAsyncThunk('userManagement/blockusers', async (userId: string, {rejectWithValue})=>{
     try{
         const response = await axiosInstance.patch(`/admin/users/${userId}/block`);
-        return userId;
+        return response.data;
     }catch(error: any){
         console.error(error.response?.data?.message)
         return rejectWithValue(error.response?.data?.message || "Failed to fetch users");
@@ -135,18 +112,35 @@ const genreManagementSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         })
-        .addCase(archiveGenre.pending, (state)=>{
-            state.loading = true;
-        })
         .addCase(archiveGenre.fulfilled, (state, action: PayloadAction<string>)=>{
-            state.loading = false;
             const genreId = action.payload;
             const genre = state.genres.find((g)=>g._id === genreId);
             const selectedGenre = state.selectedGenre;
             if(genre) genre.isArchive = !genre.isArchive;
             if(selectedGenre) selectedGenre.isArchive = !selectedGenre.isArchive;
         })
-        .addCase(archiveGenre.rejected, (state, action: PayloadAction<any>)=>{
+        .addCase(addGenre.pending, (state)=>{
+            state.loading = true;
+        })
+        .addCase(addGenre.fulfilled, (state, action: PayloadAction<Genre>)=>{
+            state.loading = false;
+            state.genres.push(action.payload);
+        })
+        .addCase(addGenre.rejected, (state, action: PayloadAction<any>)=>{
+            state.loading = false;
+            state.error = action.payload;
+        })
+        .addCase(updateGenre.pending, (state)=>{
+            state.loading = true;
+        })
+        .addCase(updateGenre.fulfilled, (state, action: PayloadAction<Genre>)=>{
+            state.loading = false;
+            const index = state.genres.findIndex((genre)=>genre._id === action.payload._id);
+            if(index !== -1){
+                state.genres[index] = action.payload;
+            }
+        })
+        .addCase(updateGenre.rejected, (state, action: PayloadAction<any>)=>{
             state.loading = false;
             state.error = action.payload;
         })

@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { useNavigate } from 'react-router-dom';
 import { archiveGenre, fetchAllGenres } from '../../../redux/slices/admin/genreManagementSlice';
 import AdminGenreModal from '../../../components/Admin/modals/AdminGenreModal';
+import LoadingPage from '../../../components/LoadingPage';
 
 
 interface Movie {
@@ -28,7 +29,7 @@ const AdminManageGenres: React.FC = () => {
   const [showArchives, setShowArchives] = useState(false);
   const [showAddOrEditGenre, setShowAddOrEditGenre] = useState(false);
   const [editingGenre, setEditingGenre] = useState<Genre | null>(null); // To hold the genre being edited
-  const { genres } = useAppSelector((state) => state.genreManagement);
+  const { genres, loading } = useAppSelector((state) => state.genreManagement);
 
   useEffect(() => {
     dispatch(fetchAllGenres());
@@ -54,8 +55,12 @@ const AdminManageGenres: React.FC = () => {
 
   const maxCount = Math.max(...genres.map((genre) => genre.movies.length + 5));
 
+  // if(loading) return <LoadingPage/>
   return (
-    <div className="container w-full mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="relative container w-full mx-auto px-4 sm:px-6 lg:px-8">
+      <div className={`fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 ${
+    loading ? 'block' : 'hidden'
+  }`}/>
       <div className="grid grid-cols-1 lg:grid-rows-2 lg:grid-cols-[1fr,3fr] max-h-1/2 gap-4 mb-8">
         <div className="p-7 bg-[rgb(44,44,44)] shadow rounded-lg hover:shadow-md transition">
           <h2 className="text-xl text-center lg:text-left font-semibold text-gray-300">Total Genres</h2>
@@ -132,6 +137,8 @@ const AdminManageGenres: React.FC = () => {
           onClose={() => setShowAddOrEditGenre(false)}
         />
       )}
+
+      {loading&& <LoadingPage/>}
     </div>
   );
 };

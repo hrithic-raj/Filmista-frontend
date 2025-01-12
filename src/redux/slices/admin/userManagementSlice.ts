@@ -82,9 +82,6 @@ const userManagementSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         })
-        .addCase(blockUserById.pending, (state)=>{
-            state.loading = true;
-        })
         .addCase(blockUserById.fulfilled, (state, action: PayloadAction<string>)=>{
             state.loading = false;
             const userId = action.payload;
@@ -96,10 +93,6 @@ const userManagementSlice = createSlice({
             if(selectedUser){
                 selectedUser.isBlocked = !selectedUser.isBlocked;
             }
-        })
-        .addCase(blockUserById.rejected, (state, action: PayloadAction<any>)=>{
-            state.loading = false;
-            state.error = action.payload;
         })
     }
 })

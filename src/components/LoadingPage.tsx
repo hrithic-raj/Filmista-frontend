@@ -3,7 +3,7 @@ import logo from '../assets/images/logo.png'
 // import { ThreeDot } from 'react-loading-indicators';
 const LoadingPage: React.FC = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-screen h-screen bg-[#212121]">
+    <div className="absolute top-0 left-0 flex flex-col items-center justify-center w-full h-screen z-50">
       <img
         src={logo}
         alt="Filmista Logo"

@@ -58,7 +58,7 @@ const AdminManageGenres: React.FC = () => {
   // if(loading) return <LoadingPage/>
   return (
     <div className="relative container w-full mx-auto px-4 sm:px-6 lg:px-8">
-      <div className={`fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 ${
+      <div className={`fixed inset-0 bg-gray-900 bg-opacity-20 backdrop-blur-sm flex items-center justify-center z-45 ${
     loading ? 'block' : 'hidden'
   }`}/>
       <div className="grid grid-cols-1 lg:grid-rows-2 lg:grid-cols-[1fr,3fr] max-h-1/2 gap-4 mb-8">

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import AdminGenreCard from '../../../components/Admin/cards/AdminGenreCard';
+import AdminGenreCard from '../../../components/Admin/cards/AdminFormCard';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { useNavigate } from 'react-router-dom';
 import { archiveGenre, fetchAllGenres } from '../../../redux/slices/admin/genreManagementSlice';
 import AdminGenreModal from '../../../components/Admin/modals/AdminGenreModal';
 import LoadingPage from '../../../components/LoadingPage';
+import { FaPlusCircle } from 'react-icons/fa';
 
 
 interface Movie {
@@ -36,7 +37,7 @@ const AdminManageGenres: React.FC = () => {
   }, [dispatch]);
 
   const handleViewGenre = (id: string) => {
-    console.log(`view movie`,id);
+    navigate(`/admin/genres/${id}`);
   };
 
   const handleAddGenre = () => {
@@ -64,13 +65,14 @@ const AdminManageGenres: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-rows-2 lg:grid-cols-[1fr,3fr] max-h-1/2 gap-4 mb-8">
         <div className="p-7 bg-[rgb(44,44,44)] shadow rounded-lg hover:shadow-md transition">
           <h2 className="text-xl text-center lg:text-left font-semibold text-gray-300">Total Genres</h2>
-          <p className="text-2xl text-center lg:text-left font-bold text-gray-100">2743</p>
+          <p className="text-2xl text-center lg:text-left font-bold text-gray-100">{genres?.length}</p>
         </div>
-        <div onClick={handleAddGenre} className="p-7 lg:order-3 bg-[rgb(44,44,44)] flex justify-center items-center shadow rounded-lg hover:cursor-pointer hover:shadow-md transition">
+        <div onClick={handleAddGenre} className="flex flex-col gap-2 p-7 lg:order-3 bg-[rgb(44,44,44)] justify-center items-center shadow rounded-lg hover:cursor-pointer hover:shadow-md transition">
+          <FaPlusCircle className='text-3xl text-gray-200'/>
           <h2 className="text-2xl font-semibold text-gray-200 select-none">Add Genre</h2>
         </div>
         <div className="w-full max-h-[330px] lg:max-h-[330px] bg-[rgb(44,44,44)] shadow rounded-lg hover:shadow-md transition row-span-2 mx-auto font-sans overflow-y-auto custom-scrollbar">
-          <h1 className="text-2xl font-bold mb-4 text-center text-gray-300">Genres and Movie Counts</h1>
+          <h1 className="text-2xl mt-2 font-bold mb-4 text-center text-gray-300">Genres and Movie Counts</h1>
           <div className="space-y-4 pb-5">
             {genres.map((genre) => (
               <div key={genre._id} className="flex items-center pr-5">
@@ -106,11 +108,11 @@ const AdminManageGenres: React.FC = () => {
                 key={genre._id}
                 id={genre._id}
                 image={genre.poster}
-                genre={genre.genre}
+                title={genre.genre}
                 isArchive={genre.isArchive}
-                editGenre={() => handleEditGenre(genre)}
-                archiveGenre={handleArchiveGenre}
-                viewGenre={handleViewGenre}
+                edit={() => handleEditGenre(genre)}
+                archive={handleArchiveGenre}
+                view={handleViewGenre}
               />
             )
           ))
@@ -121,11 +123,11 @@ const AdminManageGenres: React.FC = () => {
                 key={genre._id}
                 id={genre._id}
                 image={genre.poster}
-                genre={genre.genre}
+                title={genre.genre}
                 isArchive={genre.isArchive}
-                editGenre={() => handleEditGenre(genre)}
-                archiveGenre={handleArchiveGenre}
-                viewGenre={handleViewGenre}
+                edit={() => handleEditGenre(genre)}
+                archive={handleArchiveGenre}
+                view={handleViewGenre}
               />
             )
           ))

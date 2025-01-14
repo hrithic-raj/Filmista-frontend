@@ -4,31 +4,17 @@ import { useAppDispatch } from '../../../hooks/reduxHooks';
 import { addGenre, updateGenre } from '../../../redux/slices/admin/genreManagementSlice';
 import { FaPlusCircle } from 'react-icons/fa';
 import { FaDeleteLeft, FaSackXmark } from 'react-icons/fa6';
+import ILanguage from '../../../interfaces/LanguageInterface';
+import { addLanguage, updateLanguage } from '../../../redux/slices/admin/languageManagementSlice';
 
-interface Movie {
-    id: string;
-    name: string;
-    description: string;
-    poster: string;
-    horizontalPoster: string;
+interface AdminLanguageModalProps {
+    language: ILanguage | null;
+    onClose: () => void;
 }
 
-interface Genre {
-    _id: string;
-    genre: string;
-    poster: string;
-    isArchive: boolean;
-    movies: Movie[]
-}
-
-interface AdminGenreModalProps {
-  genre: Genre | null;
-  onClose: () => void;
-}
-
-const AdminGenreModal: React.FC<AdminGenreModalProps> = ({ genre, onClose }) => {
-  const [genreName, setGenreName] = useState(genre ? genre.genre : '');
-  const [isArchive, setIsArchive] = useState(genre ? genre.isArchive : false);
+const AdminLanguageModal: React.FC<AdminLanguageModalProps> = ({ language, onClose }) => {
+  const [languageName, setLanguageName] = useState(language ? language.language : '');
+  const [isArchive, setIsArchive] = useState(language ? language.isArchive : false);
   const [image, setImage] = useState<File | null>(null);
   const dispatch = useAppDispatch();
   const { getRootProps, getInputProps } = useDropzone({
@@ -38,17 +24,17 @@ const AdminGenreModal: React.FC<AdminGenreModalProps> = ({ genre, onClose }) => 
     },
   });
   useEffect(() => {
-    if (genre) {
-      setGenreName(genre.genre);
-      setIsArchive(genre.isArchive);
+    if (language) {
+      setLanguageName(language.language);
+      setIsArchive(language.isArchive);
       setImage(null);
     }
-  }, [genre]);
+  }, [language]);
 
   const handleSubmit = async() => {
     const jsonPayload = JSON.stringify({
-      genre: genreName,
-      isArchive: isArchive,
+        language: languageName,
+        isArchive: isArchive,
     })
 
     const formData = new FormData();
@@ -57,12 +43,12 @@ const AdminGenreModal: React.FC<AdminGenreModalProps> = ({ genre, onClose }) => 
 
     try{
       onClose();
-      if(genre){
-        await dispatch(updateGenre({genreId: genre._id, formData})).unwrap();
-        console.log("Genre updated");
+      if(language){
+        await dispatch(updateLanguage({langId: language._id, formData})).unwrap();
+        console.log("Language updated");
       }else{
-        await dispatch(addGenre(formData)).unwrap();
-        console.log("Genre added");
+        await dispatch(addLanguage(formData)).unwrap();
+        console.log("Language added");
       }
     }catch(error){
       console.error('Error:', error);
@@ -72,13 +58,13 @@ const AdminGenreModal: React.FC<AdminGenreModalProps> = ({ genre, onClose }) => 
   return (
     <div className="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-40">
       <div className="bg-[rgb(44,44,44)] p-6 rounded-lg shadow-lg lg:w-2/3 w-96">
-        <h2 className="text-gray-100 text-xl font-bold mb-4">{genre ? 'Edit Genre' : 'Add Genre'}</h2>
+        <h2 className="text-gray-100 text-xl font-bold mb-4">{language ? 'Edit Language' : 'Add Language'}</h2>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-200">Genre Name</label>
+          <label className="block text-sm font-medium text-gray-200">Language Name</label>
           <input
             type="text"
-            value={genreName}
-            onChange={(e) => setGenreName(e.target.value)}
+            value={languageName}
+            onChange={(e) => setLanguageName(e.target.value)}
             className="mt-1 block w-full px-3 py-2 bg-[rgb(44,44,44)] text-gray-100 border border-gray-200 rounded-md"
           />
         </div>
@@ -117,4 +103,4 @@ const AdminGenreModal: React.FC<AdminGenreModalProps> = ({ genre, onClose }) => 
   );
 };
 
-export default AdminGenreModal;
+export default AdminLanguageModal;

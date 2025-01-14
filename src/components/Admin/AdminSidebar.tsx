@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaHome, FaUsers, FaFilm, FaChartPie, FaCog, FaStar, FaSignOutAlt, FaCamera} from 'react-icons/fa';
+import { FaHome, FaUsers, FaFilm, FaChartPie, FaCog, FaStar, FaSignOutAlt, FaCamera, FaLanguage} from 'react-icons/fa';
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { signout } from '../../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
@@ -21,6 +21,7 @@ const AdminSidebar: React.FC = () => {
     { name: 'Celebrities', path: '/admin/celebrities', icon: <FaStar /> },
     { name: 'Movies', path: '/admin/movies', icon: <FaFilm /> },
     { name: 'Genres', path: '/admin/genres', icon: <FaCamera/> },
+    { name: 'Language', path: '/admin/language', icon: <FaLanguage/> },
     { name: 'Analytics', path: '/admin/analytics', icon: <FaChartPie /> },
     { name: 'Settings', path: '/admin/settings', icon: <FaCog /> },
   ];
@@ -34,7 +35,7 @@ const AdminSidebar: React.FC = () => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <nav className="mt-5 flex flex-col justify-center">
-        <ul className='flex flex-col space-y-5 items-center'>
+        <ul className='flex flex-col space-y-4 items-center'>
           {links.map((link) => (
             <li key={link.name} className="group hover:cursor-pointer w-full flex justify-center">
               <div

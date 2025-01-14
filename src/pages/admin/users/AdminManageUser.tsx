@@ -23,7 +23,7 @@ const AdminManageUser: React.FC = ()=>{
     // useEffect(()=>{
     //     dispatch(fetchUsers());    
     // },[dispatch]);
-
+    
     const handleBlockUser= async(id:string)=>{
         if(id) await dispatch(blockUserById(id));
     }

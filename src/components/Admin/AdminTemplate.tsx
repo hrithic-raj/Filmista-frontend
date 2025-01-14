@@ -16,7 +16,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       <AdminSidebar />
       <div className="flex-1 flex flex-col">
         <AdminNavbar />
-        <main className="flex-1 pt-20 sm:pl-[80px] lg:pl-[200px] sm:pr-[70px] lg:pr-[100px]">{children}</main>
+        <main className="flex-1 pt-20 pb-10 sm:pl-[80px] lg:pl-[200px] sm:pr-[70px] lg:pr-[100px]">{children}</main>
       </div>
     </div>
   );

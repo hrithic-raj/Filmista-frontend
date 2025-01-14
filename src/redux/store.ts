@@ -1,6 +1,8 @@
 import authReducer from './slices/authSlice';
 import userManagementReducer from './slices/admin/userManagementSlice';
 import genreManagementReducer from './slices/admin/genreManagementSlice';
+import languageManagementReducer from './slices/admin/languageManagementSlice';
+// import userInfoReducer from './slices/user/userInfoSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -10,6 +12,8 @@ const rootReducer = combineReducers({
     auth: authReducer,
     userManagement: userManagementReducer,
     genreManagement: genreManagementReducer,
+    languageManagement: languageManagementReducer,
+    // userInfo: userInfoReducer,
 });
 
 const persistConfig = {

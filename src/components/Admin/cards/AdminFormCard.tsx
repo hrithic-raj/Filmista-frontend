@@ -3,41 +3,41 @@ import React, { useState } from "react";
 interface CardProps {
   id: string;
   image: string;
-  genre: string;
+  title: string;
   isArchive: boolean;
-  editGenre: () => void;
-  archiveGenre: (id: string) => void;
-  viewGenre: (id: string) => void;
+  edit: () => void;
+  archive: (id: string) => void;
+  view: (id: string) => void;
 }
 
-const AdminGenreCard: React.FC<CardProps> = ({
+const AdminFormCard: React.FC<CardProps> = ({
   id,
   image,
-  genre,
+  title,
   isArchive,
-  editGenre,
-  archiveGenre,
-  viewGenre,
+  edit,
+  archive,
+  view,
 }) => {
   const [hovered, setHovered] = useState(false);
 
   return (
     <div
-      className="relative w-full sm:w-[48%] lg:w-[23%] max-w-xs bg-gray-800 rounded-[25px] overflow-hidden shadow-lg cursor-pointer group"
+      className="relative w-full sm:w-[48%] lg:w-[23%] max-w-xs bg-gray-800 rounded-[25px] z-30 overflow-hidden shadow-lg cursor-pointer group"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       {/* Image */}
       <img
         src={image}
-        alt={genre}
+        alt={title}
         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 group-hover:opacity-40"
       />
 
       {/* Hover Overlay */}
       <div
         className={`absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent ${
-          hovered ? "h-3/4" : "h-20"
+          hovered ? "h-3/4" : "h-16"
         } transition-all duration-300`}
       >
         <div
@@ -45,7 +45,7 @@ const AdminGenreCard: React.FC<CardProps> = ({
         >
           {!hovered && (
             <div>
-              <h3 className="text-white text-lg font-bold">{genre}</h3>
+              <h3 className="text-white text-lg font-bold">{title}</h3>
             </div>
           )}
 
@@ -55,25 +55,25 @@ const AdminGenreCard: React.FC<CardProps> = ({
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  viewGenre(id); // Ensure the ID is passed correctly
+                  view(id); // Ensure the ID is passed correctly
                 }}
                 className="px-4 py-2 w-3/4 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0] transition-colors"
               >
-                View Genre
+                View
               </button>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  editGenre(); // Ensure the ID is passed correctly
+                  edit(); // Ensure the ID is passed correctly
                 }}
                 className="px-4 py-2 w-3/4 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0] transition-colors"
               >
-                Edit Genre
+                Edit
               </button>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  archiveGenre(id); // Ensure the ID is passed correctly
+                  archive(id); // Ensure the ID is passed correctly
                 }}
                 className="px-4 w-3/4 py-2 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0] transition-colors"
               >
@@ -87,4 +87,4 @@ const AdminGenreCard: React.FC<CardProps> = ({
   );
 };
 
-export default AdminGenreCard;
+export default AdminFormCard;

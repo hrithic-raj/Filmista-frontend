@@ -28,9 +28,7 @@ const AdminViewUser: React.FC = () => {
     const dispatch = useAppDispatch();
     const { selectedUser: user, loading } = useAppSelector((state) => state.userManagement);
     useEffect(()=>{
-        if(id){
-            dispatch(fetchUserById(id))    
-        }
+        if(id) dispatch(fetchUserById(id))
     },[dispatch, id]);
 
     const handleBlockUser= async()=>{

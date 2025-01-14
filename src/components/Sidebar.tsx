@@ -41,7 +41,7 @@ const Sidebar = () => {
                       <UserSVG/>
                       <span className="hidden lg:flex w-[64.30px] h-[23.63px] text-[#e9e9e9] text-base font-normal font-['Fredoka'] hover:text-[#5cfef0]">Profile</span>
                   </li>
-                  <li onClick={()=>navigate('/')} className="lg:flex items-center space-x-3 hover:cursor-pointer">
+                  <li onClick={()=>navigate('/settings')} className="lg:flex items-center space-x-3 hover:cursor-pointer">
                       <SettingsSVG/>
                       <span className="hidden lg:flex w-[64.30px] h-[23.63px] text-[#e9e9e9] text-base font-normal font-['Fredoka'] hover:text-[#5cfef0]">Settings</span>
                   </li>

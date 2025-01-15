@@ -1,83 +1,152 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminUserCard from '../../../components/Admin/cards/AdminUserCard';
 import hrjLogo from '../../../assets/images/hrjlogo.png'
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
+import { blockCelebrityById, fetchAllRequests, fetchCelebrities } from '../../../redux/slices/admin/celebrityManagementSlice';
+import { FaList, FaPlusCircle } from 'react-icons/fa';
+import LoadingPage from '../../../components/LoadingPage';
+import AdminCelebrityCard from '../../../components/Admin/cards/AdminCelebrityCard';
 
 const AdminManageCelebrity: React.FC = () => {
     const [hovered, setHovered] = useState(false);
+    const [showBlocked, setShowBlocked] = useState(false);
     const navigate = useNavigate();
-    const celebrities = [
-        {
-            _id: "6777cae081d216a8b8389b67",
-            name: "hrithic raj",
-            email: "hrjpunda@gmail.com","otp": "909588",
-            isBlocked:true
-        },
-        {
-            _id: "6777cae081d216a8b8389b67",
-            name: "hrithic raj",
-            email: "hrjpunda@gmail.com","otp": "909588",
-            isBlocked:true
-        },
-        {
-            _id: "6777cae081d216a8b8389b67",
-            name: "hrithic raj",
-            email: "hrjpunda@gmail.com","otp": "909588",
-            isBlocked:true
-        },
-        {
-            _id: "6777cae081d216a8b8389b67",
-            name: "hrithic raj",
-            email: "hrjpunda@gmail.com","otp": "909588",
-            isBlocked:true
-        },
-        {
-            _id: "6777cae081d216a8b8389b67",
-            name: "hrithic raj",
-            email: "hrjpunda@gmail.com","otp": "909588",
-            isBlocked:true
-        },
-        {
-            _id: "6777cae081d216a8b8389b67",
-            name: "hrithic raj",
-            email: "hrjpunda@gmail.com","otp": "909588",
-            isBlocked:true
-        },
-        {
-            _id: "6777cae081d216a8b8389b67",
-            name: "hrithic raj",
-            email: "hrjpunda@gmail.com","otp": "909588",
-            isBlocked:true
-        },
-        {
-            _id: "6777cae081d216a8b8389b67",
-            name: "hrithic raj",
-            email: "hrjpunda@gmail.com","otp": "909588",
-            isBlocked:true
-        },
-    ];
-    const handleBlockUser=(id:string)=>{
-        console.log(`User ${id} Blocked`)
+    const dispatch = useAppDispatch();
+    const {celebrities, requests, loading} = useAppSelector((state)=>state.celebrityManagement)
+    
+    useEffect(()=>{
+        dispatch(fetchCelebrities());
+        dispatch(fetchAllRequests());
+    },[dispatch])
+
+    const handleBlockCelebrity= async (id:string)=>{
+        if(id) await dispatch(blockCelebrityById(id));
     }
     const handleViewCelebrity=(id:string)=>{
         navigate(`/admin/celebrities/${id}`);
     }
+
+    // const maxCount = Math.max(requests.length + 5);
+    const pendingCount = requests.filter(request => request.status === "pending").length;
   return (
-    <div className=''>
-        <h3 className='mb-5 font-fredoka text-2xl text-white'>Celebrities</h3>
-        <div className='flex flex-wrap gap-5'>
-        {celebrities.map(celebrity=>(
-            <AdminUserCard
-                id={celebrity._id}
+    <div className="relative container w-full mx-auto px-4 sm:px-6 lg:px-8">
+      <div className={`fixed inset-0 bg-gray-900 bg-opacity-20 backdrop-blur-sm flex items-center justify-center z-45 ${
+    loading ? 'block' : 'hidden'
+  }`}/>
+      <div className="grid grid-cols-1 lg:grid-rows-2 lg:grid-cols-[1fr,3fr] max-h-1/2 gap-4 mb-8">
+        <div className="p-7 bg-[rgb(44,44,44)] shadow rounded-lg hover:shadow-md transition">
+          <h2 className="text-xl text-center lg:text-left font-semibold text-gray-300">Total Celebrities</h2>
+          <p className="text-2xl text-center lg:text-left font-bold text-gray-100">{celebrities?.length}</p>
+        </div>
+        <div onClick={()=>navigate('/admin/celebrities/requests')} className="flex flex-col gap-2 p-7 lg:order-3 bg-[rgb(44,44,44)] justify-center items-center shadow rounded-lg hover:cursor-pointer hover:shadow-md transition">
+          <FaList className='text-3xl text-gray-200'/>
+          <h2 className="text-2xl font-semibold text-gray-200 select-none">Requests</h2>
+        </div>
+        <div className="w-full max-h-[330px] lg:max-h-[330px] bg-[rgb(44,44,44)] shadow rounded-lg hover:shadow-md transition row-span-2 mx-auto font-sans overflow-y-auto custom-scrollbar">
+          <h1 className="text-2xl mt-2 font-bold mb-4 text-center text-gray-300">Celebrities and Requests</h1>
+          <div className="space-y-4 pb-5">
+            {/* Celebrities */}
+            <div className="flex items-center pr-5">
+              <span className="w-[20%] text-sm text-center font-medium text-blue-600">Celebrities</span>
+              <div className="relative flex-1 h-4 bg-gray-200 rounded-lg overflow-hidden">
+                <div
+                  className="absolute top-0 left-0 h-full bg-yellow-400 transition-all duration-500"
+                  style={{
+                    width: `${(celebrities.length / (celebrities.length || 1)) * 10}%`,
+                  }}
+                />
+              </div>
+              <span className="w-[5%] text-sm text-gray-300 text-right">{celebrities.length}</span>
+            </div>
+
+            {/* Request Pending */}
+            <div className="flex items-center pr-5">
+              <span className="w-[20%] text-sm text-center font-medium text-blue-600">Request Pending</span>
+              <div className="relative flex-1 h-4 bg-gray-200 rounded-lg overflow-hidden">
+                <div
+                  className="absolute top-0 left-0 h-full bg-yellow-400 transition-all duration-500"
+                  style={{
+                    width: `${(pendingCount / (requests.length || 1)) * 100}%`,
+                  }}
+                />
+              </div>
+              <span className="w-[5%] text-sm text-gray-300 text-right">{pendingCount}</span>
+            </div>
+
+            {/* Request Reviewed */}
+            <div className="flex items-center pr-5">
+              <span className="w-[20%] text-sm text-center font-medium text-blue-600">Request Reviewed</span>
+              <div className="relative flex-1 h-4 bg-gray-200 rounded-lg overflow-hidden">
+                <div
+                  className="absolute top-0 left-0 h-full bg-yellow-400 transition-all duration-500"
+                  style={{
+                    width: `${((requests.length - pendingCount) / (requests.length || 1)) * 100}%`,
+                  }}
+                />
+              </div>
+              <span className="w-[5%] text-sm text-gray-300 text-right">{requests.length - pendingCount}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <h3 className="mb-5 font-fredoka text-2xl text-white">Genres</h3>
+      <div className="lg:w-[20%] w-[30%] flex justify-between my-5 gap-3">
+          <button
+            onClick={() => setShowBlocked(false)}
+            className={`border w-full h-10 px-1 flex items-center justify-center rounded-lg text-lg ${
+              showBlocked
+                ? "text-gray-400 border-gray-500"
+                : "text-gray-200 border-gray-200"
+            }`}
+          >
+            Celebrities
+          </button>
+          <button
+            onClick={() => setShowBlocked(true)}
+            className={`border w-full h-10 px-1 flex items-center justify-center rounded-lg text-lg ${
+              showBlocked
+                ? "text-gray-200 border-gray-200"
+                : "text-gray-400 border-gray-500"
+            }`}
+          >
+            Blocked
+          </button>
+        </div>
+      <div className="flex flex-wrap justify-center gap-4">
+        {!showBlocked ? (
+          celebrities.map((celebrity) => (
+            !celebrity.isBlocked && (
+                <AdminCelebrityCard
+                _id={celebrity._id}
                 profilePicture={hrjLogo}
                 name={celebrity.name}
                 email={celebrity.email}
                 isBlocked={celebrity.isBlocked}
-                blockUser={handleBlockUser}
-                viewUser={handleViewCelebrity}
+                block={handleBlockCelebrity}
+                view={handleViewCelebrity}
             />
-        ))}
-        </div>
+            )
+          ))
+        ) : (
+          celebrities.map((celebrity) => (
+            celebrity.isBlocked && (
+                <AdminCelebrityCard
+                _id={celebrity._id}
+                profilePicture={hrjLogo}
+                name={celebrity.name}
+                email={celebrity.email}
+                isBlocked={celebrity.isBlocked}
+                block={handleBlockCelebrity}
+                view={handleViewCelebrity}
+            />
+            )
+          ))
+        )}
+      </div>
+
+      {loading&& <LoadingPage/>}
     </div>
   )
 }

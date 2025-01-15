@@ -67,13 +67,13 @@ const AdminManageMovies: React.FC = () => {
             <h2 className="text-2xl font-semibold text-gray-200 select-none">Add movies</h2>
           </div>
           <div className="p-7 bg-[rgb(44,44,44)] flex justify-center items-center shadow rounded-lg hover:cursor-pointer hover:shadow-md transition">
-            <h2 className="text-2xl font-semibold text-gray-300">Add Requests</h2>
+            <h2 className="text-2xl font-semibold text-gray-300">Review Requests</h2>
             {/* <p className="text-2xl font-bold text-gray-100">2743</p> */}
           </div>
-          {/* <div className="p-7 bg-[rgb(44,44,44)] shadow rounded-lg hover:shadow-md transition">
-            <h2 className="text-lg font-semibold text-gray-300">Total movies</h2>
-            <p className="text-2xl font-bold text-gray-100">2743</p>
-          </div> */}
+          <div className="p-7 bg-[rgb(44,44,44)] shadow rounded-lg hover:shadow-md transition">
+            {/* <h2 className="text-lg font-semibold text-gray-300">Total movies</h2> */}
+            {/* <p className="text-2xl font-bold text-gray-100">2743</p> */}
+          </div>
       </div>
       <div className='flex flex-wrap gap-5 justify-center'>
         {movies.map((movie) => (

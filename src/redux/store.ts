@@ -2,6 +2,7 @@ import authReducer from './slices/authSlice';
 import userManagementReducer from './slices/admin/userManagementSlice';
 import genreManagementReducer from './slices/admin/genreManagementSlice';
 import languageManagementReducer from './slices/admin/languageManagementSlice';
+import celebrityManagementReducer from './slices/admin/celebrityManagementSlice';
 // import userInfoReducer from './slices/user/userInfoSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     userManagement: userManagementReducer,
     genreManagement: genreManagementReducer,
     languageManagement: languageManagementReducer,
+    celebrityManagement: celebrityManagementReducer,
     // userInfo: userInfoReducer,
 });
 

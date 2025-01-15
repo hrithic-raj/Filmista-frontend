@@ -13,7 +13,7 @@ const CelebrityRequestModal: React.FC<ModalProps> = ({ onClose }) => {
   const [image, setImage] = useState<File | null>(null);
   const dispatch = useAppDispatch();
   const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*' as unknown as Accept,
+    accept: { 'application/pdf': ['.pdf'], 'image/*': ['.jpg', '.jpeg', '.png'] } as unknown as Accept,
     onDrop: (acceptedFiles) => {
       setImage(acceptedFiles[0]);
     },
@@ -24,9 +24,9 @@ const CelebrityRequestModal: React.FC<ModalProps> = ({ onClose }) => {
     if (image) formData.append('proofDocument', image);
 
     try{
-      onClose();
       await submitCelebrityRequest(formData);
-        console.log("Genre updated")
+      console.log("Genre updated")
+      onClose();
     }catch(error){
       console.error('Error:', error);
     }

@@ -43,17 +43,17 @@ const AdminViewCelebrity: React.FC = () => {
         <div className='flex items-center space-x-6'>
             <img
                 src={hrjLogo}
-                alt={`${user?.name}'s profile`}
+                alt={`${user?.userId?.name}'s profile`}
                 className="w-24 h-24 rounded-full object-cover border"
             />
             <div>
-                <h2 className="text-2xl font-semibold text-gray-200">{user?.name}</h2>
-                <p className="text-gray-400">Email: {user?.email}</p>
+                <h2 className="text-2xl font-semibold text-gray-200">{user?.userId?.name}</h2>
+                <p className="text-gray-400">Email: {user?.userId?.email}</p>
             </div>
         </div>
         <div className='flex flex-col gap-4'>
             <button onClick={handleBlockUser} className='border rounded-md p-2 font-bold text-gray-300 hover:border-[#5cfef0] hover:text-[#5cfef0]'>
-                {user?.isBlocked?'UNBLOCK':'BLOCK'}
+                {user?.userId?.isBlocked?'UNBLOCK':'BLOCK'}
                 </button>
             {/* <button className='bg-red-200 rounded-md p-2 font-bold text-gray-800'>BLOCK</button> */}
         </div>

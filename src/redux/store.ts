@@ -2,6 +2,8 @@ import authReducer from './slices/authSlice';
 import userManagementReducer from './slices/admin/userManagementSlice';
 import genreManagementReducer from './slices/admin/genreManagementSlice';
 import languageManagementReducer from './slices/admin/languageManagementSlice';
+import genreReducer from './slices/user/genreSlice';
+import languageReducer from './slices/user/languageSlice';
 import celebrityManagementReducer from './slices/admin/celebrityManagementSlice';
 // import userInfoReducer from './slices/user/userInfoSlice';
 import { configureStore } from '@reduxjs/toolkit';
@@ -14,6 +16,8 @@ const rootReducer = combineReducers({
     userManagement: userManagementReducer,
     genreManagement: genreManagementReducer,
     languageManagement: languageManagementReducer,
+    genre: genreReducer,
+    language: languageReducer,
     celebrityManagement: celebrityManagementReducer,
     // userInfo: userInfoReducer,
 });

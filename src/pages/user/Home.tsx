@@ -48,7 +48,7 @@ const movies: Movie[] = [
     horizontalPoster:"https://c4.wallpaperflare.com/wallpaper/624/721/234/movie-poster-aliens-sigourney-weaver-h-r-giger-wallpaper-preview.jpg"
   },
 ];
-const HomePage = () => {
+const HomePage: React.FC = () => {
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
@@ -140,6 +140,7 @@ const HomePage = () => {
               >
                 {movies.map((movie) => (
                   <MovieCard
+                  id={movie.id.toString()}
                   image={movie.horizontalPoster}
                   title={movie.name}
                   rating={2.5}
@@ -150,6 +151,7 @@ const HomePage = () => {
                 ))}
                 {movies.map((movie) => (
               <MovieCard
+              id={movie.id.toString()}
               image={movie.horizontalPoster}
               title={movie.name}
               rating={2.5}
@@ -171,6 +173,7 @@ const HomePage = () => {
               >
                 {movies.map((movie) => (
                   <MovieCard
+                  id={movie.id.toString()}
                   image={movie.horizontalPoster}
                   title={movie.name}
                   rating={2.5}
@@ -181,6 +184,7 @@ const HomePage = () => {
                 ))}
                 {movies.map((movie) => (
               <MovieCard
+              id={movie.id.toString()}
               image={movie.horizontalPoster}
               title={movie.name}
               rating={2.5}

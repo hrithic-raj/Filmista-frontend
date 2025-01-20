@@ -1,5 +1,6 @@
 import React from 'react'
 import AdminMovieCard from '../../../components/Admin/AdminMovieCard';
+import { useNavigate } from 'react-router-dom';
 
 interface Movie {
     id: string;
@@ -49,6 +50,7 @@ interface Movie {
   ];
 
 const AdminManageMovies: React.FC = () => {
+  const navigate = useNavigate();
     const handleViewMoview = (id:string) => {
         console.log(`view movie`);
       };
@@ -63,7 +65,7 @@ const AdminManageMovies: React.FC = () => {
             <h2 className="text-xl font-semibold text-gray-300">Total movies</h2>
             <p className="text-2xl font-bold text-gray-100">2743</p>
           </div>
-          <div className="p-7 bg-[rgb(44,44,44)] flex justify-center items-center shadow rounded-lg hover:cursor-pointer hover:shadow-md transition">
+          <div onClick={()=>navigate('/admin/movies/add-movies')} className="p-7 bg-[rgb(44,44,44)] flex justify-center items-center shadow rounded-lg hover:cursor-pointer hover:shadow-md transition">
             <h2 className="text-2xl font-semibold text-gray-200 select-none">Add movies</h2>
           </div>
           <div className="p-7 bg-[rgb(44,44,44)] flex justify-center items-center shadow rounded-lg hover:cursor-pointer hover:shadow-md transition">
@@ -77,26 +79,26 @@ const AdminManageMovies: React.FC = () => {
       </div>
       <div className='flex flex-wrap gap-5 justify-center'>
         {movies.map((movie) => (
-                  <AdminMovieCard
-                  id={movie.id}
-                  image={movie.horizontalPoster}
-                  title={movie.name}
-                  rating={2.5}
-                  genres={["Adventure", "Comedy"]}
-                  viewMoview={handleViewMoview}
-                  onAddToWatchlist={handleAddToWatchlist}
-                />
+            <AdminMovieCard
+              id={movie.id}
+              image={movie.horizontalPoster}
+              title={movie.name}
+              rating={2.5}
+              genres={["Adventure", "Comedy"]}
+              viewMoview={handleViewMoview}
+              onAddToWatchlist={handleAddToWatchlist}
+            />
         ))}
         {movies.map((movie) => (
-                  <AdminMovieCard
-                  id={movie.id}
-                  image={movie.horizontalPoster}
-                  title={movie.name}
-                  rating={2.5}
-                  genres={["Adventure", "Comedy"]}
-                  viewMoview={handleViewMoview}
-                  onAddToWatchlist={handleAddToWatchlist}
-                />
+            <AdminMovieCard
+              id={movie.id}
+              image={movie.horizontalPoster}
+              title={movie.name}
+              rating={2.5}
+              genres={["Adventure", "Comedy"]}
+              viewMoview={handleViewMoview}
+              onAddToWatchlist={handleAddToWatchlist}
+            />
         ))}
       </div>
     </div>

@@ -20,7 +20,7 @@ const initialState: genreManagementState ={
 export const fetchAllLanguages = createAsyncThunk('genreManagement/fetchAllLanguages', async (_,{rejectWithValue})=>{
     try{
         const response = await axiosInstance.get('/admin/languages');
-        return response.data.language;
+        return response.data.languages;
     }catch(error: any){
         console.error(error.response?.data?.message)
         return rejectWithValue(error.response?.data?.message || "Failed to fetch genres");

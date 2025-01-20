@@ -114,37 +114,45 @@ const AdminManageCelebrity: React.FC = () => {
             Blocked
           </button>
         </div>
-      <div className="flex flex-wrap justify-center gap-4">
-        {!showBlocked ? (
-          celebrities.map((celebrity) => (
-            !celebrity.isBlocked && (
-                <AdminCelebrityCard
-                _id={celebrity._id}
-                profilePicture={hrjLogo}
-                name={celebrity.name}
-                email={celebrity.email}
-                isBlocked={celebrity.isBlocked}
-                block={handleBlockCelebrity}
-                view={handleViewCelebrity}
-            />
-            )
-          ))
-        ) : (
-          celebrities.map((celebrity) => (
-            celebrity.isBlocked && (
-                <AdminCelebrityCard
-                _id={celebrity._id}
-                profilePicture={hrjLogo}
-                name={celebrity.name}
-                email={celebrity.email}
-                isBlocked={celebrity.isBlocked}
-                block={handleBlockCelebrity}
-                view={handleViewCelebrity}
-            />
-            )
-          ))
-        )}
-      </div>
+        <div className="flex flex-wrap justify-center gap-4">
+  {!showBlocked ? (
+    celebrities.map((celebrity) => {
+      if (typeof celebrity.userId !== 'string' && !celebrity.userId.isBlocked) {
+        return (
+          <AdminCelebrityCard
+            key={celebrity._id}
+            _id={celebrity._id as string}
+            profilePicture={hrjLogo}
+            name={celebrity.userId.name}
+            email={celebrity.userId.email}
+            isBlocked={celebrity.userId.isBlocked}
+            block={()=>handleBlockCelebrity(celebrity.userId._id)}
+            view={handleViewCelebrity}
+          />
+        );
+      }
+      return null;
+    })
+  ) : (
+    celebrities.map((celebrity) => {
+      if (typeof celebrity.userId !== 'string' && celebrity.userId.isBlocked) {
+        return (
+          <AdminCelebrityCard
+            key={celebrity._id}
+            _id={celebrity.userId._id}
+            profilePicture={hrjLogo}
+            name={celebrity.userId.name}
+            email={celebrity.userId.email}
+            isBlocked={celebrity.userId.isBlocked}
+            block={()=>handleBlockCelebrity(celebrity.userId._id)}
+            view={handleViewCelebrity}
+          />
+        );
+      }
+      return null;
+    })
+  )}
+</div>
 
       {loading&& <LoadingPage/>}
     </div>

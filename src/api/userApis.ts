@@ -10,3 +10,11 @@ export const submitCelebrityRequest = async (formData: FormData) => {
             console.error(error)
         }
 }
+export const getProfile = async () => {
+    try {
+        const response = await axiosInstance.post(`/users/profile`);
+        return response.data.user;
+    } catch (error: any) {
+        console.error(error)
+    }
+}

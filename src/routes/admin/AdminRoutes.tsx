@@ -11,18 +11,20 @@ import AdminViewGenre from '../../pages/admin/Genres/AdminViewGenre';
 import AdminManageLanguage from '../../pages/admin/languages/AdminManageLanguages';
 import AdminViewCelebrity from '../../pages/admin/celebrities/AdminViewCelebrity';
 import AdminCelebrityRequestPage from '../../pages/admin/celebrities/AdminCelebrityRequestpage';
+import AddMovieForm from '../../pages/admin/movies/AdminAddMovies';
 
 const AdminRoutes: RouteObject[] = [
     { path: '/admin', element: <AdminLayout ><Dashboard /></AdminLayout>},
     { path: '/admin/users', element: <AdminLayout ><AdminManageUser/></AdminLayout>},
     { path: '/admin/celebrities', element: <AdminLayout ><AdminManageCelebrity/></AdminLayout>},
-    { path: '/admin/movies', element: <AdminLayout ><AdminManageMovies /></AdminLayout>},
     { path: `/admin/users/:id`, element: <AdminLayout ><AdminViewUser /></AdminLayout>},
     { path: `/admin/genres`, element: <AdminLayout ><AdminManageGenres /></AdminLayout>},
     { path: `/admin/genres/:id`, element: <AdminLayout ><AdminViewGenre /></AdminLayout>},
     { path: `/admin/language`, element: <AdminLayout ><AdminManageLanguage /></AdminLayout>},
     { path: `/admin/celebrities/:id`, element: <AdminLayout ><AdminViewCelebrity/></AdminLayout>},
     { path: `/admin/celebrities/requests`, element: <AdminLayout ><AdminCelebrityRequestPage /></AdminLayout>},
+    { path: '/admin/movies', element: <AdminLayout ><AdminManageMovies /></AdminLayout>},
+    { path: '/admin/movies/add-movies', element: <AdminLayout ><AddMovieForm /></AdminLayout>},
 ];
 
 export default AdminRoutes;

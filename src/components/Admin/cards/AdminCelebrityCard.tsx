@@ -7,7 +7,7 @@ interface CardProps {
     email: string;
     isBlocked:boolean;
     view:(id: string) => void;
-    block: (id: string) => void;
+    block: () => void;
 }
 
 const AdminCelebrityCard: React.FC<CardProps> = ({
@@ -23,6 +23,7 @@ const AdminCelebrityCard: React.FC<CardProps> = ({
 
   return (
     <div
+      key={_id}
       className="relative w-full sm:w-[48%] lg:w-[23%] max-w-xs bg-gray-800 rounded-[25px] z-30 overflow-hidden shadow-lg cursor-pointer group"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -66,7 +67,7 @@ const AdminCelebrityCard: React.FC<CardProps> = ({
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  block(_id);
+                  block();
                 }}
                 className="px-4 w-3/4 py-2 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0] transition-colors"
               >

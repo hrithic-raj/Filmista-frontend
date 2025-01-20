@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 interface CardProps {
+  id: string;
   image: string;
   title: string;
   rating: number;
@@ -10,6 +11,7 @@ interface CardProps {
 }
 
 const MovieCard: React.FC<CardProps> = ({
+  id,
   image,
   title,
   rating,
@@ -23,6 +25,7 @@ const MovieCard: React.FC<CardProps> = ({
 
   return (
     <div
+      key={id}
       className="relative max-w-[24.3%] flex-shrink-0 sm:min-w-[20%] max-h-80 bg-gray-800 rounded-[25px] overflow-hidden shadow-lg cursor-pointer group"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => {

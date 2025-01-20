@@ -1,10 +1,10 @@
-import IMovie from "./MovieInterface";
+import {IMovie} from "./MovieInterface";
 
 interface IGenre {
     _id: string;
     genre: string;
     poster: string;
     isArchive: boolean;
-    movies: IMovie[];
+    movies: string | IMovie[];
   }
 export default IGenre

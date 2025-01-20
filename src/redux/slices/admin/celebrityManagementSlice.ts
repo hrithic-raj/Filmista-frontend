@@ -111,10 +111,11 @@ const celebrityManagementSlice = createSlice({
             const celebrities = state.celebrities.find((u)=>u._id === celebrityId);
             const selectedCelebrity = state.selectedCelebrity
             if(celebrities){
-                celebrities.isBlocked = !celebrities.isBlocked;
+                if(typeof celebrities.userId !== 'string') celebrities.userId.isBlocked = !celebrities.userId.isBlocked;
             }
-            if(selectedCelebrity){
-                selectedCelebrity.isBlocked = !selectedCelebrity.isBlocked;
+            if(selectedCelebrity && (typeof selectedCelebrity.userId !== 'string')){
+                
+                selectedCelebrity.userId.isBlocked = !selectedCelebrity.userId.isBlocked;
             }
         })
         .addCase(fetchAllRequests.pending, (state)=>{

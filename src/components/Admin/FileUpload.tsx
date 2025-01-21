@@ -4,14 +4,10 @@ interface FileUploadProps {
   }
   
   const FileUpload = ({ type, onFileSelect }: FileUploadProps) => {
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-      const files = e.target.files;
-      if (files && files.length > 0) {
-        const uploadedUrls = Array.from(files).map((file) => `https://example.com/${file.name}`);
-        onFileSelect(type, uploadedUrls);
-      }
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const files = Array.from(event.target.files || []).map(file => URL.createObjectURL(file));
+      onFileSelect(type, files);
     };
-  
     return (
       <div>
         <input
@@ -24,4 +20,3 @@ interface FileUploadProps {
   };
   
   export default FileUpload;
-  

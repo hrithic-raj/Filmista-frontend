@@ -1,17 +1,17 @@
 import { useState } from 'react';
+import { useAppSelector } from '../../../hooks/reduxHooks';
 
 interface Part1Props {
   onNext: () => void;
+  onTitleChange:(newTitle: string)=> void;
+  onDescriptionChange:(newDescription: string)=> void;
+  onReleaseDateChange:(newReleaseDate: string)=> void;
+  onDurationChange:(newDuration: string)=> void;
 }
 
-const Part1 = ({ onNext }: Part1Props) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [releaseDate, setReleaseDate] = useState('');
-  const [duration, setDuration] = useState(30);
-
+const Part1 = ({ onNext, onTitleChange, onDescriptionChange, onReleaseDateChange, onDurationChange }: Part1Props) => {
+  const {title, description, releaseDate, duration } = useAppSelector((state) => state.movieManagement);
   const handleSubmit = () => {
-    // Validate
     onNext();
   };
 
@@ -24,7 +24,7 @@ const Part1 = ({ onNext }: Part1Props) => {
           type="text"
           id="title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => onTitleChange(e.target.value)}
           className="mt-1 block w-full px-3 py-2 bg-[rgb(44,44,44)] text-gray-100 border border-gray-200 rounded-md"
         />
       </div>
@@ -33,7 +33,7 @@ const Part1 = ({ onNext }: Part1Props) => {
         <textarea
           id="description"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => onDescriptionChange(e.target.value)}
           className="mt-1 w-full p-2 px-3 py-2 bg-[rgb(44,44,44)] text-gray-100 border border-gray-200 rounded-md"
         />
       </div>
@@ -43,7 +43,7 @@ const Part1 = ({ onNext }: Part1Props) => {
           type="date"
           id="releaseDate"
           value={releaseDate}
-          onChange={(e) => setReleaseDate(e.target.value)}
+          onChange={(e) => onReleaseDateChange(e.target.value)}
           className="mt-1 w-full p-2 px-3 py-2 bg-[rgb(44,44,44)] text-gray-100 border border-gray-200 rounded-md"
         />
       </div>
@@ -53,7 +53,7 @@ const Part1 = ({ onNext }: Part1Props) => {
           type="number"
           id="duration"
           value={duration}
-          onChange={(e) => setDuration(Number(e.target.value))}
+          onChange={(e) => onDurationChange(e.target.value.toString())}
           className="mt-1 w-full p-2 px-3 py-2 bg-[rgb(44,44,44)] text-gray-100 border border-gray-200 rounded-md"
         />
       </div>

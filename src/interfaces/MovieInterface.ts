@@ -37,7 +37,7 @@ export interface IMovie {
   title: string;
   description: string;
   releaseDate: string;
-  duration: number;
+  duration: string;
   genres: string[];
   language: string[];
   cast: CastMember[];

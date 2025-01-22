@@ -1,10 +1,13 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import IGenre from '../../../interfaces/GenreInterface';
 import ILanguage from '../../../interfaces/LanguageInterface';
 import { CastMember, IMovie } from '../../../interfaces/MovieInterface';
+import axiosInstance from '../../../utils/axiosInstance';
 
 interface MovieState {
   movies: IMovie[];
+  loading: Boolean;
+  error: string | null;
   title: string;
   description: string;
   releaseDate: string;
@@ -21,6 +24,8 @@ interface MovieState {
 
 const initialState: MovieState = {
   movies: [],
+  loading: false,
+  error: null,
   title: '',
   description: '',
   releaseDate: '',
@@ -34,6 +39,28 @@ const initialState: MovieState = {
   videos: [],
   cast: [],
 };
+
+export const fetchAllMovies = createAsyncThunk('movieManagement/fetchAllMovies', async (_,{rejectWithValue})=>{
+  try{
+      const response = await axiosInstance.get('/admin/movies');
+      return response.data.movies;
+  }catch(error: any){
+      console.error(error.response?.data?.message)
+      return rejectWithValue(error.response?.data?.message || "Failed to fetch genres");
+  }
+})
+
+export const addMovie = createAsyncThunk('movieManagement/addMovie', async (formData:FormData,{rejectWithValue})=>{
+  try{
+      const response = await axiosInstance.post('/admin/movies',formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      return response.data.movie;
+  }catch(error: any){
+      console.error(error.response?.data?.message)
+      return rejectWithValue(error.response?.data?.message || "Failed to fetch genres");
+  }
+})
 
 const movieManagementSlice = createSlice({
   name: 'movieManagement',
@@ -77,6 +104,20 @@ const movieManagementSlice = createSlice({
     },
     clearMovieData: () => initialState,
   },
+  extraReducers:(builder)=>{
+    builder
+    .addCase(fetchAllMovies.pending, (state)=>{
+      state.loading = true;
+    })
+    .addCase(fetchAllMovies.fulfilled, (state, action: PayloadAction<IMovie[]>)=>{
+      state.loading = false;
+      state.movies = action.payload;
+    })
+    .addCase(fetchAllMovies.rejected, (state, action: PayloadAction<any>)=>{
+      state.loading = false;
+      state.error = action.payload;
+    })
+  }
 });
 
 export const {

@@ -4,25 +4,10 @@ import { useAppDispatch } from '../../../hooks/reduxHooks';
 import { addGenre, updateGenre } from '../../../redux/slices/admin/genreManagementSlice';
 import { FaPlusCircle } from 'react-icons/fa';
 import { FaDeleteLeft, FaSackXmark } from 'react-icons/fa6';
-
-interface Movie {
-    id: string;
-    name: string;
-    description: string;
-    poster: string;
-    horizontalPoster: string;
-}
-
-interface Genre {
-    _id: string;
-    genre: string;
-    poster: string;
-    isArchive: boolean;
-    movies: Movie[]
-}
+import IGenre from '../../../interfaces/GenreInterface';
 
 interface AdminGenreModalProps {
-  genre: Genre | null;
+  genre: IGenre | null;
   onClose: () => void;
 }
 

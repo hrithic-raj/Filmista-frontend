@@ -10,6 +10,7 @@ import { setCast, setDescription, setDuration, setGenres, setHorizontalPoster, s
 import IGenre from '../../../interfaces/GenreInterface';
 import ILanguage from '../../../interfaces/LanguageInterface';
 import { CastMember } from '../../../interfaces/MovieInterface';
+import { addMovie } from '../../../api/adminApis';
 
 
 const AddMovieForm = () => {
@@ -39,32 +40,53 @@ const AddMovieForm = () => {
   const handleGenreChange = (newGenres: IGenre[]) => dispatch(setGenres(newGenres));
   const handleLanguageChange = (newLanguages: ILanguage[]) => dispatch(setLanguages(newLanguages));
   const handleCastChange = (newCast: CastMember[]) => dispatch(setCast(newCast));
-  const handlePosterChange = (newPoster: string) => dispatch(setPoster(newPoster));
-  const handleHorizontalPosterChange = (newHorizontalPoster: string) => dispatch(setHorizontalPoster(newHorizontalPoster));
-  const handleOtherImagesChange = (newImages: string[]) => dispatch(setOtherImages(newImages));
+  const handlePosterChange = (newPoster: File) => dispatch(setPoster(newPoster));
+  const handleHorizontalPosterChange = (newHorizontalPoster: File) => dispatch(setHorizontalPoster(newHorizontalPoster));
+  const handleOtherImagesChange = (newImages: File[]) => dispatch(setOtherImages(newImages));
   const handleTrailerChange = (newTrailer: string) => dispatch(setTrailer(newTrailer));
   const handleVideosChange = (newVideos: string[]) => dispatch(setVideos(newVideos));
 
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
 
-    const movieData = {
+    const genresIds = genres.map((genre)=> genre._id);
+    const languagesIds = languages.map((lang)=> lang._id);
+
+    const jsonPayload = JSON.stringify({
       title,
       description,
       releaseDate,
       duration,
-      genres,
-      languages,
+      genres:genresIds,
+      languages:languagesIds,
       cast,
-      poster,
-      horizontalPoster,
-      otherImages,
       trailer,
       videos,
-    };
-    console.log(movieData)
-    // Use your API function to send this data to the backend
-    // dispatch(createMovie(movieData)); // Example: createMovie action
+    })
+
+    const formData = new FormData();
+    
+    formData.append('data', jsonPayload)
+    
+    if (poster) {
+      formData.append('poster', poster);
+    }
+  
+    if (horizontalPoster) {
+      formData.append('horizontalPoster', horizontalPoster);
+    }
+    
+    if (otherImages && otherImages.length > 0) {
+      otherImages.forEach(( file: File ) => {
+        formData.append('otherImages', file);
+      });
+    }
+
+    try{
+      const res = await addMovie(formData);
+    }catch(error){
+      console.error('Error adding movie:', error);
+    }
   };
 
   return (

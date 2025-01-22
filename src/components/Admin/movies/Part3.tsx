@@ -3,6 +3,7 @@ import hrj from '../../../assets/images/hrjlogo.png';
 import ICelebrity from '../../../interfaces/CelebrityInterface';
 import { CastMember } from '../../../interfaces/MovieInterface';
 import SearchBox from '../SearchBox';
+import uploadFileToCloudinary from '../../../utils/uploadFileToCloudinary';
 
 interface Part3Props {
   onNext: () => void;
@@ -17,6 +18,7 @@ const Part3: React.FC<Part3Props> = ({ onNext, onPrev, celebrities, castMembers,
   const [selectedCelebrity, setSelectedCelebrity] = useState<ICelebrity | null>(null);
   const [name, setName] = useState('');
   const [role, setRole] = useState('');
+  const [celebrityId, setCelebrityId] = useState('');
   const [profilePicture, setProfilePicture] = useState('');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -25,12 +27,14 @@ const Part3: React.FC<Part3Props> = ({ onNext, onPrev, celebrities, castMembers,
       name,
       role,
       profilePicture,
+      celebrityId
     };
     onCastChange([...castMembers, newCast]);
     setName('');
     setRole('');
     setProfilePicture('');
     setSelectedCelebrity(null);
+    setCelebrityId('');
   };
 
   const clearCastMember = () => {
@@ -43,15 +47,15 @@ const Part3: React.FC<Part3Props> = ({ onNext, onPrev, celebrities, castMembers,
   const handleCelebritySelect = (celebrity: ICelebrity) => {
     setSelectedCelebrity(celebrity);
     setName(celebrity.userId.name);
-    setProfilePicture(celebrity.userId.profilePicture || hrj);
+    setProfilePicture(celebrity.userId.profilePicture || 'https://m.media-amazon.com/images/M/MV5BODQ2NTlkYjItZTIyNi00ZTM0LTk3OTctNzkzYWI1ZWI0ODEyXkEyXkFqcGc@._V1_.jpg');
+    setCelebrityId(celebrity._id!)
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => setProfilePicture(e.target?.result as string);
-      reader.readAsDataURL(file);
+      const imageUrl = await uploadFileToCloudinary(file)
+      setProfilePicture(imageUrl);
     }
   };
 
@@ -81,7 +85,7 @@ const Part3: React.FC<Part3Props> = ({ onNext, onPrev, celebrities, castMembers,
               <span className="text-white text-3xl">+</span>
             )}
           </div>
-          {profilePicture!=='' && (
+          {profilePicture && (
             <button
               onClick={()=>setProfilePicture('')}
               className="absolute bottom-5 left-[35%] bg-red-500 text-white px-4 py-2 rounded"

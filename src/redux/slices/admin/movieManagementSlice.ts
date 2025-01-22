@@ -1,32 +1,34 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import IGenre from '../../../interfaces/GenreInterface';
 import ILanguage from '../../../interfaces/LanguageInterface';
-import { CastMember } from '../../../interfaces/MovieInterface';
+import { CastMember, IMovie } from '../../../interfaces/MovieInterface';
 
 interface MovieState {
+  movies: IMovie[];
   title: string;
   description: string;
   releaseDate: string;
   duration: string;
   genres: IGenre[];
   languages: ILanguage[];
-  poster: string;
-  horizontalPoster: string;
-  otherImages: string[];
+  poster: File | null;
+  horizontalPoster: File | null;
+  otherImages: File[];
   trailer: string;
   videos: string[];
   cast: CastMember[];
 }
 
 const initialState: MovieState = {
+  movies: [],
   title: '',
   description: '',
   releaseDate: '',
   duration: '',
   genres: [],
   languages: [],
-  poster: '',
-  horizontalPoster: '',
+  poster: null,
+  horizontalPoster: null,
   otherImages: [],
   trailer: '',
   videos: [],
@@ -55,13 +57,13 @@ const movieManagementSlice = createSlice({
     setLanguages: (state, action: PayloadAction<ILanguage[]>) => {
       state.languages = action.payload;
     },
-    setPoster: (state, action: PayloadAction<string>) => {
+    setPoster: (state, action: PayloadAction<File | null>) => {
       state.poster = action.payload;
     },
-    setHorizontalPoster: (state, action: PayloadAction<string>) => {
+    setHorizontalPoster: (state, action: PayloadAction<File | null>) => {
       state.horizontalPoster = action.payload;
     },
-    setOtherImages: (state, action: PayloadAction<string[]>) => {
+    setOtherImages: (state, action: PayloadAction<File[]>) => {
       state.otherImages = action.payload;
     },
     setTrailer: (state, action: PayloadAction<string>) => {

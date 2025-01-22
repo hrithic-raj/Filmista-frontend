@@ -4,9 +4,9 @@ import { useAppSelector } from '../../../hooks/reduxHooks';
 
 interface Part4Props {
   onPrev: () => void;
-  onPosterChange: (newPoster: string) => void;
-  onHorizontalPosterChange: (newHorizontalPoster: string) => void;
-  onOtherImagesChange: (newImages: string[]) => void;
+  onPosterChange: (newPoster: File) => void;
+  onHorizontalPosterChange: (newHorizontalPoster: File) => void;
+  onOtherImagesChange: (newImages: File[]) => void;
   onTrailerChange: (newTrailer: string) => void;
   onVideosChange: (newVideos: string[]) => void;
   onSubmit: () => void;
@@ -22,15 +22,9 @@ const Part4: React.FC<Part4Props> = ({
   onSubmit
 }) => {
 
-  // const [poster, setPoster] = useState<string>('');
-  // const [horizontalPoster, setHorizontalPoster] = useState<string>('');
-  // const [otherImages, setOtherImages] = useState<string[]>([]);
-  // const [trailer, setTrailer] = useState<string>('');
-  // const [videos, setVideos] = useState<string[]>([]);
-
   const { poster, horizontalPoster, otherImages, trailer, videos } = useAppSelector((state) => state.movieManagement);
 
-  const handleFileUpload = (type: string, files: string[]) => {
+  const handleFileUpload = (type: string, files: File[]) => {
     if (type === 'poster') {
       onPosterChange(files[0]);
     } else if (type === 'horizontalPoster') {
@@ -52,7 +46,7 @@ const Part4: React.FC<Part4Props> = ({
         <div className="w-40 h-52 border">
           {poster ? (
             <img
-              src={poster}
+              src={URL.createObjectURL(poster)}
               alt="Poster"
               className="w-full h-full object-cover"
             />
@@ -73,7 +67,7 @@ const Part4: React.FC<Part4Props> = ({
         <div className="w-52 h-32 border">
           {horizontalPoster ? (
             <img
-              src={horizontalPoster}
+              src={URL.createObjectURL(horizontalPoster)}
               alt="Horizontal Poster"
               className="w-full h-full object-cover"
             />
@@ -102,7 +96,7 @@ const Part4: React.FC<Part4Props> = ({
           {otherImages.map((image, index) => (
             <div key={index} className="group relative w-24 h-24 border rounded-lg">
               <img
-                src={image}
+                src={URL.createObjectURL(image)}
                 alt={`Other Image ${index + 1}`}
                 className="w-full h-full object-cover group-hover:opacity-50 rounded-lg"
               />

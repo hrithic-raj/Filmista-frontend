@@ -6,6 +6,7 @@ import { archiveGenre, fetchAllGenres } from '../../../redux/slices/admin/genreM
 import AdminGenreModal from '../../../components/Admin/modals/AdminGenreModal';
 import LoadingPage from '../../../components/LoadingPage';
 import { FaPlusCircle } from 'react-icons/fa';
+import IGenre from '../../../interfaces/GenreInterface';
 
 
 interface Movie {
@@ -29,7 +30,7 @@ const AdminManageGenres: React.FC = () => {
   const navigate = useNavigate();
   const [showArchives, setShowArchives] = useState(false);
   const [showAddOrEditGenre, setShowAddOrEditGenre] = useState(false);
-  const [editingGenre, setEditingGenre] = useState<Genre | null>(null); // To hold the genre being edited
+  const [editingGenre, setEditingGenre] = useState<IGenre | null>(null); // To hold the genre being edited
   const { genres, loading } = useAppSelector((state) => state.genreManagement);
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const AdminManageGenres: React.FC = () => {
     setShowAddOrEditGenre(true);
   };
 
-  const handleEditGenre = (genre: Genre) => {
+  const handleEditGenre = (genre: IGenre) => {
     setEditingGenre(genre); // Set the genre being edited
     setShowAddOrEditGenre(true);
   };

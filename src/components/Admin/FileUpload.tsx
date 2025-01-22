@@ -1,11 +1,11 @@
 interface FileUploadProps {
     type: string;
-    onFileSelect: (type: string, files: string[]) => void;
+    onFileSelect: (type: string, files: File[]) => void;
   }
   
   const FileUpload = ({ type, onFileSelect }: FileUploadProps) => {
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const files = Array.from(event.target.files || []).map(file => URL.createObjectURL(file));
+      const files = Array.from(event.target.files || []);
       onFileSelect(type, files);
     };
     return (

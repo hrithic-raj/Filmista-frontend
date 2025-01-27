@@ -62,7 +62,7 @@ const Signin: React.FC =()=>{
     } else if (admin) {
       navigate('/admin');
     }
-  }, [user, celebrity, admin, token]);
+  }, [dispatch, token]);
   
   // if(loading){
   //   return <LoadingPage/>

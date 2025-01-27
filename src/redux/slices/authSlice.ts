@@ -3,6 +3,8 @@ import IUser from "../../interfaces/UserInterface";
 import ICelebrity from "../../interfaces/CelebrityInterface";
 import IAdmin from "../../interfaces/AdminInterface";
 import axiosInstance from "../../utils/axiosInstance";
+import IGenre from "../../interfaces/GenreInterface";
+import ILanguage from "../../interfaces/LanguageInterface";
 // import { persistor } from "../persistor";
 
 
@@ -11,6 +13,8 @@ interface AuthState {
     user: IUser | null;
     admin: IAdmin | null;
     celebrity: ICelebrity | null;
+    genres:IGenre[];
+    languages: ILanguage[];
     accessToken: string| null;
     refreshToken:string | null;
     loading: boolean;
@@ -22,6 +26,8 @@ const initialState: AuthState = {
     user: null,
     admin: null,
     celebrity: null,
+    genres:[],
+    languages: [],
     accessToken: null,
     refreshToken: null,
     loading: false,
@@ -98,6 +104,12 @@ const authSlice = createSlice({
         clearAccessToken(state){
             state.accessToken = null;
         },
+        setGenres: (state, action: PayloadAction<IGenre[]>) => {
+            state.genres = action.payload;
+        },
+        setLanguages: (state, action: PayloadAction<ILanguage[]>) => {
+            state.languages = action.payload;
+        },
     },
     extraReducers:(builder)=>{
         builder
@@ -171,5 +183,5 @@ const authSlice = createSlice({
 })
 
 
-export const { resetAuthState, setAccessToken, clearAccessToken } = authSlice.actions;
+export const { resetAuthState, setAccessToken, clearAccessToken, setGenres, setLanguages} = authSlice.actions;
 export default authSlice.reducer;

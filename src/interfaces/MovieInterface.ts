@@ -7,6 +7,8 @@
 //   }
 // export default IMovie
 
+import IGenre from "./GenreInterface";
+
 
 // movieTypes.ts
 export interface Genre {
@@ -39,8 +41,8 @@ export interface IMovie {
   description: string;
   releaseDate: string;
   duration: string;
-  genres: string[];
-  language: string[];
+  genres: IGenre[];
+  language: [];
   cast: CastMember[];
   images: {
     poster: string;

@@ -58,7 +58,9 @@ const Part3: React.FC<Part3Props> = ({ onNext, onPrev, celebrities, castMembers,
       setProfilePicture(imageUrl);
     }
   };
-
+  const handleRemoveCast = async (index : Number)=>{
+    onCastChange(castMembers.filter((_,i)=> i !== index));
+  }
 
   const handleImageClick = () => {
     fileInputRef.current?.click();
@@ -155,20 +157,21 @@ const Part3: React.FC<Part3Props> = ({ onNext, onPrev, celebrities, castMembers,
       </div>
       <div className="mt-4 flex gap-4 flex-wrap">
         {castMembers.map((cast, index) => (
-          <div key={index} className="flex flex-col p-5 w-[20%] lg:w-[15%] items-center border rounded-lg mb-2">
-            <div className="w-10 h-10 rounded-full bg-gray-200">
+          <div key={index} className="group relative flex flex-col p-5 w-[20%] lg:w-[15%] items-center border rounded-lg mb-2">
+            <div className="w-10 h-10 rounded-full bg-gray-200 group-hover:opacity-50">
               <img
                 src={cast.profilePicture}
                 alt={cast.name}
                 className="w-full h-full rounded-full object-cover"
               />
             </div>
-            <span className="ml-2 text-gray-200">
+            <span className="ml-2 text-gray-200 group-hover:opacity-50">
               {cast.name}
             </span>
-            <span className="ml-2 text-gray-200">
+            <span className="ml-2 text-gray-200 group-hover:opacity-50">
               {cast.role}
             </span>
+            <button onClick={()=>handleRemoveCast(index)} className='hidden group-hover:flex absolute top-14 left-14 text-4xl text-gray-200'>X</button>
           </div>
         ))}
       </div>

@@ -23,12 +23,12 @@ export default {
           "50%": { opacity: "1" },
         },
         typing: {
-          "0%": { width: "0ch" }, // Start with no characters
-          "50%": { width: "9ch" }, // Complete typing "Loading..."
+          "0%": { width: "0ch" },
+          "50%": { width: "9ch" },
         },
         erase: {
-          "0%": { width: "0ch" }, // Start erasing from the full text
-          "50%": { width: "9ch" }, // Erase all characters
+          "0%": { width: "0ch" },
+          "50%": { width: "9ch" },
         },
       },
       noScrollbar: {

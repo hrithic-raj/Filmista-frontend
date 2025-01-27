@@ -50,7 +50,7 @@ const Part1 = ({ onNext, onTitleChange, onDescriptionChange, onReleaseDateChange
       <div className="mb-4">
         <label htmlFor="duration" className="block text-sm font-medium text-gray-200">Duration (min)</label>
         <input
-          type="number"
+          type="text"
           id="duration"
           value={duration}
           onChange={(e) => onDurationChange(e.target.value.toString())}

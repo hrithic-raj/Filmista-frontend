@@ -8,7 +8,9 @@ interface IUser {
     refreshToken: string;
     role: string;
     profilePicture?: string;
-    isBlocked:boolean;
+    isBlocked: boolean;
+    genres?: string[];
+    languages?: string[];
 }
 
 export default IUser;

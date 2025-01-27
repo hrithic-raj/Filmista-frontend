@@ -6,6 +6,7 @@ import axiosInstance from '../../../utils/axiosInstance';
 
 interface MovieState {
   movies: IMovie[];
+  selectedMovie:IMovie | null;
   loading: Boolean;
   error: string | null;
   title: string;
@@ -24,6 +25,7 @@ interface MovieState {
 
 const initialState: MovieState = {
   movies: [],
+  selectedMovie: null,
   loading: false,
   error: null,
   title: '',
@@ -49,6 +51,15 @@ export const fetchAllMovies = createAsyncThunk('movieManagement/fetchAllMovies',
       return rejectWithValue(error.response?.data?.message || "Failed to fetch genres");
   }
 })
+// export const fetchAllMovies = createAsyncThunk('movieManagement/fetchAllMovies', async (_,{rejectWithValue})=>{
+//   try{
+//       const response = await axiosInstance.get('/admin/movies');
+//       return response.data.movies;
+//   }catch(error: any){
+//       console.error(error.response?.data?.message)
+//       return rejectWithValue(error.response?.data?.message || "Failed to fetch genres");
+//   }
+// })
 
 export const addMovie = createAsyncThunk('movieManagement/addMovie', async (formData:FormData,{rejectWithValue})=>{
   try{

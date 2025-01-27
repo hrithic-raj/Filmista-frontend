@@ -7,6 +7,7 @@ interface CardProps {
   rating: number;
   genres: string[];
   onRate: (rating: number) => void;
+  onView: (id: string) => void;
   onAddToWatchlist: () => void;
 }
 
@@ -17,6 +18,7 @@ const MovieCard: React.FC<CardProps> = ({
   rating,
   genres,
   onRate,
+  onView,
   onAddToWatchlist,
 }) => {
 
@@ -43,7 +45,7 @@ const MovieCard: React.FC<CardProps> = ({
       {/* Hover Overlay */}
       <div
         className={`absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent ${
-          hovered ? "h-1/2" : "h-20"
+          hovered ? "h-3/4" : "h-20"
         } transition-all duration-300`}
       >
         <div
@@ -89,15 +91,27 @@ const MovieCard: React.FC<CardProps> = ({
               </div>
 
               {/* Add to Watchlist*/}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onAddToWatchlist();
-                }}
-                className="px-4 py-2 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
-              >
-                Add to Watchlist
-              </button>
+              <div className="flex flex-col space-y-3">
+
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onView(id);
+                  }}
+                  className="px-4 py-2 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
+                >
+                  View Movie
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onAddToWatchlist();
+                  }}
+                  className="px-4 py-2 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
+                >
+                  Add to Watchlist
+                </button>
+              </div>
             </>
           )}
         </div>

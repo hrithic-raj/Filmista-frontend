@@ -86,7 +86,7 @@ const Signup: React.FC =()=> {
   }
   useEffect(() => {
     if (user) {
-      navigate('/');
+      navigate('/select-languages');
     }
   }, [user, navigate]);
 
@@ -159,7 +159,7 @@ const Signup: React.FC =()=> {
                   </div>
                 </div>
                 <button onClick={handleSentOtp} className="w-full max-w-[219px] py-2 rounded-lg border-2 border-[#46cec2] text-[#46cec2] text-lg font-medium">SIGN UP</button>
-                <span className='text-[#e9e9e9]/80'>Already have an accound ? <span onClick={() => navigate('/signin')} className='cursor-pointer text-blue-500'>signin</span></span>
+                {/* <span className='text-[#e9e9e9]/80'>Already have an accound ? <span onClick={() => navigate('/signin')} className='cursor-pointer text-blue-500'>signin</span></span> */}
                 <div className="flex lg:hidden space-x-5 mt-5 lg:mt-0">
                   <span className="text-[#e9e9e9]/80 text-sm">About</span>
                   <span className="text-[#e9e9e9]/80 text-sm">Terms</span>
@@ -183,7 +183,7 @@ const Signup: React.FC =()=> {
                 ):(
                   <button onClick={handleOtpValidation} className="w-full max-w-[219px] py-2 rounded-lg border-2 border-[#46cec2] text-[#46cec2] text-lg font-medium">VERIFY OTP</button>
                 )}
-                <span className='text-[#e9e9e9]/80 flex lg:hidden'>Already have an accound ? <span onClick={() => navigate('/signin')} className='cursor-pointer text-blue-400'>signin</span></span>
+                {/* <span className='text-[#e9e9e9]/80 flex lg:hidden'>Already have an accound ? <span onClick={() => navigate('/signin')} className='cursor-pointer text-blue-400'>signin</span></span> */}
                 <div className="flex lg:hidden space-x-5 mt-5 lg:mt-0">
                   <span className="text-[#e9e9e9]/80 text-sm">About</span>
                   <span className="text-[#e9e9e9]/80 text-sm">Terms</span>

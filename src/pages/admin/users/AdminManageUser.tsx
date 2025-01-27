@@ -34,8 +34,9 @@ const AdminManageUser: React.FC = ()=>{
     <div className=''>
         <h3 className='mb-5 font-fredoka text-2xl text-white'>Users</h3>
         <div className='flex flex-wrap gap-5'>
-            {users.map(user=>(
-                <AdminUserCard
+            { users.map(user=>(
+                user.role==='user' && (
+                    <AdminUserCard
                     id={user._id}
                     profilePicture={hrjLogo}
                     name={user.name}
@@ -44,6 +45,7 @@ const AdminManageUser: React.FC = ()=>{
                     blockUser={handleBlockUser}
                     viewUser={handleViewUser}
                 />
+                )
             ))}
         </div>
     </div>

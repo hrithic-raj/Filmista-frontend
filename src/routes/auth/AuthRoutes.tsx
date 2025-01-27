@@ -5,6 +5,7 @@ import Signup from '../../pages/auth/Signup';
 const AuthRoutes: RouteObject[] = [
   { path: '/signup', element: <Signup/> },
   { path: '/signin', element: <Signin/>},
+  
 ];
 
 export default AuthRoutes;

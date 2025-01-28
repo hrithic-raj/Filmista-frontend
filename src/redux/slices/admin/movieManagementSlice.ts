@@ -48,18 +48,18 @@ export const fetchAllMovies = createAsyncThunk('movieManagement/fetchAllMovies',
       return response.data.movies;
   }catch(error: any){
       console.error(error.response?.data?.message)
-      return rejectWithValue(error.response?.data?.message || "Failed to fetch genres");
+      return rejectWithValue(error.response?.data?.message || "Failed to fetch movies");
   }
 })
-// export const fetchAllMovies = createAsyncThunk('movieManagement/fetchAllMovies', async (_,{rejectWithValue})=>{
-//   try{
-//       const response = await axiosInstance.get('/admin/movies');
-//       return response.data.movies;
-//   }catch(error: any){
-//       console.error(error.response?.data?.message)
-//       return rejectWithValue(error.response?.data?.message || "Failed to fetch genres");
-//   }
-// })
+export const fetchMoviesById = createAsyncThunk('movieManagement/fetchMoviesById', async (movieId,{rejectWithValue})=>{
+  try{
+      const response = await axiosInstance.get(`/admin/movies/${movieId}`);
+      return response.data.movie;
+  }catch(error: any){
+      console.error(error.response?.data?.message)
+      return rejectWithValue(error.response?.data?.message || "Failed to fetch movie");
+  }
+})
 
 export const addMovie = createAsyncThunk('movieManagement/addMovie', async (formData:FormData,{rejectWithValue})=>{
   try{
@@ -125,6 +125,17 @@ const movieManagementSlice = createSlice({
       state.movies = action.payload;
     })
     .addCase(fetchAllMovies.rejected, (state, action: PayloadAction<any>)=>{
+      state.loading = false;
+      state.error = action.payload;
+    })
+    .addCase(fetchMoviesById.pending, (state)=>{
+      state.loading = true;
+    })
+    .addCase(fetchMoviesById.fulfilled, (state, action: PayloadAction<IMovie>)=>{
+      state.loading = false;
+      state.selectedMovie = action.payload;
+    })
+    .addCase(fetchMoviesById.rejected, (state, action: PayloadAction<any>)=>{
       state.loading = false;
       state.error = action.payload;
     })

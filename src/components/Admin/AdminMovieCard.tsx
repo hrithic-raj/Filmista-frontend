@@ -7,7 +7,7 @@ interface CardProps {
     rating: number;
     genres: string[];
     viewMoview: (id: string) => void;
-    onAddToWatchlist: () => void;
+    onEditMovie: () => void;
 }
 
 const AdminMovieCard: React.FC<CardProps> = ({
@@ -17,7 +17,7 @@ const AdminMovieCard: React.FC<CardProps> = ({
     rating,
     genres,
     viewMoview,
-    onAddToWatchlist,
+    onEditMovie,
 }) => {
 
   const [hovered, setHovered] = useState(false);
@@ -67,24 +67,26 @@ const AdminMovieCard: React.FC<CardProps> = ({
               </div>
 
               {/* Add to Watchlist*/}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  viewMoview(id);
-                }}
-                className="px-4 py-2 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
-              >
-                View Movie
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  viewMoview(id);
-                }}
-                className="px-4 py-2 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
-              >
-                View movie
-              </button>
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    viewMoview(id);
+                  }}
+                  className="px-4 py-2 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
+                >
+                  View Movie
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEditMovie();
+                  }}
+                  className="px-4 py-2 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
+                >
+                  Edit
+                </button>
+              </div>
             </>
           )}
         </div>

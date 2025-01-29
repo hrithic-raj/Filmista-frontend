@@ -6,7 +6,7 @@ import axiosInstance from '../../../utils/axiosInstance';
 
 interface MovieState {
   movies: IMovie[];
-  selectedMovie:IMovie | null;
+  selectedMovie: IMovie | null;
   loading: Boolean;
   error: string | null;
   title: string;
@@ -15,9 +15,9 @@ interface MovieState {
   duration: string;
   genres: IGenre[];
   languages: ILanguage[];
-  poster: File | null;
-  horizontalPoster: File | null;
-  otherImages: File[];
+  poster: File | string;
+  horizontalPoster: File | string;
+  otherImages: (string | File)[];
   trailer: string;
   videos: string[];
   cast: CastMember[];
@@ -34,8 +34,8 @@ const initialState: MovieState = {
   duration: '',
   genres: [],
   languages: [],
-  poster: null,
-  horizontalPoster: null,
+  poster: '',
+  horizontalPoster: '',
   otherImages: [],
   trailer: '',
   videos: [],
@@ -51,7 +51,7 @@ export const fetchAllMovies = createAsyncThunk('movieManagement/fetchAllMovies',
       return rejectWithValue(error.response?.data?.message || "Failed to fetch movies");
   }
 })
-export const fetchMoviesById = createAsyncThunk('movieManagement/fetchMoviesById', async (movieId,{rejectWithValue})=>{
+export const fetchMoviesById = createAsyncThunk('movieManagement/fetchMoviesById', async (movieId:string,{rejectWithValue})=>{
   try{
       const response = await axiosInstance.get(`/admin/movies/${movieId}`);
       return response.data.movie;
@@ -66,7 +66,21 @@ export const addMovie = createAsyncThunk('movieManagement/addMovie', async (form
       const response = await axiosInstance.post('/admin/movies',formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      return response.data.movie;
+      return response.data.newMovie;
+  }catch(error: any){
+      console.error(error.response?.data?.message)
+      return rejectWithValue(error.response?.data?.message || "Failed to fetch genres");
+  }
+})
+
+export const updateMovie = createAsyncThunk('movieManagement/updateMovie', async ({movieId, formData}:{movieId: string; formData: FormData},{rejectWithValue})=>{
+  try{
+      console.log(movieId,"movieId")
+      const response = await axiosInstance.patch(`/admin/movies/${movieId}`,formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      console.log(response.data.updatedMovie, "result")
+      return response.data.updatedMovie;
   }catch(error: any){
       console.error(error.response?.data?.message)
       return rejectWithValue(error.response?.data?.message || "Failed to fetch genres");
@@ -95,13 +109,13 @@ const movieManagementSlice = createSlice({
     setLanguages: (state, action: PayloadAction<ILanguage[]>) => {
       state.languages = action.payload;
     },
-    setPoster: (state, action: PayloadAction<File | null>) => {
+    setPoster: (state, action: PayloadAction< string | File >) => {
       state.poster = action.payload;
     },
-    setHorizontalPoster: (state, action: PayloadAction<File | null>) => {
+    setHorizontalPoster: (state, action: PayloadAction< string | File >) => {
       state.horizontalPoster = action.payload;
     },
-    setOtherImages: (state, action: PayloadAction<File[]>) => {
+    setOtherImages: (state, action: PayloadAction<(string | File)[]>) => {
       state.otherImages = action.payload;
     },
     setTrailer: (state, action: PayloadAction<string>) => {

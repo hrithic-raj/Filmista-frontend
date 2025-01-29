@@ -30,7 +30,6 @@ export const fetchAllMovies = createAsyncThunk('movie/fetchAllMovies', async (_,
 export const fetchMoviesById = createAsyncThunk('movie/fetchMoviesById', async (movieId:string,{rejectWithValue})=>{
   try{
       const response = await axiosInstance.get(`/users/movies/${movieId}`);
-      console.log(response.data.movie)
       return response.data.movie;
   }catch(error: any){
       console.error(error.response?.data?.message)

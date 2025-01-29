@@ -5,6 +5,7 @@ import { fetchMoviesById } from '../../../redux/slices/user/movieSlice';
 import MovieImg from '../../../assets/images/movie/joker.png';
 import starFilledSVG from '../../../assets/svg/star filled.svg';
 import starOutlineSVG from '../../../assets/svg/star stroke.svg';
+import verified from '../../../assets/svg/verified.svg';
 import ImgaesSVG from '../../../assets/svg/images.svg';
 import VideoSVG from '../../../assets/svg/videos.svg';
 import RoundPlusSVG from '../../../assets/svg/rounded-plus.svg';
@@ -12,6 +13,9 @@ import rtArrow from '../../../assets/svg/arrow-rt.svg';
 import hrj from '../../../assets/images/hrjlogo.png';
 import likeSVG from '../../../assets/svg/like.svg';
 import dislikeSVG from '../../../assets/svg/dislike.svg';
+import IGenre from '../../../interfaces/GenreInterface';
+import ILanguage from '../../../interfaces/LanguageInterface';
+import { CastMember } from '../../../interfaces/MovieInterface';
 
 
 const MoviePage: React.FC = () => {
@@ -21,21 +25,29 @@ const MoviePage: React.FC = () => {
   const {id} = useParams();
   const [rating, setRating] = useState<number>(0);
   const [hover, setHover] = useState<number>(0);
-
+  // console.log(selectedMovie)
   useEffect(()=>{
     if(id) dispatch(fetchMoviesById(id))
   },[dispatch])
-
+  const genres = selectedMovie?.genres.slice(0,3).map((g : IGenre) => g.genre);
+  const languages = selectedMovie?.languages.map((l : ILanguage) => l.language).join(', ');
+  const director = selectedMovie?.cast.filter(c => c.role === 'Director');
+  const castMembers = selectedMovie?.cast.filter(c=> c.role !== 'Director');
+  const handleCelebrity = (cast:CastMember)=>{
+    if(cast.celebrityId!==''){
+      navigate(`/celebrity/${cast._id}`)
+    }
+  }
   return (
     <>
       <div className='flex flex-col mb-10'>
         <div className='mt-2 mb-4 flex flex-col gap-1'>
-          <span className="text-white text-5xl font-bold font-['Gelasio']">Joker</span>
-          <div className="text-[#46cec2] text-lg font-bold font-['Gelasio']">2025-01-22</div>
+          <span className="text-white text-5xl font-bold font-['Gelasio']">{selectedMovie && selectedMovie.title}</span>
+          <div className="text-[#46cec2] text-lg font-bold font-['Gelasio']">{selectedMovie && selectedMovie.releaseDate}</div>
         </div>
         <div className='flex flex-col lg:flex-row gap-12 mb-3'>
           <div className='lg:w-[80%] lg:h-[359px] bg-black rounded-[15px] shadow-2xl'>
-            <img src={MovieImg} className='w-full h-full object-cover rounded-[15px]' alt="" />
+            <img src={(selectedMovie && selectedMovie.images?.horizontalPoster) ?? MovieImg} className='w-full h-full object-cover rounded-[15px]' alt="" />
           </div>
           <div className='flex lg:flex-col flex-row justify-between'>
             <div className='hidden lg:flex flex-col items-center p-2 w-[181px] h-[65px] bg-[#2c2c2c] shadow-2xl rounded-[15px]'>
@@ -48,28 +60,26 @@ const MoviePage: React.FC = () => {
             </div>
             <div onClick={()=>navigate(`/movies/images/${id}`)} className='hidden lg:flex flex-col justify-center items-center gap-1 w-[181px] h-[137px] bg-[#2c2c2c] shadow-2xl rounded-[15px] cursor-pointer'>
               <img src={ImgaesSVG} className='w-14' alt="" />
-              <span className="text-white text-lg font-normal font-mono">26 IMAGES</span>
+              <span className="text-white text-lg font-normal font-mono">{selectedMovie && selectedMovie.images.other.length+2} IMAGES</span>
             </div>
             <div onClick={()=>navigate(`/movies/videos/${id}`)} className='hidden lg:flex flex-col justify-center items-center gap-1 w-[181px] h-[137px] bg-[#2c2c2c] shadow-2xl rounded-[15px] cursor-pointer'>
               <img src={VideoSVG} className='w-14' alt="" />
-              <span className="text-white text-lg font-normal font-mono">26 VIDEOS</span>
+              <span className="text-white text-lg font-normal font-mono">{selectedMovie && selectedMovie.videos.others.length+1} VIDEOS</span>
             </div>
           </div>
         </div>
         <div className='flex flex-col gap-5'>
           <div className='lg:w-[79%] max-h-[150px] overflow-hidden'>
-              <span className="text-gray-300 text-xl font-bold">Struggling with his dual identity, failed comedian Arthur Fleck meets the love of his life, Harley Quinn, while incarcerated at Arkham State Hospital.</span>
+              <span className="text-gray-300 text-xl font-bold">{selectedMovie?.description}</span>
           </div>
           <div className='flex gap-2'>
-            <div className='px-4 py-1 flex justify-center items-center bg-[#2c2c2c] rounded-[36px]'>
-              <span className="text-[#46cec2] text-lg font-normal font-['Fredoka']">Action</span>
-            </div>
-            <div className='px-4 py-1 flex justify-center items-center bg-[#2c2c2c] rounded-[36px]'>
-              <span className="text-[#46cec2] text-lg font-normal font-['Fredoka']">Advanture</span>
-            </div>
-            <div className='px-4 py-1 flex justify-center items-center bg-[#2c2c2c] rounded-[36px]'>
-              <span className="text-[#46cec2] text-lg font-normal font-['Fredoka']">Mystery</span>
-            </div>
+            {
+              genres && genres.map((g, index)=>(
+                <div key={index} className='px-4 py-1 flex justify-center items-center bg-[#2c2c2c] rounded-[36px]'>
+                  <span className="text-[#46cec2] text-lg font-normal font-['Fredoka']">{g}</span>
+                </div>
+              ))
+            }
           </div>
           <div className='flex justify-between lg:w-[80%]'>
             <div className="flex space-x-2">
@@ -91,9 +101,15 @@ const MoviePage: React.FC = () => {
             </button>
           </div>
           <hr className='lg:w-[80%] mx-4 opacity-20'/>
-          <div className='mt-4 flex gap-6'>
-            <span className="text-white text-2xl font-bold font-['Geologica']">Director</span>
-            <span className="text-[#46cec2] text-xl font-normal font-['Geologica']">Todd Philips</span>
+          <div className='mt-4 flex flex-col gap-3'>
+            <div className='flex gap-6'>
+              <span className="text-white text-2xl font-bold font-['Geologica']">Director</span>
+              <span className="text-[#46cec2] text-xl font-normal font-['Geologica']">{director?.[0].name}</span>
+            </div>
+            <div className='flex gap-6'>
+              <span className="text-white text-2xl font-bold font-['Geologica']">Languages</span>
+              <span className="text-[#46cec2] text-xl font-normal font-['Geologica']">{languages}</span>
+            </div>
           </div>
           <hr className='lg:w-[80%] mx-4 opacity-20'/>
           <div className='lg:w-[80%] flex flex-col gap-4'>
@@ -104,15 +120,38 @@ const MoviePage: React.FC = () => {
               </div>
             </div>
             <div className='flex space-x-5'>
-              {[1,2,3,4,5].map((cast)=>(
-                <div key={cast} className='flex flex-col justify-center items-center gap-1'>
-                  <img src={hrj} className='border w-14 h-14 lg:w-20 lg:h-20 rounded-full' alt="" />
-                  <span className="text-white text-sm font-normal font-['Geologica']">hrithic raj</span>
-                  <span className="text-white text-sm font-normal font-['Geologica']">michel jackson</span>
+              {castMembers?.slice(0,4).map((cast)=>(
+                <div key={cast._id} className='flex flex-col justify-center items-center gap-1'>
+                  <div className='relative'>
+                    <img onClick={()=>handleCelebrity(cast)} src={cast.profilePicture} className={`border w-14 h-14 lg:w-20 lg:h-20 rounded-full ${cast.celebrityId!==''? 'border-[#5cfef0] cursor-pointer':''}`} alt="" />
+                    {cast.celebrityId!==''&&(
+                      <img src={verified} className='absolute top-1 right-1' alt="" />
+                    )}
+                  </div>
+                  <span className="text-white text-sm font-normal font-['Geologica']">{cast.name}</span>
+                  <span className="text-white text-sm font-normal font-['Geologica']">{cast.role}</span>
                 </div>
               ))}
               <div className='flex flex-col items-center gap-1'>
                 <button className="flex justify-center items-center border w-14 h-14 lg:w-20 lg:h-20 rounded-full text-white text-[15px] font-normal font-['Geologica']">More</button>
+              </div>
+            </div>
+          </div>
+          <div className='lg:hidden flex flex-col gap-4'>
+            <div className='flex justify-between'>
+              <div className='flex gap-2 cursor-pointer'>
+                <img src={rtArrow} alt="" />
+                <span className="text-white text-4xl font-normal font-['Geologica']">Images & Videos</span>
+              </div>
+            </div>
+            <div className='flex justify-evenly px-3'>
+              <div onClick={()=>navigate(`/movies/images/${id}`)} className='lg:hidden flex flex-col justify-center items-center gap-1 w-[181px] h-[137px] bg-[#2c2c2c] shadow-2xl rounded-[15px] cursor-pointer'>
+                  <img src={ImgaesSVG} className='w-14' alt="" />
+                  <span className="text-white text-lg font-normal font-mono">26 IMAGES</span>
+              </div>
+              <div onClick={()=>navigate(`/movies/videos/${id}`)} className='lg:hidden flex flex-col justify-center items-center gap-1 w-[181px] h-[137px] bg-[#2c2c2c] shadow-2xl rounded-[15px] cursor-pointer'>
+                <img src={VideoSVG} className='w-14' alt="" />
+                <span className="text-white text-lg font-normal font-mono">26 VIDEOS</span>
               </div>
             </div>
           </div>

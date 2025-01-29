@@ -325,24 +325,18 @@
 
 
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
+import { useParams } from "react-router-dom";
+import { fetchMoviesById } from "../../../redux/slices/user/movieSlice";
 
 const MovieVideos: React.FC = () => {
-  const movieData = {
-    videos: {
-      trailer: "https://www.youtube.com/embed/6LiKKFZyhRU",
-      others: [
-        "https://www.youtube.com/embed/bnBWYvaDWKA",
-        "https://www.youtube.com/embed/sD0NjbwqlYw",
-        "https://www.youtube.com/embed/orxCH7LzJ9c",
-        "https://www.youtube.com/embed/57JFpCc23k0",
-        "https://www.youtube.com/embed/7X2TAY0U0LI",
-        "https://youtu.be/DuH3VpwRWDM?si=rF3DAZdFMHyk1ELf",
-        "https://youtu.be/KZZLqoRuuHw?si=2MTJ_cs_z1tDf7VR",
-      ],
-    },
-  };
-
+  const {selectedMovie} = useAppSelector((state)=> state.movie)
+  const {id} = useParams();
+  const dispatch = useAppDispatch();
+  useEffect(()=>{
+    if(id) dispatch(fetchMoviesById(id))
+  },[dispatch])
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
   const convertToEmbedUrl = (url: string) => {
@@ -367,6 +361,9 @@ const MovieVideos: React.FC = () => {
 
     return videoId;
   };
+  const trailerId = getVideoId(selectedMovie?.videos.trailer|| '');
+  const embedUrl = convertToEmbedUrl(selectedMovie?.videos.trailer|| '');
+
 
   return (
     <div className="min-h-screen text-white p-6">
@@ -375,65 +372,70 @@ const MovieVideos: React.FC = () => {
       </div>
       
       {/* Trailer Section */}
-      <div className="mb-8">
-        <iframe
-          className="w-full h-[20rem] md:h-[30rem] rounded-lg shadow-lg"
-          src={movieData.videos.trailer}
-          title="Movie Trailer"
-          allowFullScreen
-          onError={(e) => {
-            e.currentTarget.src = "";
-            alert("This video is unavailable. Please try another.");
-          }}
-        ></iframe>
-      </div>
+        <div className="mb-8">
+          <iframe
+            className="w-full h-[20rem] md:h-[30rem] rounded-lg shadow-lg"
+            src={embedUrl}
+            title="Movie Trailer"
+            allowFullScreen
+            onError={(e) => {
+              e.currentTarget.src = "";
+              alert("This video is unavailable. Please try another.");
+            }}
+          ></iframe>
+        </div>
 
       {/* Other Videos Section */}
-      <h2 className="text-2xl font-semibold mb-4">More Videos</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {movieData.videos.others.map((video, index) => {
-          const videoId = getVideoId(video);
-          const embedUrl = convertToEmbedUrl(video);
-          return (
-            <div
-              key={index}
-              className={`relative transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl ${
-                activeVideo === video ? "col-span-2 row-span-2 scale-105" : ""
-              }`}
-            >
-              {activeVideo === video ? (
-                <iframe
-                  className="w-full h-[20rem] md:h-[25rem] rounded-lg"
-                  src={embedUrl}
-                  title={`Video ${index + 1}`}
-                  allowFullScreen
-                  onError={(e) => {
-                    e.currentTarget.src = "";
-                    alert("This video is unavailable. Please try another.");
-                  }}
-                ></iframe>
-              ) : (
-                // Default video card
-                <div
-                  onClick={() => setActiveVideo(video)}
-                  className="cursor-pointer overflow-hidden"
-                >
-                  <img
-                    src={`https://img.youtube.com/vi/${videoId}/0.jpg`}
-                    alt={`Video ${index + 1}`}
-                    className="w-full h-[10rem] object-cover rounded-lg"
-                  />
-                  <div className="p-2 bg-gray-800">
-                    <p className="text-sm font-semibold text-center">
-                      Play Video {index + 1}
-                    </p>
+      {
+        selectedMovie && selectedMovie.videos.others.length>0 && (
+          <>
+            <h2 className="text-2xl font-semibold mb-4">More Videos</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {selectedMovie?.videos.others.map((video, index) => {
+                const videoId = getVideoId(video);
+                const embedUrl = convertToEmbedUrl(video);
+                return (
+                  <div
+                    key={index}
+                    className={`relative transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl ${
+                      activeVideo === video ? "col-span-2 row-span-2 scale-105" : ""
+                    }`}
+                  >
+                    {activeVideo === video ? (
+                      <iframe
+                        className="w-full h-[20rem] md:h-[25rem] rounded-lg"
+                        src={embedUrl}
+                        title={`Video ${index + 1}`}
+                        allowFullScreen
+                        onError={(e) => {
+                          e.currentTarget.src = "";
+                          alert("This video is unavailable. Please try another.");
+                        }}
+                      ></iframe>
+                    ) : (
+                      <div
+                        onClick={() => setActiveVideo(video)}
+                        className="cursor-pointer h-[10rem] overflow-hidden"
+                      >
+                        <img
+                          src={`https://img.youtube.com/vi/${videoId}/0.jpg`}
+                          alt={`Video ${index + 1}`}
+                          className="w-full h-[10rem] object-cover rounded-lg"
+                        />
+                        {/* <div className="p-2 bg-gray-800">
+                          <p className="text-sm font-semibold text-center">
+                            Play Video {index + 1}
+                          </p>
+                        </div> */}
+                      </div>
+                    )}
                   </div>
-                </div>
-              )}
+                );
+              })}
             </div>
-          );
-        })}
-      </div>
+          </>
+        )
+      }
     </div>
   );
 };

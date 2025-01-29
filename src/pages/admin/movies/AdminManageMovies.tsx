@@ -18,9 +18,9 @@ const AdminManageMovies: React.FC = () => {
         console.log(`view movie`);
       };
     
-      const handleAddToWatchlist = () => {
-        console.log("Added to Watchlist");
-      };
+    const handleEditMovie = (id: string) => {
+      navigate(`/admin/movies/edit-movies/${id}`);
+    };
   return (
     <div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -49,7 +49,7 @@ const AdminManageMovies: React.FC = () => {
               rating={2.5}
               genres={movie.genres.map((g : IGenre) => g.genre)}
               viewMoview={handleViewMoview}
-              onAddToWatchlist={handleAddToWatchlist}
+              onEditMovie={()=>handleEditMovie(movie._id)}
             />
         ))}
         {/* {movies.map((movie) => (

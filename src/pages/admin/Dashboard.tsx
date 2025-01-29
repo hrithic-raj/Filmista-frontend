@@ -14,6 +14,7 @@ import {
 } from "chart.js";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { fetchUsers } from "../../redux/slices/admin/userManagementSlice";
+import { fetchAllGenres } from "../../redux/slices/admin/genreManagementSlice";
 
 ChartJS.register(
   CategoryScale,
@@ -27,10 +28,12 @@ ChartJS.register(
 );
 
 const Dashboard: React.FC = () => {
-  const {users, loading} = useAppSelector((state)=>state.userManagement)
+  const {users} = useAppSelector((state)=>state.userManagement)
+  const {genres} = useAppSelector((state)=>state.genreManagement)
   const dispatch = useAppDispatch();
   useEffect(()=>{
     dispatch(fetchUsers());
+    dispatch(fetchAllGenres());
   },[dispatch])
   const lineChartData = {
     labels: ["January", "February", "March", "April", "May", "June"],
@@ -45,11 +48,11 @@ const Dashboard: React.FC = () => {
   };
 
   const barChartData = {
-    labels: ["Action", "Drama", "Comedy", "Horror", "Sci-Fi", "Romance"],
+    labels: genres.map(g=>g.genre),
     datasets: [
       {
         label: "Movies Added",
-        data: [12, 19, 8, 15, 10, 6],
+        data: genres.map(g=> g.movies.length),
         backgroundColor: [
           "#4F46E5",
           "#22C55E",

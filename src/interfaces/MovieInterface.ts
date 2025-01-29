@@ -1,31 +1,4 @@
-// interface IMovie {
-//     id: string;
-//     name: string;
-//     description: string;
-//     poster: string;
-//     horizontalPoster: string;
-//   }
-// export default IMovie
-
 import IGenre from "./GenreInterface";
-
-
-// movieTypes.ts
-export interface Genre {
-  _id: string;
-  name: string;
-}
-
-export interface Language {
-  _id: string;
-  name: string;
-}
-
-export interface Celebrity {
-  _id: string;
-  name: string;
-  profilePicture: string;
-}
 
 export interface CastMember {
   _id?: string;
@@ -42,7 +15,7 @@ export interface IMovie {
   releaseDate: string;
   duration: string;
   genres: IGenre[];
-  language: [];
+  languages: [];
   cast: CastMember[];
   images: {
     poster: string;

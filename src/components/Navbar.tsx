@@ -1,7 +1,7 @@
 import upArrow from '../assets/images/icons/up-arrow.png'
 import downArrow from '../assets/images/icons/down-arrow.png'
 import hrjLogo from '../assets/images/hrjlogo.png'
-import { BellSVGNav, HeartSVGNav, SearchSVG } from '../assets/svg/SVGs';
+import { BellSVGNav, HeartSVGNav, LeftArrow, RightArrow, SearchSVG } from '../assets/svg/SVGs';
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { signout } from '../redux/slices/authSlice';
@@ -34,9 +34,15 @@ const Navbar = () => {
     <div className='hidden sm:flex flex-col'>
     <header className="text-gray-100 sm:pl-[80px] lg:pl-[320px] z-40 flex items-center justify-between space-x-3 sm:justify-around lg:justify-between sm:pr-[70px] lg:pr-[150px]">
       <div className='flex justify-between space-x-5'>
-        <div onClick={()=>alert("hello")} className='hidden lg:flex justify-center items-center space-x-2 pl-6 pr-6 h-[50px] bg-[#2c2c2c] rounded-[408.80px]'>
-          <span className="opacity-90 text-white text-[18.84px] font-normal font-['Geologica'] hover:text-[#5CFEF0]">ALL</span>
-          <img src={downArrow} alt="" />
+        <div className='hidden lg:flex justify-center items-center space-x-4 px-4 h-[50px] bg-[#2c2c2c] rounded-[408.80px]'>
+          {/* <span className="opacity-90 text-white text-[18.84px] font-normal font-['Geologica'] hover:text-[#5CFEF0]">ALL</span>
+          <img src={downArrow} alt="" /> */}
+          <button onClick={() => navigate(-1)}>
+            <LeftArrow/>
+          </button>
+          <button onClick={() => navigate(1)}>
+            <RightArrow/>
+          </button>
         </div>
         <div className="flex justify-center items-center h-[50px] pr-5 bg-[#2c2c2c] rounded-[215.70px]">
           <input

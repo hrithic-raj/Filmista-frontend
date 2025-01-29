@@ -12,6 +12,7 @@ import AdminManageLanguage from '../../pages/admin/languages/AdminManageLanguage
 import AdminViewCelebrity from '../../pages/admin/celebrities/AdminViewCelebrity';
 import AdminCelebrityRequestPage from '../../pages/admin/celebrities/AdminCelebrityRequestpage';
 import AddMovieForm from '../../pages/admin/movies/AdminAddMovies';
+import EditMovieForm from '../../pages/admin/movies/AdminEdtMovies';
 
 const AdminRoutes: RouteObject[] = [
     { path: '/admin', element: <AdminLayout ><Dashboard /></AdminLayout>},
@@ -25,6 +26,7 @@ const AdminRoutes: RouteObject[] = [
     { path: `/admin/celebrities/requests`, element: <AdminLayout ><AdminCelebrityRequestPage /></AdminLayout>},
     { path: '/admin/movies', element: <AdminLayout ><AdminManageMovies /></AdminLayout>},
     { path: '/admin/movies/add-movies', element: <AdminLayout ><AddMovieForm /></AdminLayout>},
+    { path: '/admin/movies/edit-movies/:id', element: <AdminLayout ><EditMovieForm /></AdminLayout>},
 ];
 
 export default AdminRoutes;

@@ -7,8 +7,8 @@ export const addMovie = async(formData:FormData) =>{
               'Content-Type': 'multipart/form-data',
             }
         });
-        console.log(response.data);
-        return response.data
+        console.log(response.data.newMovie);
+        return response.data.newMovie
     }catch(error){
         console.error('Error adding movie:', error);
         throw error;

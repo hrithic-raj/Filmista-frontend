@@ -6,27 +6,46 @@ import Part4 from '../../../components/Admin/movies/Part4';
 import ICelebrity from '../../../interfaces/CelebrityInterface';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { fetchCelebrities } from '../../../redux/slices/admin/celebrityManagementSlice';
-import { clearMovieData, setCast, setDescription, setDuration, setGenres, setHorizontalPoster, setLanguages, setOtherImages, setPoster, setReleaseDate, setTitle, setTrailer, setVideos } from '../../../redux/slices/admin/movieManagementSlice';
+import { clearMovieData, fetchMoviesById, setCast, setDescription, setDuration, setGenres, setHorizontalPoster, setLanguages, setOtherImages, setPoster, setReleaseDate, setTitle, setTrailer, setVideos, updateMovie } from '../../../redux/slices/admin/movieManagementSlice';
 import IGenre from '../../../interfaces/GenreInterface';
 import ILanguage from '../../../interfaces/LanguageInterface';
 import { CastMember } from '../../../interfaces/MovieInterface';
-import { addMovie } from '../../../api/adminApis';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
-const AddMovieForm = () => {
+const EditMovieForm = () => {
   const [currentPart, setCurrentPart] = useState(1);
   const navigate = useNavigate();
+  const {id} = useParams()
   // const [celebrities, setCelebrities] = useState<ICelebrity[]>([]);
   // const [selectedCelebrities, setSelectedCelebrities] = useState<ICelebrity[]>([]);
   const dispatch = useAppDispatch();
+  const {selectedMovie} = useAppSelector((state)=>state.movieManagement)
   const {celebrities} = useAppSelector((state)=>state.celebrityManagement)
+
   useEffect(()=>{
-      dispatch(fetchCelebrities());
-  },[dispatch])
-  useEffect(()=>{
-    dispatch(clearMovieData());
-  },[]);
+    dispatch(fetchCelebrities());
+    if(id) dispatch(fetchMoviesById(id));
+  },[dispatch, id])
+
+  
+  useEffect(() => {
+    if (selectedMovie) {
+      dispatch(setTitle(selectedMovie.title));
+      dispatch(setDescription(selectedMovie.description));
+      dispatch(setReleaseDate(selectedMovie.releaseDate));
+      dispatch(setDuration(selectedMovie.duration));
+      dispatch(setGenres(selectedMovie.genres));
+      dispatch(setLanguages(selectedMovie.languages));
+      dispatch(setCast(selectedMovie.cast));
+      dispatch(setPoster(selectedMovie.images.poster)); 
+      dispatch(setHorizontalPoster(selectedMovie.images.horizontalPoster));
+      dispatch(setOtherImages(selectedMovie.images.other));
+      dispatch(setTrailer(selectedMovie.videos.trailer));
+      dispatch(setVideos(selectedMovie.videos.others));
+    }
+  }, [selectedMovie, dispatch]);
+
   const handleNext = () => {
     setCurrentPart(currentPart + 1);
   };
@@ -55,9 +74,8 @@ const AddMovieForm = () => {
     
     const genresIds = genres.map((genre)=> genre._id);
     const languagesIds = languages.map((lang)=> lang._id);
-    
     const jsonPayload = JSON.stringify({
-      title,
+        title,
       description,
       releaseDate,
       duration,
@@ -66,27 +84,31 @@ const AddMovieForm = () => {
       cast,
       trailer,
       videos,
+    //   poster: typeof poster === "string" ? poster : undefined,
+    //   horizontalPoster: typeof horizontalPoster === "string" ? horizontalPoster : undefined,
+      otherImages: otherImages.filter((img) => typeof img === "string"),
     })
+    // console.log(jsonPayload)
+
     const formData = new FormData();
     
     formData.append('data', jsonPayload)
     
-    if (poster) {
-      formData.append('poster', poster);
+    if (poster instanceof File) {
+        formData.append("poster", poster);
+    }
+    if (horizontalPoster instanceof File) {
+        formData.append("horizontalPoster", horizontalPoster);
     }
     
-    if (horizontalPoster) {
-      formData.append('horizontalPoster', horizontalPoster);
-    }
-    
-    if (otherImages && otherImages.length > 0) {
-      (otherImages as File[]).forEach(( file: File ) => {
-        formData.append('otherImages', file);
-      });
-    }
+    otherImages.forEach((img) => {
+        if (img instanceof File) {
+            formData.append("otherImages", img);
+        }
+    });
     
     try{
-      const res = await addMovie(formData);
+      const res = await dispatch(updateMovie({movieId:id as string,formData}));
       dispatch(clearMovieData());
       navigate('/admin/movies');
     }catch(error){
@@ -138,11 +160,11 @@ const AddMovieForm = () => {
           onTrailerChange={handleTrailerChange}
           onVideosChange={handleVideosChange}
           onSubmit={handleSubmit}
-          isEditMode={false}
+          isEditMode={true}
         />
       }
     </div>
   );
 };
 
-export default AddMovieForm;
+export default EditMovieForm;

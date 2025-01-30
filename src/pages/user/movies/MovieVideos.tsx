@@ -368,7 +368,7 @@ const MovieVideos: React.FC = () => {
   return (
     <div className="min-h-screen text-white p-6">
       <div className="mb-4 flex flex-col gap-1">
-        <span className="text-white text-5xl font-bold font-['Gelasio']">Joker</span>
+        <span className="text-white text-5xl font-bold font-['Gelasio']">{selectedMovie?.title}</span>
       </div>
       
       {/* Trailer Section */}

@@ -12,7 +12,7 @@ export const submitCelebrityRequest = async (formData: FormData) => {
 }
 export const getProfile = async () => {
     try {
-        const response = await axiosInstance.post(`/users/profile`);
+        const response = await axiosInstance.get(`/users/profile`);
         return response.data.user;
     } catch (error: any) {
         console.error(error)

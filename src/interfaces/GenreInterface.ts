@@ -5,6 +5,6 @@ interface IGenre {
     genre: string;
     poster: string;
     isArchive: boolean;
-    movies: string | IMovie[];
+    movies: (string | IMovie)[];
   }
 export default IGenre

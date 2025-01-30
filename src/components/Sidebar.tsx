@@ -1,9 +1,23 @@
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/images/logo.png'
 import {ExploreSVG, HeartSVG, HomeSVG, LogoSVG, SettingsSVG, UserSVG} from '../assets/svg/SVGs';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
+import { useEffect } from 'react';
+import { getUserInfo } from '../redux/slices/user/userSlice';
+import IGenre from '../interfaces/GenreInterface';
 const Sidebar = () => {
   const navigate = useNavigate();
-  return (
+  const dispatch = useAppDispatch();
+  const {user} = useAppSelector((state)=>state.user);
+  
+  useEffect(()=>{
+    dispatch(getUserInfo())
+  },[dispatch])
+  const genres = user?.genres
+  ?.filter((g): g is IGenre => typeof g === "object" && "genre" in g)
+  .map((g) => g.genre) ?? [];
+
+    return (
     <div className='hidden sm:block h-screen w-[70px] lg:w-[257px] fixed  z-50 sm:ms-5 lg:ms-10'>
       <aside className="bg-[rgb(44,44,44)] text-gray-100 h-[93%] rounded-[36px] p-4 lg:p-8">
         <div className='flex flex-col h-full mt-4 '>
@@ -37,7 +51,7 @@ const Sidebar = () => {
                 </div>
                 <hr className='text-[#373830] opacity-20' />
                 <div className='flex flex-col space-y-9 items-center lg:items-start lg:ml-2'>
-                  <li onClick={()=>navigate('/')} className="lg:flex items-center space-x-3 hover:cursor-pointer">
+                  <li onClick={()=>navigate('/profile')} className="lg:flex items-center space-x-3 hover:cursor-pointer">
                       <UserSVG/>
                       <span className="hidden lg:flex w-[64.30px] h-[23.63px] text-[#e9e9e9] text-base font-normal font-['Fredoka'] hover:text-[#5cfef0]">Profile</span>
                   </li>
@@ -51,7 +65,7 @@ const Sidebar = () => {
           <div className="mt-auto mb-2 hidden lg:flex lg:flex-col">
               <h2 className="mb-4 text-[#e9e9e9] text-base font-normal font-['Fredoka']">Favorite genres</h2>
               <div className="flex flex-wrap gap-2">
-                {['Action', 'Adventure', 'Anime', 'Fantasy', 'Comedy'].map((genre) => (
+                {genres?.slice(0,5).map((genre) => (
                   <div key={genre} className='flex justify-center items-center h-[23.94px] p-2 bg-[#fefefe]/0 rounded-[36px] border border-[#e9e9e9]'>
                     <span className="text-[#e9e9e9] text-[11px] font-normal font-['Fredoka']">{genre}</span>
                   </div>

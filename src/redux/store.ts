@@ -3,6 +3,7 @@ import userManagementReducer from './slices/admin/userManagementSlice';
 import genreManagementReducer from './slices/admin/genreManagementSlice';
 import languageManagementReducer from './slices/admin/languageManagementSlice';
 import genreReducer from './slices/user/genreSlice';
+import userReducer from './slices/user/userSlice';
 import movieReducer from './slices/user/movieSlice';
 import languageReducer from './slices/user/languageSlice';
 import celebrityManagementReducer from './slices/admin/celebrityManagementSlice';
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     userManagement: userManagementReducer,
     genreManagement: genreManagementReducer,
     languageManagement: languageManagementReducer,
+    user: userReducer,
     genre: genreReducer,
     language: languageReducer,
     celebrityManagement: celebrityManagementReducer,
@@ -29,7 +31,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['userManagement'],
+    whitelist: ['user']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -22,7 +22,7 @@ const AdminViewGenre: React.FC = () => {
   const handleEditGenre = () => {
       setEditingGenre(selectedGenre);
       setShowAddOrEditGenre(true);
-    };
+  };
   
     const handleArchiveGenre = (id: string) => {
       if(id) dispatch(archiveGenre(id));

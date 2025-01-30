@@ -12,7 +12,7 @@ interface TemplateProps {
       <Sidebar />
       <div className="flex-grow">
         <Navbar />
-        <main className="pt-5 sm:ml-[100px] lg:ml-[320px] bg-[#212121] sm:pr-[70px] lg:pr-[150px]">
+        <main className="pt-5 sm:ml-[100px] px-1 lg:ml-[320px] bg-[#212121] sm:pr-[70px] lg:pr-[150px]">
           {children}
         </main>
       <Bottombar />

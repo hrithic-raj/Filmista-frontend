@@ -9,6 +9,8 @@ import MovieImages from '../../pages/user/movies/MovieImages';
 import MovieVideos from '../../pages/user/movies/MovieVideos';
 import MovieCast from '../../pages/user/movies/MovieCast';
 import MovieReviews from '../../pages/user/movies/MovieReviews';
+import Profile from '../../pages/user/Profile';
+import EditProfile from '../../pages/user/EditProfile';
 
 const UserRoutes: RouteObject[] = [
   // { path: '/language-selection', element: <Signin/>},
@@ -22,8 +24,9 @@ const UserRoutes: RouteObject[] = [
   { path: '/settings', element: <Template><Settings /></Template>},
   { path: '/select-genres', element: <GenreSelector />},
   { path: '/select-languages', element: <LanguageSelector />},
-  // { path: '/', element: <AdminLayout><Dashboard /></AdminLayout>},
-  // { path: '/', element: <Template><HomeNew /></Template>},
+  { path: '/profile', element: <Template><Profile /></Template>},
+  { path: '/edit-profile', element: <Template><EditProfile /></Template>},
+
 ];
 
 export default UserRoutes;

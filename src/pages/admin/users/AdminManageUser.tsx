@@ -20,9 +20,9 @@ const AdminManageUser: React.FC = ()=>{
     const dispatch = useAppDispatch();
     const {users, loading, error} = useAppSelector((state)=> state.userManagement)
 
-    // useEffect(()=>{
-    //     dispatch(fetchUsers());    
-    // },[dispatch]);
+    useEffect(()=>{
+        dispatch(fetchUsers());    
+    },[dispatch]);
     
     const handleBlockUser= async(id:string)=>{
         if(id) await dispatch(blockUserById(id));

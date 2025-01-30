@@ -3,33 +3,29 @@ import downArrow from '../assets/images/icons/down-arrow.png'
 import hrjLogo from '../assets/images/hrjlogo.png'
 import { BellSVGNav, HeartSVGNav, LeftArrow, RightArrow, SearchSVG } from '../assets/svg/SVGs';
 import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { signout } from '../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { persistor } from '../redux/persistor';
 import { getProfile } from '../api/userApis';
 import IUser from '../interfaces/UserInterface';
+import { getUserInfo } from '../redux/slices/user/userSlice';
 
 const Navbar = () => {
   const [isProfile, setIsProfile] = useState(false);
-  const [user, setUser] = useState<IUser | null>(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const {user} = useAppSelector((state)=>state.user);
+  
+  useEffect(()=>{
+    dispatch(getUserInfo())
+  },[dispatch])
+  
   const handleSignout = async()=>{
     await dispatch(signout());
     await persistor.purge();
     navigate('/signin');
   }
-
-  useEffect(()=>{
-    getProfile()
-    .then((res)=>{
-      if(res.userId) setUser(res.userId);
-      else setUser(res);
-      }
-    )
-  },[dispatch])
-
   return (
     <div className='hidden sm:flex flex-col'>
     <header className="text-gray-100 sm:pl-[80px] lg:pl-[320px] z-40 flex items-center justify-between space-x-3 sm:justify-around lg:justify-between sm:pr-[70px] lg:pr-[150px]">
@@ -62,11 +58,11 @@ const Navbar = () => {
         </button>
       </div>
       <div className="relative h-[50px] bg-[#2c2c2c] rounded-[215.70px] pr-2">
-        <div onClick={()=>setIsProfile(!isProfile)} className='flex h-[50px] items-center gap-2 hover:cursor-pointer'>
+        <div onClick={()=>setIsProfile(!isProfile)} className='flex h-[50px] items-center px-1 gap-2 hover:cursor-pointer'>
           <img
-            src={hrjLogo}
+            src={user?.profilePicture || hrjLogo}
             alt="User Avatar"
-            className="h-[50px] rounded-[215.70px] border border-gray-100"
+            className="h-[40px] rounded-[215.70px] border-2"
           />
           <div className='relative flex justify-center items-center'>
             <span className="hidden lg:flex h-7 px-2 max-w-[150px] min-w-[80px] text-center overflow-hidden text-[#e9e9e9] text-lg font-normal font-['Geologica'] select-none">{user ? user.name : "Loading..."}</span>
@@ -85,19 +81,26 @@ const Navbar = () => {
           {isProfile &&(
             <div className='absolute top-16 right-0 w-3/4 min-w-[80px] h-[130px] rounded-[16px] bg-[#2c2c2c] border border-gray-300'>
                 <div className='flex flex-col justify-evenly items-center h-full'>
-                  <button>
+                  <button
+                    onClick={()=>{
+                      navigate('/profile');
+                      setIsProfile(false);
+                  }}
+                  >
                   <span className='font-fredoka'>View Profile</span>
                   </button>
                   <hr className='text-gray-300'/>
                   <button 
-                  onClick={() => {
-                    navigate('/settings');
-                    setIsProfile(false);
+                    onClick={() => {
+                      navigate('/settings');
+                      setIsProfile(false);
                   }}>
                     <span className='font-fredoka'>Settings</span>
                   </button>
                   <hr className='text-gray-300'/>
-                  <button onClick={handleSignout}>
+                  <button 
+                    onClick={handleSignout}
+                  >
                     <span className='font-fredoka'>Sign Out</span>
                   </button>
                 </div>

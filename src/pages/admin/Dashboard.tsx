@@ -15,6 +15,8 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { fetchUsers } from "../../redux/slices/admin/userManagementSlice";
 import { fetchAllGenres } from "../../redux/slices/admin/genreManagementSlice";
+import { fetchAllMovies } from "../../redux/slices/admin/movieManagementSlice";
+import { fetchCelebrities } from "../../redux/slices/admin/celebrityManagementSlice";
 
 ChartJS.register(
   CategoryScale,
@@ -30,11 +32,17 @@ ChartJS.register(
 const Dashboard: React.FC = () => {
   const {users} = useAppSelector((state)=>state.userManagement)
   const {genres} = useAppSelector((state)=>state.genreManagement)
+  const { movies } = useAppSelector((state) => state.movieManagement)
+  const { celebrities } = useAppSelector((state) => state.celebrityManagement)
   const dispatch = useAppDispatch();
-  useEffect(()=>{
-    dispatch(fetchUsers());
-    dispatch(fetchAllGenres());
-  },[dispatch])
+    useEffect(()=>{
+    },[])
+    useEffect(()=>{
+      dispatch(fetchUsers());
+      dispatch(fetchAllMovies())
+      dispatch(fetchAllGenres());
+      dispatch(fetchCelebrities());
+    },[dispatch])
   const lineChartData = {
     labels: ["January", "February", "March", "April", "May", "June"],
     datasets: [
@@ -100,9 +108,9 @@ const Dashboard: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {[
           { title: "Total Users", value: users.length, change: "+12%" },
-          { title: "Movies Uploaded", value: "567", change: "+8%" },
+          { title: "Movies Uploaded", value: movies.length, change: "+8%" },
           { title: "Revenue", value: "$123,456", change: "+15%" },
-          { title: "Active Celebrities", value: "89", change: "+5%" },
+          { title: "Active Celebrities", value: celebrities.length, change: "+5%" },
         ].map((card, idx) => (
           <div
             key={idx}

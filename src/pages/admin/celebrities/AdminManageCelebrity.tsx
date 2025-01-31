@@ -114,8 +114,100 @@ const AdminManageCelebrity: React.FC = () => {
             Blocked
           </button>
         </div>
-        <div className="flex flex-wrap justify-center gap-4">
-  {!showBlocked ? (
+        <div className="w-full">
+          <div className='flex flex-col gap-5'>
+              <div className='bg-[rgb(44,44,44)] rounded-xl py-3 '>
+                  <tr className='flex w-[100%] items-center rounded-lg text-center'>
+                      <td className="w-[20%] font-bold text-gray-200">Profile Pic</td>
+                      <td className="w-[20%] font-bold text-gray-200">NAME</td>
+                      <td className="w-[20%] font-bold text-gray-200">Email</td>
+                      <td className="w-[20%] font-bold text-gray-200">Status</td>
+                      <td className="w-[20%] font-bold text-gray-200">VIEW</td>
+                  </tr>
+              </div>
+              {
+                !showBlocked ? (
+                  celebrities.map((celebrity) => {
+                    if (typeof celebrity.userId !== 'string' && !celebrity.userId.isBlocked) {
+                      return (
+                        <div className='bg-[rgb(44,44,44)] rounded-xl py-1'>
+                            <tr className='w-[100%] flex items-center text-center'>
+                                <td onClick={()=>handleViewCelebrity(celebrity._id)} className='w-[20%] flex justify-center cursor-pointer'>
+                                    <img src={celebrity.userId.profilePicture || hrjLogo} className='w-12 h-12 rounded-full border' alt="" />
+                                </td>
+                                <td onClick={()=>handleViewCelebrity(celebrity._id)} className="w-[20%] text-gray-300 rounded-[16px] font-['Geologica'] cursor-pointer">{celebrity.userId.name}</td>
+                                <td className="w-[20%] text-gray-300 rounded-[16px] font-['Geologica']">{celebrity.userId.email}</td>
+                                <td className='w-[20%]'>
+                                    <button
+                                        onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleBlockCelebrity(celebrity._id);
+                                        }}
+                                        className="px-3 py-1 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
+                                    >
+                                        {celebrity.userId.isBlocked?'UNBLOCK':'BLOCK'}
+                                    </button>
+                                </td>
+                                <td className='w-[20%]'>
+                                    <button
+                                        onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleViewCelebrity(celebrity._id);
+                                        }}
+                                        className="px-3 py-1 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
+                                    >
+                                        VIEW
+                                    </button>
+                                </td>
+                            </tr>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })
+                ):(
+                  celebrities.map((celebrity) => {
+                    if (typeof celebrity.userId !== 'string' && celebrity.userId.isBlocked) {
+                      return (
+                        <div className='bg-[rgb(44,44,44)] rounded-xl py-1'>
+                            <tr className='w-[100%] flex items-center text-center'>
+                                <td onClick={()=>handleViewCelebrity(celebrity._id)} className='w-[20%] flex justify-center cursor-pointer'>
+                                    <img src={celebrity.userId.profilePicture || hrjLogo} className='w-12 h-12 rounded-full border' alt="" />
+                                </td>
+                                <td onClick={()=>handleViewCelebrity(celebrity._id)} className="w-[20%] text-gray-300 rounded-[16px] font-['Geologica'] cursor-pointer">{celebrity.userId.name}</td>
+                                <td className="w-[20%] text-gray-300 rounded-[16px] font-['Geologica']">{celebrity.userId.email}</td>
+                                <td className='w-[20%]'>
+                                    <button
+                                        onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleBlockCelebrity(celebrity._id);
+                                        }}
+                                        className="px-3 py-1 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
+                                    >
+                                        {celebrity.userId.isBlocked?'UNBLOCK':'BLOCK'}
+                                    </button>
+                                </td>
+                                <td className='w-[20%]'>
+                                    <button
+                                        onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleViewCelebrity(celebrity._id);
+                                        }}
+                                        className="px-3 py-1 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
+                                    >
+                                        VIEW
+                                    </button>
+                                </td>
+                            </tr>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })
+                )
+              }
+          </div>
+  {/* {!showBlocked ? (
     celebrities.map((celebrity) => {
       if (typeof celebrity.userId !== 'string' && !celebrity.userId.isBlocked) {
         return (
@@ -151,7 +243,7 @@ const AdminManageCelebrity: React.FC = () => {
       }
       return null;
     })
-  )}
+  )} */}
 </div>
 
       {loading&& <LoadingPage/>}

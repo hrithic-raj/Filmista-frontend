@@ -5,6 +5,7 @@ import languageManagementReducer from './slices/admin/languageManagementSlice';
 import genreReducer from './slices/user/genreSlice';
 import userReducer from './slices/user/userSlice';
 import movieReducer from './slices/user/movieSlice';
+import ratingReducer from './slices/user/ratingSlice';
 import languageReducer from './slices/user/languageSlice';
 import celebrityManagementReducer from './slices/admin/celebrityManagementSlice';
 import movieManagementReducer from './slices/admin/movieManagementSlice';
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
     celebrityManagement: celebrityManagementReducer,
     movieManagement: movieManagementReducer,
     movie: movieReducer,
+    rating: ratingReducer,
     // userInfo: userInfoReducer,
 });
 

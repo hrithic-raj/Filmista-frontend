@@ -6,7 +6,7 @@ interface CardProps {
   title: string;
   rating: number;
   genres: string[];
-  onRate: (rating: number) => void;
+  onRate: (rating: number ,id:string) => void;
   onView: (id: string) => void;
   onAddToWatchlist: () => void;
 }
@@ -76,7 +76,7 @@ const MovieCard: React.FC<CardProps> = ({
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
                     key={star}
-                    onClick={() => onRate(star)}
+                    onClick={() => onRate(star, id)}
                     onMouseEnter={() => setHoveredStar(star)}
                     onMouseLeave={() => setHoveredStar(null)}
                     className={`text-xl ${

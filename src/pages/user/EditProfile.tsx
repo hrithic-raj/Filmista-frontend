@@ -65,7 +65,7 @@ const EditProfile: React.FC = () => {
             <img src={typeof banner === 'string' ? (banner!=='' ? banner : DefaultBanner) : URL.createObjectURL(banner)} className='h-full w-full object-cover rounded-t-[15px]' alt="" />
             <div className='absolute rounded-full top-[25%] sm:top-[30%] md:top-[40%] ml-10 w-[100px] h-[100px] md:w-[120px] md:h-[120px]'>
                 <div className='bg-gradient-to-tr from-black rounded-full w-full h-full'/>
-                <img src={typeof profilePicture === 'string' ? profilePicture : URL.createObjectURL(profilePicture)} className='absolute top-0 left-0 rounded-full z-6 border w-full h-full' alt="" />
+                <img src={typeof profilePicture === 'string' ? (profilePicture!==''? profilePicture : hrj) : URL.createObjectURL(profilePicture)} className='absolute top-0 left-0 object-cover rounded-full z-6 border w-full h-full' alt="" />
             </div>
           </div>
           <div className='flex flex-col md:flex-row gap-10 justify-between pt-[50px] w-full'>

@@ -1,7 +1,7 @@
 import IUser from "./UserInterface";
 
 interface ICelebrity{
-  _id?: string,
+  _id: string,
   userId: IUser;
   proofDocument: string;
 }

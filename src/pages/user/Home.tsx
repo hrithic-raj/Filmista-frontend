@@ -5,16 +5,17 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { fetchAllMovies } from '../../redux/slices/user/movieSlice';
 import { useNavigate } from 'react-router-dom';
 import IGenre from '../../interfaces/GenreInterface';
+import { submitRating } from '../../redux/slices/user/ratingSlice';
 
 const HomePage: React.FC = () => {
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
   const navigate = useNavigate();
   const dispatch= useAppDispatch();
   const { movies} = useAppSelector((state)=>state.movie);
- 
+  const [star, setStar] = useState(0);
   useEffect(()=>{
     dispatch(fetchAllMovies());
-  },[dispatch])
+  },[dispatch, star])
 
   useEffect(() => {
     if(movies && movies.length>0){
@@ -38,8 +39,9 @@ const HomePage: React.FC = () => {
   const handleViewMovie = (id: string)=>{
     navigate(`/movies/${id}`);
   }
-  const handleRate = (rating: number) => {
-    console.log(`Rated: ${rating}`);
+  const handleRate = async (rating: number, id:string) => {
+    await dispatch(submitRating({ movieId: id, rating }));
+    setStar(rating);
   };
 
   const handleAddToWatchlist = () => {
@@ -72,7 +74,7 @@ const HomePage: React.FC = () => {
                 <p className="text-white text-sm md:text-[13px] font-bold font-['Geologica'] max-w-[90%] max-h-[60px] overflow-hidden md:max-w-[548px]">
                   {movies && lastFiveMovies.length>0 ? lastFiveMovies[currentMovieIndex].description : ''}
                 </p>
-                <button className="px-6 py-1 bg-[#fefefe] text-black rounded-[36px] font-['Geologica'] hover:text-[#5cfef0] hover:bg-[#2C2C2C]">
+                <button onClick={()=>navigate(`/movies/${movies && lastFiveMovies.length>0 ? lastFiveMovies[currentMovieIndex]._id:''}`)} className="px-6 py-1 bg-[#fefefe] text-black rounded-[36px] font-['Geologica'] hover:text-[#5cfef0] hover:bg-[#2C2C2C]">
                   View
                 </button>
               </div>
@@ -112,7 +114,7 @@ const HomePage: React.FC = () => {
                     id={movie._id}
                     image={movie.images?.poster}
                     title={movie.title}
-                    rating={2.5}
+                    rating={movie.rating}
                     genres={movie.genres.map((g : IGenre) => g.genre)}
                     onRate={handleRate}
                     onView={handleViewMovie}
@@ -124,7 +126,7 @@ const HomePage: React.FC = () => {
                     id={movie._id}
                     image={movie.images?.poster}
                     title={movie.title}
-                    rating={2.5}
+                    rating={movie.rating}
                     genres={movie.genres.map((g : IGenre) => g.genre)}
                     onRate={handleRate}
                     onView={handleViewMovie}
@@ -147,7 +149,7 @@ const HomePage: React.FC = () => {
                     id={movie._id.toString()}
                     image={movie.images?.poster}
                     title={movie.title}
-                    rating={2.5}
+                    rating={movie.rating}
                     genres={movie.genres.map((g : IGenre) => g.genre)}
                     onRate={handleRate}
                     onView={handleViewMovie}
@@ -159,7 +161,7 @@ const HomePage: React.FC = () => {
                     id={movie._id.toString()}
                     image={movie.images?.poster}
                     title={movie.title}
-                    rating={2.5}
+                    rating={movie.rating}
                     genres={movie.genres.map((g : IGenre) => g.genre)}
                     onRate={handleRate}
                     onView={handleViewMovie}

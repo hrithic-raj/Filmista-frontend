@@ -1,18 +1,19 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axiosInstance from "../../../utils/axiosInstance";
+import IUser from "../../../interfaces/UserInterface";
 
-interface User {
-    _id: string;
-    name: string;
-    email: string;
-    isBlocked: boolean;
-    role: string;
-    googleId?: string;
-}
+// interface User {
+//     _id: string;
+//     name: string;
+//     email: string;
+//     isBlocked: boolean;
+//     role: string;
+//     googleId?: string;
+// }
 
 interface UserManagementState {
-    users: User[];
-    selectedUser: User | null;
+    users: IUser[];
+    selectedUser: IUser | null;
     loading: boolean;
     error: string | null;
 }
@@ -63,7 +64,7 @@ const userManagementSlice = createSlice({
         .addCase(fetchUsers.pending, (state)=>{
             state.loading = true;
         })
-        .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>)=>{
+        .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<IUser[]>)=>{
             state.loading = false;
             state.users = action.payload;
         })
@@ -74,7 +75,7 @@ const userManagementSlice = createSlice({
         .addCase(fetchUserById.pending, (state)=>{
             state.loading=true;
         })
-        .addCase(fetchUserById.fulfilled, (state, action: PayloadAction<User>)=>{
+        .addCase(fetchUserById.fulfilled, (state, action: PayloadAction<IUser>)=>{
             state.loading = false;
             state.selectedUser = action.payload;
         })

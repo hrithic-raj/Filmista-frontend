@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import IGenre from '../../../interfaces/GenreInterface';
-import ILanguage from '../../../interfaces/LanguageInterface';
-import { CastMember, IMovie } from '../../../interfaces/MovieInterface';
+import { IMovie } from '../../../interfaces/MovieInterface';
 import axiosInstance from '../../../utils/axiosInstance';
 
 interface MovieState {

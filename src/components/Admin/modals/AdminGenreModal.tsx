@@ -3,7 +3,7 @@ import { Accept, useDropzone } from 'react-dropzone';
 import { useAppDispatch } from '../../../hooks/reduxHooks';
 import { addGenre, updateGenre } from '../../../redux/slices/admin/genreManagementSlice';
 import { FaPlusCircle } from 'react-icons/fa';
-import { FaDeleteLeft, FaSackXmark } from 'react-icons/fa6';
+import { FaDeleteLeft } from 'react-icons/fa6';
 import IGenre from '../../../interfaces/GenreInterface';
 
 interface AdminGenreModalProps {

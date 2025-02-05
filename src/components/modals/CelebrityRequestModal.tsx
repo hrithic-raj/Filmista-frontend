@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { Accept, useDropzone } from 'react-dropzone';
 import { FaPlusCircle } from 'react-icons/fa';
-import { FaDeleteLeft, FaSackXmark } from 'react-icons/fa6';
-import { useAppDispatch } from '../../hooks/reduxHooks';
+import { FaDeleteLeft } from 'react-icons/fa6';
+// import { useAppDispatch } from '../../hooks/reduxHooks';
 import { submitCelebrityRequest } from '../../api/userApis';
 
 interface ModalProps {
@@ -11,7 +11,7 @@ interface ModalProps {
 
 const CelebrityRequestModal: React.FC<ModalProps> = ({ onClose }) => {
   const [image, setImage] = useState<File | null>(null);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const { getRootProps, getInputProps } = useDropzone({
     accept: { 'application/pdf': ['.pdf'], 'image/*': ['.jpg', '.jpeg', '.png'] } as unknown as Accept,
     onDrop: (acceptedFiles) => {

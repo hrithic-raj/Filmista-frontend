@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { fetchAllRequests, reviewCelebrityRequests } from '../../../redux/slices/admin/celebrityManagementSlice';
 // import { fetchRequests, approveRequest, rejectRequest } from './redux/actions'; // Import the actions
@@ -6,7 +6,7 @@ import { fetchAllRequests, reviewCelebrityRequests } from '../../../redux/slices
 
 const AdminCelebrityRequestPage = () => {
   const dispatch = useAppDispatch();
-  const { requests, loading, error } = useAppSelector((state) => state.celebrityManagement);
+  const { requests } = useAppSelector((state) => state.celebrityManagement);
     const [showReviewdReq, setShowReviewdReq] = useState(false);
   useEffect(() => {
     dispatch(fetchAllRequests());

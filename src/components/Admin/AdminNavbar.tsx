@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaSearch, FaBars, FaBell } from "react-icons/fa";
+import { FaSearch, FaBell } from "react-icons/fa";
 import logo from '../../assets/images/logo.png'
 import upArrow from '../../assets/images/icons/up-arrow.png'
 import downArrow from '../../assets/images/icons/down-arrow.png'

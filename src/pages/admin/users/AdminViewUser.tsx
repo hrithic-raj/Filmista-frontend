@@ -1,24 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import hrjLogo from '../../../assets/images/hrjlogo.png'
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { blockUserById, fetchUserById } from '../../../redux/slices/admin/userManagementSlice';
-import LoadingPage from '../../../components/LoadingPage';
-
-type User = {
-    id: string;
-    name: string;
-    email: string;
-    profilePic: string;
-};
-
-type Movie = {
-    id: string;
-    title: string;
-    poster: string;
-    rating?: number;
-    review?: string;
-};
 
 const AdminViewUser: React.FC = () => {
     // const [user, setUser] = useState<User | null>(null);
@@ -26,7 +10,7 @@ const AdminViewUser: React.FC = () => {
     const reviewedMovies =[32,4,4,4,5,8]
     const {id} = useParams<{id: string}>();
     const dispatch = useAppDispatch();
-    const { selectedUser: user, loading } = useAppSelector((state) => state.userManagement);
+    const { selectedUser: user } = useAppSelector((state) => state.userManagement);
     useEffect(()=>{
         if(id) dispatch(fetchUserById(id))
     },[dispatch, id]);

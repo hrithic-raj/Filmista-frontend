@@ -1,10 +1,6 @@
 import React from 'react';
 import AdminSidebar from './AdminSidebar';
 import AdminNavbar from './AdminNavbar';
-// import upArrow from '../assets/images/icons/up-arrow.png'
-import downArrow from '../../assets/images/icons/down-arrow.png'
-import hrjLogo from '../../assets/images/hrjlogo.png'
-import { BellSVGNav, HeartSVGNav, SearchSVG } from '../../assets/svg/SVGs';
 
 interface AdminLayoutProps {
   children: React.ReactNode;

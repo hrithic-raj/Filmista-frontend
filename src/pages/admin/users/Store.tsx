@@ -1,4 +1,3 @@
-import React from 'react'
 import rtArrow from '../../../assets/svg/arrow-rt.svg';
 import hrj from '../../../assets/images/hrjlogo.png'
 const Store = () => {

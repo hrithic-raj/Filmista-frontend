@@ -1,25 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import hrjLogo from '../../../assets/images/hrjlogo.png'
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
-import { blockUserById, fetchUserById } from '../../../redux/slices/admin/userManagementSlice';
-import LoadingPage from '../../../components/LoadingPage';
 import { blockCelebrityById, fetchCelebrityById } from '../../../redux/slices/admin/celebrityManagementSlice';
-
-type User = {
-    id: string;
-    name: string;
-    email: string;
-    profilePic: string;
-};
-
-type Movie = {
-    id: string;
-    title: string;
-    poster: string;
-    rating?: number;
-    review?: string;
-};
 
 const AdminViewCelebrity: React.FC = () => {
     // const [user, setUser] = useState<User | null>(null);
@@ -27,7 +10,7 @@ const AdminViewCelebrity: React.FC = () => {
     const reviewedMovies =[32,4,4,4,5,8]
     const {id} = useParams<{id: string}>();
     const dispatch = useAppDispatch();
-    const { selectedCelebrity: user, loading } = useAppSelector((state) => state.celebrityManagement);
+    const { selectedCelebrity: user } = useAppSelector((state) => state.celebrityManagement);
     useEffect(()=>{
         if(id) dispatch(fetchCelebrityById(id))
     },[dispatch, id]);

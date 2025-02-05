@@ -8,23 +8,6 @@ import LoadingPage from '../../../components/LoadingPage';
 import { FaPlusCircle } from 'react-icons/fa';
 import IGenre from '../../../interfaces/GenreInterface';
 
-
-interface Movie {
-  id: string;
-  name: string;
-  description: string;
-  poster: string;
-  horizontalPoster: string;
-}
-
-interface Genre {
-  _id: string;
-  genre: string;
-  poster: string;
-  isArchive: boolean;
-  movies: Movie[];
-}
-
 const AdminManageGenres: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

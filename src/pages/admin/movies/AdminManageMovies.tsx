@@ -15,7 +15,7 @@ const AdminManageMovies: React.FC = () => {
   },[])
 
     const handleViewMoview = (id:string) => {
-        console.log(`view movie`);
+        console.log(`view movie${id}`);
       };
     
     const handleEditMovie = (id: string) => {

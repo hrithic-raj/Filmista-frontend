@@ -7,8 +7,6 @@ import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { signout } from '../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { persistor } from '../redux/persistor';
-import { getProfile } from '../api/userApis';
-import IUser from '../interfaces/UserInterface';
 import { getUserInfo } from '../redux/slices/user/userSlice';
 
 const Navbar = () => {

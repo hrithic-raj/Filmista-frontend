@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import hrjLogo from '../../../assets/images/hrjlogo.png'
 import { archiveGenre, fetchGenreById } from '../../../redux/slices/admin/genreManagementSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import IGenre from '../../../interfaces/GenreInterface';

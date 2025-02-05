@@ -3,7 +3,6 @@ import Part1 from '../../../components/Admin/movies/Part1';
 import Part2 from '../../../components/Admin/movies/Part2';
 import Part3 from '../../../components/Admin/movies/Part3';
 import Part4 from '../../../components/Admin/movies/Part4';
-import ICelebrity from '../../../interfaces/CelebrityInterface';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { fetchCelebrities } from '../../../redux/slices/admin/celebrityManagementSlice';
 import { clearMovieData, setCast, setDescription, setDuration, setGenres, setHorizontalPoster, setLanguages, setOtherImages, setPoster, setReleaseDate, setTitle, setTrailer, setVideos } from '../../../redux/slices/admin/movieManagementSlice';
@@ -86,7 +85,7 @@ const AddMovieForm = () => {
     }
     
     try{
-      const res = await addMovie(formData);
+      await addMovie(formData);
       dispatch(clearMovieData());
       navigate('/admin/movies');
     }catch(error){

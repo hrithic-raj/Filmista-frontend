@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import IGenre from "../../../interfaces/GenreInterface";
 import ILanguage from "../../../interfaces/LanguageInterface";
 import SearchBox from "../SearchBox";

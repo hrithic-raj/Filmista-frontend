@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { useAppDispatch } from "../../hooks/reduxHooks";
 import { checkMovieInWatchlist } from "../../redux/slices/user/movieSlice";
 
 interface CardProps {
@@ -21,13 +21,13 @@ const MovieCard: React.FC<CardProps> = ({
   genres,
   onRate,
   onView,
-  onAddToWatchlist,
+  // onAddToWatchlist,
 }) => {
 
   const dispatch = useAppDispatch();
   const [hovered, setHovered] = useState(false);
   const [hoveredStar, setHoveredStar] = useState<number | null>(null);
-  const {isInWatchlist} = useAppSelector((state)=> state.movie)
+  // const {isInWatchlist} = useAppSelector((state)=> state.movie)
 
   useEffect(()=>{
     if(id){

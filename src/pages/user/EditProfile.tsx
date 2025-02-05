@@ -5,10 +5,7 @@ import uploadSVG from '../../assets/svg/upload.svg'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
-import IUser from '../../interfaces/UserInterface'
-import { getProfile } from '../../api/userApis'
 import { getUserInfo, updateUserProfile } from '../../redux/slices/user/userSlice'
-import FileUpload from '../../components/Admin/FileUpload'
 import LoadingPage from '../../components/LoadingPage'
 
 const EditProfile: React.FC = () => {

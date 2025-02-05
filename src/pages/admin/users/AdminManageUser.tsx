@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import AdminUserCard from '../../../components/Admin/cards/AdminUserCard';
+import React, { useEffect } from 'react'
 import hrjLogo from '../../../assets/images/hrjlogo.png'
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { blockUserById, fetchUsers } from '../../../redux/slices/admin/userManagementSlice';
-import { RootState } from '@reduxjs/toolkit/query';
-import LoadingPage from '../../../components/LoadingPage';
 
 // type User = {
 //     _id: string;
@@ -15,10 +12,9 @@ import LoadingPage from '../../../components/LoadingPage';
 // };
 
 const AdminManageUser: React.FC = ()=>{
-    const [hovered, setHovered] = useState(false);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const {users, loading, error} = useAppSelector((state)=> state.userManagement)
+    const {users} = useAppSelector((state)=> state.userManagement)
 
     useEffect(()=>{
         dispatch(fetchUsers());    

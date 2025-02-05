@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import AdminUserCard from '../../../components/Admin/cards/AdminUserCard';
 import hrjLogo from '../../../assets/images/hrjlogo.png'
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { blockCelebrityById, fetchAllRequests, fetchCelebrities } from '../../../redux/slices/admin/celebrityManagementSlice';
-import { FaList, FaPlusCircle } from 'react-icons/fa';
+import { FaList } from 'react-icons/fa';
 import LoadingPage from '../../../components/LoadingPage';
-import AdminCelebrityCard from '../../../components/Admin/cards/AdminCelebrityCard';
 
 const AdminManageCelebrity: React.FC = () => {
-    const [hovered, setHovered] = useState(false);
     const [showBlocked, setShowBlocked] = useState(false);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();

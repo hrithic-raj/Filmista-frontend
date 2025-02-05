@@ -4,13 +4,10 @@ import hrj from '../../assets/images/hrjlogo.png'
 import editSVG from '../../assets/svg/edit.svg'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getProfile } from '../../api/userApis'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
-import IUser from '../../interfaces/UserInterface'
 import moment from 'moment'
 import { getUserInfo } from '../../redux/slices/user/userSlice'
 import { fetchWatchlist, removeFromWatchlist } from '../../redux/slices/user/watchlistSlice'
-import MovieCard from '../../components/cards/MovieCard'
 
 const Profile: React.FC = () => {
   const navigate = useNavigate();

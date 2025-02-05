@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useAppSelector } from '../../../hooks/reduxHooks';
 
 interface Part1Props {

@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axiosInstance from "../../../utils/axiosInstance";
 import IGenre from "../../../interfaces/GenreInterface";
-import { AppDispatch } from "../../store";
 
 interface genreState {
     genres: IGenre[];

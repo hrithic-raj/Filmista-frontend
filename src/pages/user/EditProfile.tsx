@@ -7,13 +7,14 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 import IUser from '../../interfaces/UserInterface'
 import { getProfile } from '../../api/userApis'
-import { getUserInfo } from '../../redux/slices/user/userSlice'
+import { getUserInfo, updateUserProfile } from '../../redux/slices/user/userSlice'
 import FileUpload from '../../components/Admin/FileUpload'
+import LoadingPage from '../../components/LoadingPage'
 
 const EditProfile: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const {user} = useAppSelector((state)=>state.user);
+  const {user, loading} = useAppSelector((state)=>state.user);
   const [isEditName, setIsEditName] = useState(false);
   const [isEditBio, setIsEditBio] = useState(false);
   const [name, setName] = useState<string>(user?.name || "");
@@ -50,17 +51,21 @@ const EditProfile: React.FC = () => {
     if (banner) formData.append("banner", banner);
 
     try {
-      alert("Profile updated successfully!");
-      console.log("hello");
+      await dispatch(updateUserProfile(formData));
+      setIsEditBio(false);
+      setIsEditName(false);
+      navigate('/profile')
     } catch (error) {
       console.error("Error updating profile:", error);
       alert("Error updating profile.");
     }
   }
+  if( loading) return <LoadingPage/>
+
   return (
     <>
       <div className='flex flex-col gap-6 pb-8'>
-        <div className=' bg-[#2c2c2c] pb-5 rounded-[15px]'>
+        <div className='flex flex-col items-center bg-[#2c2c2c] pb-2 rounded-[15px]'>
           <div className='reletive h-[200px] md:h-[250px] w-full'>
             <img src={typeof banner === 'string' ? (banner!=='' ? banner : DefaultBanner) : URL.createObjectURL(banner)} className='h-full w-full object-cover rounded-t-[15px]' alt="" />
             <div className='absolute rounded-full top-[25%] sm:top-[30%] md:top-[40%] ml-10 w-[100px] h-[100px] md:w-[120px] md:h-[120px]'>
@@ -68,7 +73,7 @@ const EditProfile: React.FC = () => {
                 <img src={typeof profilePicture === 'string' ? (profilePicture!==''? profilePicture : hrj) : URL.createObjectURL(profilePicture)} className='absolute top-0 left-0 object-cover rounded-full z-6 border w-full h-full' alt="" />
             </div>
           </div>
-          <div className='flex flex-col md:flex-row gap-10 justify-between pt-[50px] w-full'>
+          <div className='flex flex-col md:flex-row gap-10 justify-between pt-[50px] pb-[20px] w-full'>
             <div className='flex flex-col pt-[40px] pl-10 gap-5 md:w-[40%]'>
                 {!isEditName ?(
                     <div className='flex gap-5'>
@@ -82,7 +87,7 @@ const EditProfile: React.FC = () => {
                 ):(
                     <div className='flex gap-5'>
                         <span className="text-[#e9e9e9] text-xl font-bold font-['Golos Text']">Name</span>
-                        <input type="text" className="bg-[#2c2c2c] border rounded-md pl-2 text-[#e9e9e9] text-lg font-normal font-['Golos Text']" name="name" id="" value={name} />
+                        <input type="text" onChange={(e) => setName(e.target.value)} className="bg-[#2c2c2c] border rounded-md pl-2 text-[#e9e9e9] text-lg font-normal font-['Golos Text']" name="name" id="" value={name} />
                     </div>
                 )}
                 {
@@ -91,7 +96,7 @@ const EditProfile: React.FC = () => {
                             <div className='flex gap-5 pr-5'>
                                 <span className="text-[#e9e9e9] text-xl font-bold font-['Golos Text']">Bio</span>
                                 <span className="text-[#e9e9e9] text-base font-normal font-['Golos Text']">{user.bio}</span>
-                                <button onClick={()=>setIsEditBio(true)} className="flex items-center py-1.5 px-3 gap-1 bg-[#46cec2]/80 rounded-[10px]">
+                                <button onClick={()=>setIsEditBio(true)} className="flex items-center max-h-8 py-1.5 px-5 gap-1 bg-[#46cec2]/80 rounded-[10px]">
                                     <img src={editSVG} className='w-[10px]' alt="" />
                                     <span className="text-[#e9e9e9] text-[10px] font-normal font-['Geologica']">Edit</span>
                                 </button>
@@ -170,7 +175,10 @@ const EditProfile: React.FC = () => {
                         </button>
                     </div>
                 </div>
-                <div className='flex justify-end pr-[60px] pb-[30px]'>
+            </div>
+          </div>
+                <hr className='w-[88%] opacity-20'/>
+                <div className='flex w-full justify-end pr-[60px] py-[20px]'>
                     <button
                         onClick={() => handleSubmit()}
                         className="flex items-center py-3 px-6 gap-1 bg-[#46cec2]/80 rounded-[10px]"
@@ -179,8 +187,6 @@ const EditProfile: React.FC = () => {
                         <span className="text-[#e9e9e9] text-[18px] font-normal font-['Geologica']">Save Changes</span>
                     </button>
                 </div>
-            </div>
-          </div>
           
         </div>
       </div>

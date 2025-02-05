@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks'
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchMoviesById } from '../../../redux/slices/user/movieSlice';
+import { checkMovieInWatchlist, fetchMoviesById } from '../../../redux/slices/user/movieSlice';
 import MovieImg from '../../../assets/images/movie/joker.png';
 import starFilledSVG from '../../../assets/svg/star filled.svg';
 import starOutlineSVG from '../../../assets/svg/star stroke.svg';
@@ -17,19 +17,23 @@ import IGenre from '../../../interfaces/GenreInterface';
 import ILanguage from '../../../interfaces/LanguageInterface';
 import { CastMember } from '../../../interfaces/MovieInterface';
 import { submitRating } from '../../../redux/slices/user/ratingSlice';
+import { addToWatchlist, removeFromWatchlist } from '../../../redux/slices/user/watchlistSlice';
 
 
 const MoviePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const {selectedMovie} = useAppSelector((state)=> state.movie)
+  const {selectedMovie, isInWatchlist} = useAppSelector((state)=> state.movie)
   const averageRating = useAppSelector((state) => state.rating.rating);
   const {id} = useParams();
-  const [rating, setRating] = useState<number>(0);
+  const [rating, setRating] = useState<number>(averageRating|0);
   const [hover, setHover] = useState<number>(0);
   // console.log(selectedMovie)
   useEffect(()=>{
-    if(id) dispatch(fetchMoviesById(id))
+    if(id){
+      dispatch(fetchMoviesById(id))
+      dispatch(checkMovieInWatchlist(id))
+    }
   },[dispatch, rating])
   const genres = selectedMovie?.genres.slice(0,3).map((g : IGenre) => g.genre);
   const languages = selectedMovie?.languages.map((l : ILanguage) => l.language).join(', ');
@@ -45,6 +49,16 @@ const MoviePage: React.FC = () => {
   const handleCelebrity = (cast:CastMember)=>{
     if(cast.celebrityId!==''){
       navigate(`/celebrity/${cast._id}`)
+    }
+  }
+  const handleWatchlist = async()=>{
+    if(id){
+      if(!isInWatchlist){
+        await dispatch(addToWatchlist(id));
+      }else{
+        await dispatch(removeFromWatchlist(id));
+      }
+      await dispatch(checkMovieInWatchlist(id));
     }
   }
   return (
@@ -104,9 +118,9 @@ const MoviePage: React.FC = () => {
                 />
               ))}
             </div>
-            <button className="flex justify-center items-center gap-2 p-1 w-[177px] h-[45px] bg-[#46cec2]/80 rounded-[15px]">
+            <button onClick={handleWatchlist} className="flex justify-center items-center gap-2 p-1  h-[45px] bg-[#46cec2]/80 rounded-[15px]">
               <img src={RoundPlusSVG} alt="" />
-              <div className="text-[#e9e9e9] text-[15px] font-normal font-['Geologica']">Add to watchlist</div>
+              <div className="text-[#e9e9e9] text-[15px] font-normal font-['Geologica']">{isInWatchlist?'Remove from watchlist':'Add to watchlist'}</div>
             </button>
           </div>
           <hr className='lg:w-[80%] mx-4 opacity-20'/>

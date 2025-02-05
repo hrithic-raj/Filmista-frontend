@@ -75,11 +75,9 @@ export const addMovie = createAsyncThunk('movieManagement/addMovie', async (form
 
 export const updateMovie = createAsyncThunk('movieManagement/updateMovie', async ({movieId, formData}:{movieId: string; formData: FormData},{rejectWithValue})=>{
   try{
-      console.log(movieId,"movieId")
       const response = await axiosInstance.patch(`/admin/movies/${movieId}`,formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      console.log(response.data.updatedMovie, "result")
       return response.data.updatedMovie;
   }catch(error: any){
       console.error(error.response?.data?.message)

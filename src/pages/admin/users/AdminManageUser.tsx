@@ -49,7 +49,7 @@ const AdminManageUser: React.FC = ()=>{
                         <div className='bg-[rgb(44,44,44)] rounded-xl py-1'>
                             <tr className='w-[100%] flex items-center text-center'>
                                 <td onClick={()=>handleViewUser(user._id)} className='w-[20%] flex justify-center cursor-pointer'>
-                                    <img src={user.profilePicture || hrjLogo} className='w-12 h-12 rounded-full border' alt="" />
+                                    <img src={user.profilePicture || hrjLogo} className='w-12 h-12 object-cover rounded-full border' alt="" />
                                 </td>
                                 <td onClick={()=>handleViewUser(user._id)} className="w-[20%] text-gray-300 rounded-[16px] font-['Geologica'] cursor-pointer">{user.name}</td>
                                 <td className="w-[20%] text-gray-300 rounded-[16px] font-['Geologica']">{user.email}</td>

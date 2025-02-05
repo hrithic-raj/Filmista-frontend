@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/images/logo.png'
-import {ExploreSVG, HeartSVG, HomeSVG, LogoSVG, SettingsSVG, UserSVG} from '../assets/svg/SVGs';
+import {ExploreSVG, HeartSVG, HomeSVG, LogoSVG, SettingsSVG, StoreSVG, UserSVG} from '../assets/svg/SVGs';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { useEffect } from 'react';
 import { getUserInfo } from '../redux/slices/user/userSlice';
@@ -54,6 +54,10 @@ const Sidebar = () => {
                   <li onClick={()=>navigate('/profile')} className="lg:flex items-center space-x-3 hover:cursor-pointer">
                       <UserSVG/>
                       <span className="hidden lg:flex w-[64.30px] h-[23.63px] text-[#e9e9e9] text-base font-normal font-['Fredoka'] hover:text-[#5cfef0]">Profile</span>
+                  </li>
+                  <li onClick={()=>navigate('/store')} className="lg:flex items-center space-x-3 hover:cursor-pointer">
+                      <StoreSVG/>
+                      <span className="hidden lg:flex w-[64.30px] h-[23.63px] text-[#e9e9e9] text-base font-normal font-['Fredoka'] hover:text-[#5cfef0]">Store</span>
                   </li>
                   <li onClick={()=>navigate('/settings')} className="lg:flex items-center space-x-3 hover:cursor-pointer">
                       <SettingsSVG/>

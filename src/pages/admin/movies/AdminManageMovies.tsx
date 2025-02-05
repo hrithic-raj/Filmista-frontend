@@ -46,7 +46,7 @@ const AdminManageMovies: React.FC = () => {
               id={movie._id}
               image={movie.images.poster}
               title={movie.title}
-              rating={2.5}
+              rating={movie.rating}
               genres={movie.genres.map((g : IGenre) => g.genre)}
               viewMoview={handleViewMoview}
               onEditMovie={()=>handleEditMovie(movie._id)}

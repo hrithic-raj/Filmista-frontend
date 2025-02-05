@@ -11,6 +11,7 @@ import MovieCast from '../../pages/user/movies/MovieCast';
 import MovieReviews from '../../pages/user/movies/MovieReviews';
 import Profile from '../../pages/user/Profile';
 import EditProfile from '../../pages/user/EditProfile';
+import Store from '../../pages/admin/users/Store';
 
 const UserRoutes: RouteObject[] = [
   // { path: '/language-selection', element: <Signin/>},
@@ -26,6 +27,7 @@ const UserRoutes: RouteObject[] = [
   { path: '/select-languages', element: <LanguageSelector />},
   { path: '/profile', element: <Template><Profile /></Template>},
   { path: '/edit-profile', element: <Template><EditProfile /></Template>},
+  { path: '/store', element: <Template><Store /></Template>},
 
 ];
 

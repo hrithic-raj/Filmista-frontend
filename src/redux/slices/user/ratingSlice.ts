@@ -11,7 +11,6 @@ const initialState: RatingState = {
     rating: 0,
 };
 
-// Fetch movie ratings
 export const fetchMovieRatings = createAsyncThunk(
   "ratings/fetchMovieRatings",
   async (movieId: string) => {
@@ -20,7 +19,6 @@ export const fetchMovieRatings = createAsyncThunk(
   }
 );
 
-// Submit or update a rating
 export const submitRating = createAsyncThunk(
   "ratings/submitRating",
   async ({ movieId, rating }: { movieId: string; rating: number }) => {

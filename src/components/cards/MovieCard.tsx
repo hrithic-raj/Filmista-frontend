@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { checkMovieInWatchlist } from "../../redux/slices/user/movieSlice";
 
 interface CardProps {
   id: string;
@@ -8,7 +10,7 @@ interface CardProps {
   genres: string[];
   onRate: (rating: number ,id:string) => void;
   onView: (id: string) => void;
-  onAddToWatchlist: () => void;
+  onAddToWatchlist: (id: string) => void;
 }
 
 const MovieCard: React.FC<CardProps> = ({
@@ -22,9 +24,17 @@ const MovieCard: React.FC<CardProps> = ({
   onAddToWatchlist,
 }) => {
 
+  const dispatch = useAppDispatch();
   const [hovered, setHovered] = useState(false);
   const [hoveredStar, setHoveredStar] = useState<number | null>(null);
+  const {isInWatchlist} = useAppSelector((state)=> state.movie)
 
+  useEffect(()=>{
+    if(id){
+      dispatch(checkMovieInWatchlist(id))
+    }
+  },[dispatch])
+  
   return (
     <div
       key={id}
@@ -39,13 +49,13 @@ const MovieCard: React.FC<CardProps> = ({
       <img
         src={image}
         alt={title}
-        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 hover:opacity-60"
       />
 
       {/* Hover Overlay */}
       <div
         className={`absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent ${
-          hovered ? "h-3/4" : "h-20"
+          hovered ? "h-1/2" : "h-20"
         } transition-all duration-300`}
       >
         <div
@@ -102,15 +112,15 @@ const MovieCard: React.FC<CardProps> = ({
                 >
                   View Movie
                 </button>
-                <button
+                {/* <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    onAddToWatchlist();
+                    onAddToWatchlist(id);
                   }}
                   className="px-4 py-2 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
                 >
-                  Add to Watchlist
-                </button>
+                  {isInWatchlist?'Remove from watchlist':'Add to watchlist'}
+                </button> */}
               </div>
             </>
           )}

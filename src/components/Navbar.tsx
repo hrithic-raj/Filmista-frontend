@@ -62,7 +62,7 @@ const Navbar = () => {
           <img
             src={user?.profilePicture || hrjLogo}
             alt="User Avatar"
-            className="h-[40px] rounded-[215.70px] border-2"
+            className="h-[45px] w-[45px] object-cover rounded-full border-2"
           />
           <div className='relative flex justify-center items-center'>
             <span className="hidden lg:flex h-7 px-2 max-w-[150px] min-w-[80px] text-center overflow-hidden text-[#e9e9e9] text-lg font-normal font-['Geologica'] select-none">{user ? user.name : "Loading..."}</span>

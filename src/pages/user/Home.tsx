@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react';
 import '../../App.css';
 import MovieCard from '../../components/cards/MovieCard';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import { fetchAllMovies } from '../../redux/slices/user/movieSlice';
+import { checkMovieInWatchlist, fetchAllMovies } from '../../redux/slices/user/movieSlice';
 import { useNavigate } from 'react-router-dom';
 import IGenre from '../../interfaces/GenreInterface';
 import { submitRating } from '../../redux/slices/user/ratingSlice';
+import { addToWatchlist, removeFromWatchlist } from '../../redux/slices/user/watchlistSlice';
 
 const HomePage: React.FC = () => {
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
   const navigate = useNavigate();
   const dispatch= useAppDispatch();
-  const { movies} = useAppSelector((state)=>state.movie);
+  const { movies , isInWatchlist} = useAppSelector((state)=>state.movie);
   const [star, setStar] = useState(0);
   useEffect(()=>{
     dispatch(fetchAllMovies());
@@ -44,15 +45,22 @@ const HomePage: React.FC = () => {
     setStar(rating);
   };
 
-  const handleAddToWatchlist = () => {
-    console.log("Added to Watchlist");
+  const handleAddToWatchlist = async (id: string) => {
+    if(id){
+      await dispatch(checkMovieInWatchlist(id));
+      if(!isInWatchlist){
+        await dispatch(addToWatchlist(id));
+      }else{
+        await dispatch(removeFromWatchlist(id));
+      }
+    }
   };
   return (
       <div className="mb-5">
         {/* Slider */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 w-full max-h-full mb-3">
           {/* Movie Slider */}
-          <div className="relative bg-[#2C2C2C] rounded-[36px] shadow-lg w-full mb:w-[957px] ">
+          <div  onContextMenu={(e) => e.preventDefault()} className="relative bg-[#2C2C2C] rounded-[36px] shadow-lg w-full mb:w-[957px] ">
               <img
                 src={movies && lastFiveMovies.length>0 ? lastFiveMovies[currentMovieIndex].images?.horizontalPoster: ''}
                 alt={movies && lastFiveMovies.length>0 ? lastFiveMovies[currentMovieIndex].title: ''}
@@ -115,7 +123,7 @@ const HomePage: React.FC = () => {
                     image={movie.images?.poster}
                     title={movie.title}
                     rating={movie.rating}
-                    genres={movie.genres.map((g : IGenre) => g.genre)}
+                    genres={movie.genres.slice(0,2).map((g : IGenre) => g.genre)}
                     onRate={handleRate}
                     onView={handleViewMovie}
                     onAddToWatchlist={handleAddToWatchlist}

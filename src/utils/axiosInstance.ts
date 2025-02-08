@@ -4,7 +4,8 @@ import axios, { AxiosInstance } from "axios";
 
 const axiosInstance: AxiosInstance = axios.create({
   // baseURL: "http://localhost:5000/api",
-  baseURL: "http://54.227.151.80:5000/api",
+  // baseURL: "http://54.227.151.80:5000/api",
+  baseURL: "https://filmista.ddns.net/api",
   withCredentials: true,
 });
 

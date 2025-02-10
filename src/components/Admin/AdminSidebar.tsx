@@ -22,8 +22,8 @@ const AdminSidebar: React.FC = () => {
     { name: 'Movies', path: '/admin/movies', icon: <FaFilm /> },
     { name: 'Genres', path: '/admin/genres', icon: <FaCamera/> },
     { name: 'Language', path: '/admin/language', icon: <FaLanguage/> },
-    { name: 'Analytics', path: '/admin/analytics', icon: <FaChartPie /> },
-    { name: 'Settings', path: '/admin/settings', icon: <FaCog /> },
+    { name: 'Analytics', path: '/admin', icon: <FaChartPie /> },
+    { name: 'Settings', path: '/admin', icon: <FaCog /> },
   ];
 
   return (

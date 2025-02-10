@@ -46,6 +46,11 @@ const AdminManageGenres: React.FC = () => {
       <div className={`fixed inset-0 bg-gray-900 bg-opacity-20 backdrop-blur-sm flex items-center justify-center z-45 ${
     loading ? 'block' : 'hidden'
   }`}/>
+  {loading && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+          <LoadingPage />
+        </div>
+      )}
       <div className="grid grid-cols-1 lg:grid-rows-2 lg:grid-cols-[1fr,3fr] max-h-1/2 gap-4 mb-8">
         <div className="p-7 bg-[rgb(44,44,44)] shadow rounded-lg hover:shadow-md transition">
           <h2 className="text-xl text-center lg:text-left font-semibold text-gray-300">Total Genres</h2>
@@ -124,7 +129,6 @@ const AdminManageGenres: React.FC = () => {
         />
       )}
 
-      {loading&& <LoadingPage/>}
     </div>
   );
 };

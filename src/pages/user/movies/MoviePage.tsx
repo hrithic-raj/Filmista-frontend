@@ -18,12 +18,13 @@ import ILanguage from '../../../interfaces/LanguageInterface';
 import { CastMember } from '../../../interfaces/MovieInterface';
 import { submitRating } from '../../../redux/slices/user/ratingSlice';
 import { addToWatchlist, removeFromWatchlist } from '../../../redux/slices/user/watchlistSlice';
+import LoadingPage from '../../../components/LoadingPage';
 
 
 const MoviePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const {selectedMovie, isInWatchlist} = useAppSelector((state)=> state.movie)
+  const {selectedMovie, isInWatchlist, loading, watchlistLoading} = useAppSelector((state)=> state.movie)
   const averageRating = useAppSelector((state) => state.rating.rating);
   const {id} = useParams();
   const [rating, setRating] = useState<number>(averageRating|0);
@@ -34,7 +35,7 @@ const MoviePage: React.FC = () => {
       dispatch(fetchMoviesById(id))
       dispatch(checkMovieInWatchlist(id))
     }
-  },[dispatch, rating])
+  },[ rating, id])
   const genres = selectedMovie?.genres.slice(0,3).map((g : IGenre) => g.genre);
   const languages = selectedMovie?.languages.map((l : ILanguage) => l.language).join(', ');
   const director = selectedMovie?.cast.filter(c => c.role === 'Director');
@@ -61,9 +62,16 @@ const MoviePage: React.FC = () => {
       await dispatch(checkMovieInWatchlist(id));
     }
   }
+  // if(loading) return <LoadingPage/>
+
   return (
     <>
       <div className='flex flex-col mb-10'>
+      {loading && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+          <LoadingPage />
+        </div>
+      )}
         <div className='mt-2 mb-4 flex flex-col gap-1'>
           <span className="text-white text-5xl font-bold font-['Gelasio']">{selectedMovie && selectedMovie.title}</span>
           <div className="text-[#46cec2] text-lg font-bold font-['Gelasio']">{selectedMovie && selectedMovie.releaseDate}</div>
@@ -77,7 +85,7 @@ const MoviePage: React.FC = () => {
               <span className="text-white text-sm font-bold font-['Instrument Sans']">RATING</span>
               <div className='flex'>
                 <img src={starFilledSVG} className='mr-2 w-7' alt="" />
-                <span className="text-white text-2xl font-bold font-['Instrument Sans']">{selectedMovie?.rating || 0}</span>
+                <span className="text-white text-2xl font-bold font-['Instrument Sans']">{selectedMovie?.rating.toFixed(1) || 0}</span>
                 <span className="text-white/70 text-2xl font-bold font-['Instrument Sans']">/5</span>
               </div>
             </div>
@@ -120,7 +128,7 @@ const MoviePage: React.FC = () => {
             </div>
             <button onClick={handleWatchlist} className="flex justify-center items-center gap-2 p-1  h-[45px] bg-[#46cec2]/80 rounded-[15px]">
               <img src={RoundPlusSVG} alt="" />
-              <div className="text-[#e9e9e9] text-[15px] font-normal font-['Geologica']">{isInWatchlist?'Remove from watchlist':'Add to watchlist'}</div>
+              <div className="text-[#e9e9e9] text-[15px] font-normal font-['Geologica']">{watchlistLoading ? 'Loading':(isInWatchlist?'Remove from watchlist':'Add to watchlist')}</div>
             </button>
           </div>
           <hr className='lg:w-[80%] mx-4 opacity-20'/>

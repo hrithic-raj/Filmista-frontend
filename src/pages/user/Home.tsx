@@ -7,12 +7,13 @@ import { useNavigate } from 'react-router-dom';
 import IGenre from '../../interfaces/GenreInterface';
 import { submitRating } from '../../redux/slices/user/ratingSlice';
 import { addToWatchlist, removeFromWatchlist } from '../../redux/slices/user/watchlistSlice';
-
+import banner from '../../assets/images/naruto.jpg'
+import LoadingPage from '../../components/LoadingPage';
 const HomePage: React.FC = () => {
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
   const navigate = useNavigate();
   const dispatch= useAppDispatch();
-  const { movies , isInWatchlist} = useAppSelector((state)=>state.movie);
+  const { movies , isInWatchlist, loading} = useAppSelector((state)=>state.movie);
   const [star, setStar] = useState(0);
   useEffect(()=>{
     dispatch(fetchAllMovies());
@@ -44,7 +45,7 @@ const HomePage: React.FC = () => {
     await dispatch(submitRating({ movieId: id, rating }));
     setStar(rating);
   };
-
+  
   const handleAddToWatchlist = async (id: string) => {
     if(id){
       await dispatch(checkMovieInWatchlist(id));
@@ -57,12 +58,17 @@ const HomePage: React.FC = () => {
   };
   return (
       <div className="mb-5">
+        {loading && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+          <LoadingPage />
+        </div>
+      )}
         {/* Slider */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 w-full max-h-full mb-3">
           {/* Movie Slider */}
           <div  onContextMenu={(e) => e.preventDefault()} className="relative bg-[#2C2C2C] rounded-[36px] shadow-lg w-full mb:w-[957px] ">
               <img
-                src={movies && lastFiveMovies.length>0 ? lastFiveMovies[currentMovieIndex].images?.horizontalPoster: ''}
+                src={movies && (lastFiveMovies.length>0 ? lastFiveMovies[currentMovieIndex].images?.horizontalPoster:banner)}
                 alt={movies && lastFiveMovies.length>0 ? lastFiveMovies[currentMovieIndex].title: ''}
                 className="rounded-[36px] w-full h-[364px] object-cover"
               />
@@ -90,7 +96,7 @@ const HomePage: React.FC = () => {
 
           {/* Controllers */}
           <div className="flex md:flex-col gap-4 rounded-full bg-[#2C2C2C] items-center justify-center pt-2 pb-2">
-            {lastFiveMovies.length>0 && lastFiveMovies.map((movie, index) => (
+            {lastFiveMovies.length>0 ? lastFiveMovies.map((movie, index) => (
               <button
                 key={movie._id}
                 onClick={() => handleSelectMovie(index)}
@@ -101,12 +107,25 @@ const HomePage: React.FC = () => {
                 }`}
               >
                 <img
-                  src={movie.images?.horizontalPoster}
+                  src={movie ? movie.images?.horizontalPoster : banner}
                   alt={movie.title}
                   className="rounded-full object-cover w-full h-full"
                 />
               </button>
-            ))}
+            )):(
+              [1,2,3,4,5].map(val=>(
+              <button
+                key={val}
+                className={`relative flex items-center justify-center rounded-full shadow-lg w-12 h-12 border-gray-500 border-1`}
+              >
+                <img
+                  src={banner}
+                  alt=""
+                  className="rounded-full object-cover w-full h-full"
+                />
+              </button>
+              ))
+            )}
           </div>
         </div>
 

@@ -3,6 +3,7 @@ import hrjLogo from '../../../assets/images/hrjlogo.png'
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { blockUserById, fetchUsers } from '../../../redux/slices/admin/userManagementSlice';
+import LoadingPage from '../../../components/LoadingPage';
 
 // type User = {
 //     _id: string;
@@ -14,7 +15,7 @@ import { blockUserById, fetchUsers } from '../../../redux/slices/admin/userManag
 const AdminManageUser: React.FC = ()=>{
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const {users} = useAppSelector((state)=> state.userManagement)
+    const {users, loading} = useAppSelector((state)=> state.userManagement)
 
     useEffect(()=>{
         dispatch(fetchUsers());    
@@ -28,6 +29,11 @@ const AdminManageUser: React.FC = ()=>{
     }
   return (
     <div className=''>
+        {loading && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+          <LoadingPage />
+        </div>
+      )}
         <h3 className='mb-5 font-fredoka text-2xl text-white'>Users</h3>
         <div className='flex flex-col gap-5'>
             <div className='bg-[rgb(44,44,44)] rounded-xl py-3 '>

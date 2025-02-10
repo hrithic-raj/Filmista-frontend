@@ -58,12 +58,12 @@ const Profile: React.FC = () => {
               <div className='relative'>
                 <div className='absolute top-6 left-6 md:top-5 md:left-5 bg-gradient-to-tr from-black rounded-full w-[150px] h-[150px]  md:w-[200px] md:h-[200px]'/>
                 <img src={user?.profilePicture || hrj} className='absolute top-6 left-6 md:top-5 md:left-5 rounded-full object-cover z-6 border w-[150px] h-[150px] md:w-[200px] md:h-[200px]' alt="" onContextMenu={(e) => e.preventDefault()} />
-                {/* <img src="https://itspi3141.github.io/discord-fake-avatar-decorations/public/decorations/wizards_staff.png" className='absolute top-0 object-cover md:w-[240px] md:h-[240px]' alt="" onContextMenu={(e) => e.preventDefault()} /> */}
+                <img src="https://itspi3141.github.io/discord-fake-avatar-decorations/public/decorations/wizards_staff.png" className='absolute top-0 object-cover md:w-[240px] md:h-[240px]' alt="" onContextMenu={(e) => e.preventDefault()} />
                 {/* <img src="https://itspi3141.github.io/discord-fake-avatar-decorations/public/decorations/hood_crimson.png" className='absolute top-0 object-cover w-[190px] h-[190px] md:w-[240px] md:h-[240px]' alt="" onContextMenu={(e) => e.preventDefault()} /> */}
                 {/* <img src="https://itspi3141.github.io/discord-fake-avatar-decorations/public/decorations/santa_cat_ears.png" className='absolute top-0 rounded-full object-cover w-[190px] h-[190px] md:w-[240px] md:h-[240px]' alt="" onContextMenu={(e) => e.preventDefault()} /> */}
                 {/* <img src="https://itspi3141.github.io/discord-fake-avatar-decorations/public/decorations/sakura_gyoiko.png" className='absolute top-0 object-cover w-[190px] h-[190px] md:w-[240px] md:h-[240px]' alt="" onContextMenu={(e) => e.preventDefault()} /> */}
                 {/* <img src="https://itspi3141.github.io/discord-fake-avatar-decorations/public/decorations/lofi_girl_outfit.png" className='absolute top-0 object-cover w-[190px] h-[190px] md:w-[240px] md:h-[240px]' alt="" onContextMenu={(e) => e.preventDefault()} /> */}
-                <img src="https://itspi3141.github.io/discord-fake-avatar-decorations/public/decorations/playful_lofi_cat.png" className='absolute top-0 object-cover w-[190px] h-[190px] md:w-[240px] md:h-[240px]' alt="" onContextMenu={(e) => e.preventDefault()} />
+                {/* <img src="https://itspi3141.github.io/discord-fake-avatar-decorations/public/decorations/playful_lofi_cat.png" className='absolute top-0 object-cover w-[190px] h-[190px] md:w-[240px] md:h-[240px]' alt="" onContextMenu={(e) => e.preventDefault()} /> */}
               </div>
             </div>
         </div>

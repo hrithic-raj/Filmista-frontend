@@ -7,6 +7,7 @@ interface MovieState {
   selectedMovie: IMovie | null;
   isInWatchlist: Boolean;
   loading: Boolean;
+  watchlistLoading: Boolean;
   error: string | null;
 }
 
@@ -15,6 +16,7 @@ const initialState: MovieState = {
   selectedMovie: null,
   isInWatchlist: false,
   loading: false,
+  watchlistLoading: false,
   error: null,
 };
 
@@ -74,9 +76,16 @@ const movieSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     })
+    .addCase(checkMovieInWatchlist.pending, (state)=>{
+      state.watchlistLoading = true;
+    })
     .addCase(checkMovieInWatchlist.fulfilled, (state, action: PayloadAction<Boolean>)=>{
-      state.loading = false;
+      state.watchlistLoading = false;
       state.isInWatchlist = action.payload;
+    })
+    .addCase(checkMovieInWatchlist.rejected, (state, action: PayloadAction<any>)=>{
+      state.watchlistLoading = true;
+      state.error = action.payload;
     })
   }
 });

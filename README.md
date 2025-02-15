@@ -1,50 +1,66 @@
-# React + TypeScript + Vite
+Filmmista
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Filmmista is a platform where users can rate movies, earn coins, and customize their profiles with animated frames. The project consists of two parts: frontend and backend.
 
-Currently, two official plugins are available:
+📌 Filmmista Frontend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The frontend is built using React and Tailwind CSS, providing an interactive UI for movie ratings, profile customization, and a coin-based reward system.
 
-## Expanding the ESLint configuration
+Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Movie Ratings: Users can rate movies and provide feedback.
 
-- Configure the top-level `parserOptions` property like this:
+Coin System: Earn coins by rating movies and use them to purchase animated profile frames.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Profile Customization: Apply purchased animated frames to personalize user profiles.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Secure Authentication: Login and register securely with authentication.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Tech Stack
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Frontend: React, Tailwind CSS
+
+State Management: Context API / Redux (if applicable)
+
+API Communication: Axios
+
+Hosting: Vercel / Netlify
+
+Setup & Installation
+
+Prerequisites
+
+Make sure you have the following installed:
+
+Node.js
+
+Git
+
+Steps
+
+Clone the repository:
+
+git clone https://github.com/yourusername/filmmista-frontend.git
+cd filmmista-frontend
+
+Install dependencies:
+
+npm install
+
+Set up environment variables:
+
+Create a .env file and add the required variables (e.g., API base URL, authentication keys, etc.).
+
+Start the development server:
+
+npm run dev
+
+Open http://localhost:3000 in your browser.
+
+Deployment
+
+Build the React app:
+
+npm run build
+
+Deploy to a hosting platform (e.g., Vercel, Netlify).

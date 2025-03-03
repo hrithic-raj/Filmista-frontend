@@ -5,5 +5,10 @@
 body {
   margin: 0;
   background-color: #212121;
-  overflow: hidden;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }

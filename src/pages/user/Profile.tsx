@@ -13,127 +13,151 @@ const Profile: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [active, setActive] = useState(1);
-   const {user} = useAppSelector((state)=>state.user);
-   const {movies: watchlistMovies} = useAppSelector((state)=>state.watchlist);
-   
-   useEffect(()=>{
-     dispatch(getUserInfo())
-     dispatch(fetchWatchlist());
-   },[dispatch])
-  
-  const handleRemoveFromWatchlist = async (id:string)=>{
-    if(id) await dispatch(removeFromWatchlist(id))
-  }
+  const { user } = useAppSelector((state) => state.user);
+  const { movies: watchlistMovies } = useAppSelector((state) => state.watchlist);
+
+  useEffect(() => {
+    dispatch(getUserInfo());
+    dispatch(fetchWatchlist());
+  }, [dispatch]);
+
+  const handleRemoveFromWatchlist = async (id: string) => {
+    if (id) await dispatch(removeFromWatchlist(id));
+  };
+
   return (
-    <>
-      <div className='flex flex-col gap-6 sm:pb-8 pb-[100px]'>
-        <div className='reletive max-h-screen bg-[#2c2c2c] pb-5 rounded-[15px]'>
-          <div className='h-[200px] md:h-[250px] w-full'>
-            <img src={user?.banner || BannerImg} className='h-full w-full object-cover rounded-t-[15px]' alt="" onContextMenu={(e) => e.preventDefault()}/>
-          </div>
-          <div className='flex justify-between py-2 md:py-5'>
-            <div className='flex flex-col pl-2 pt-10 md:pt-2 md:pb-5 md:pl-[250px] mt-[80px] md:mt-0 space-y-1'>
-              <span className="text-white text-4xl font-normal font-['Goldman']">{user?.name}</span>
-              <span className="text-[#e9e9e9] text-base font-normal font-['Golos Text']">Since {moment(user?.createdAt).format("MMM-YYYY")}</span>
-              { user?.bio ? (
-                <span className="w-[300px] md:w-[433px] text-[#e9e9e9] text-[10px] font-normal font-['Geologica']">
-                {user?.bio}
-              </span>
-              ):(
-                <span className="w-[300px] md:w-[433px] text-[#e9e9e9] text-[10px] font-normal font-['Geologica']">
-                I'm a movie lover, i love to watch movies in any language
-                I love anime too, they are the best when it comes to stories
-              </span>
-              )
-              }
-            </div>
-            <div className='pt-5 pr-5'>
-              <button onClick={()=>navigate(`/edit-profile`)} className="flex py-1.5 px-4 bg-[#46cec2]/80 rounded-[10px]">
-                <img src={editSVG} alt="" />
-                <span className="text-[#e9e9e9] text-[15px] font-normal font-['Geologica']">Edit</span>
-              </button>
-            </div>
-          </div>
-            <div className='absolute top-[25%] sm:top-[30%] md:top-[40%] ml-2 w-[190px] h-[190px] md:w-[240px] md:h-[240px]'>
-              <div className='relative'>
-                <div className='absolute top-6 left-6 md:top-5 md:left-5 bg-gradient-to-tr from-black rounded-full w-[150px] h-[150px]  md:w-[200px] md:h-[200px]'/>
-                <img src={user?.profilePicture || hrj} className='absolute top-6 left-6 md:top-5 md:left-5 rounded-full object-cover z-6 border w-[150px] h-[150px] md:w-[200px] md:h-[200px]' alt="" onContextMenu={(e) => e.preventDefault()} />
-                <img src="https://itspi3141.github.io/discord-fake-avatar-decorations/public/decorations/wizards_staff.png" className='absolute top-0 object-cover md:w-[240px] md:h-[240px]' alt="" onContextMenu={(e) => e.preventDefault()} />
-                {/* <img src="https://itspi3141.github.io/discord-fake-avatar-decorations/public/decorations/hood_crimson.png" className='absolute top-0 object-cover w-[190px] h-[190px] md:w-[240px] md:h-[240px]' alt="" onContextMenu={(e) => e.preventDefault()} /> */}
-                {/* <img src="https://itspi3141.github.io/discord-fake-avatar-decorations/public/decorations/santa_cat_ears.png" className='absolute top-0 rounded-full object-cover w-[190px] h-[190px] md:w-[240px] md:h-[240px]' alt="" onContextMenu={(e) => e.preventDefault()} /> */}
-                {/* <img src="https://itspi3141.github.io/discord-fake-avatar-decorations/public/decorations/sakura_gyoiko.png" className='absolute top-0 object-cover w-[190px] h-[190px] md:w-[240px] md:h-[240px]' alt="" onContextMenu={(e) => e.preventDefault()} /> */}
-                {/* <img src="https://itspi3141.github.io/discord-fake-avatar-decorations/public/decorations/lofi_girl_outfit.png" className='absolute top-0 object-cover w-[190px] h-[190px] md:w-[240px] md:h-[240px]' alt="" onContextMenu={(e) => e.preventDefault()} /> */}
-                {/* <img src="https://itspi3141.github.io/discord-fake-avatar-decorations/public/decorations/playful_lofi_cat.png" className='absolute top-0 object-cover w-[190px] h-[190px] md:w-[240px] md:h-[240px]' alt="" onContextMenu={(e) => e.preventDefault()} /> */}
-              </div>
-            </div>
+    <div className="flex flex-col gap-6 sm:pb-8 pb-[100px]">
+      {/* Banner Section */}
+      <div className="relative h-full bg-[#2c2c2c] pb-5 rounded-[15px]">
+        <div className="h-[200px] md:h-[250px] w-full">
+          <img
+            src={user?.banner || BannerImg}
+            className="h-full w-full object-cover rounded-t-[15px]"
+            alt=""
+            onContextMenu={(e) => e.preventDefault()}
+          />
         </div>
-        <div className='flex gap-3'>
-          <div className='flex flex-col gap-3'>
-            <button onClick={()=>setActive(1)} className={`flex flex-col justify-center items-center w-[261px] h-[143px] bg-[#2c2c2c] rounded-[15px] ${active==1?'border' : 'border-0'}`}>
-              <span className="text-white text-xl font-normal font-geologica">Ratings</span>
-              <span className="text-[#46cec2] text-5xl font-normal font-['Geologica']">08</span>
-            </button>
-            <button onClick={()=>setActive(2)} className={`flex flex-col justify-center items-center w-[261px] h-[143px] bg-[#2c2c2c] rounded-[15px] ${active==2?'border' : 'border-0'}`}>
-              <span className="text-white text-xl font-normal font-geologica">Watchlist</span>
-              <span className="text-[#46cec2] text-5xl font-normal font-['Geologica']">{watchlistMovies.length<10?`0${watchlistMovies.length}`:watchlistMovies.length}</span>
-            </button>
-            <button onClick={()=>setActive(3)} className={`flex flex-col justify-center items-center w-[261px] h-[143px] bg-[#2c2c2c] rounded-[15px] ${active==3?'border' : 'border-0'}`}>
-              <span className="text-white text-xl font-normal font-geologica">Reviews</span>
-              <span className="text-[#46cec2] text-5xl font-normal font-['Geologica']">13</span>
-            </button>
+
+        {/* Profile Picture */}
+        {/* <div className="relative w-full border"> */}
+          <div className="absolute top-[28%] left-2 md:left-[10px] w-[190px] h-[190px] md:w-[240px] md:h-[240px]">
+            <div className="relative w-full h-full flex justify-center items-center">
+              <div className='relative w-[150px] h-[150px] md:w-[200px] md:h-[200px]'>
+                {/* Profile Picture Background */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-black rounded-full" />
+                
+                {/* Profile Image */}
+                <img
+                  src={user?.profilePicture || hrj}
+                  className="absolute inset-0 w-full h-full rounded-full object-cover border"
+                  alt=""
+                  onContextMenu={(e) => e.preventDefault()}
+                />
+              </div>
+
+              {/* Animated Frame */}
+              <img
+                src="https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/images/decorations/snakes_hug.png"
+                className="absolute inset-0 w-full h-full object-cover "
+                alt=""
+                onContextMenu={(e) => e.preventDefault()}
+              />
+            </div>
           </div>
-          <div className='bg-[#2c2c2c] rounded-[15px] w-full max-h-[40rem] overflow-auto custom-scrollbar'>
-            {
-              active===1 && (
-                <div key={1} className='flex flex-col'>
-                  <span className='text-2xl text-white text-center'>Ratings</span>
-                  <div className='grid md:grid-cols-3 lg:grid-cols-4 gap-3 justify-items-center place-items-center p-4'>
-                    {[1,2,3,4,5,6,32,3,24,4,4,5,6,87,54,3,2].map(m=>(
-                      <div key={m} className='w-[150px] h-[200px] rounded-md'>
-                        <img src={PosterImg} className='w-full h-full object-cover rounded-md' alt="" />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )
-            }
-            {
-              active===2 && (
-                <div key={2} className='flex flex-col'>
-                  <span className='text-2xl text-white text-center'>Watchlist</span>
-                  <div className='grid md:grid-cols-3 lg:grid-cols-4 gap-3 justify-items-center place-items-center p-4'>
-                    {watchlistMovies && watchlistMovies.map(movie=>(
-                      <div key={movie._id} className='group w-[150px] h-[200px] rounded-md'>
-                        <img src={movie.movieId.images.poster} onClick={()=>navigate(`/movies/${movie.movieId._id}`)} className='w-full h-full object-cover rounded-md cursor-pointer' alt="" />
-                        <button
-                          onClick={()=>handleRemoveFromWatchlist(movie.movieId._id)}
-                          className='hidden group-hover:flex justify-center items-center h-10 w-full bg-[#46cec2] text-lg text-black font-semibold rounded-b-md transition-transform duration-150'
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )
-            }
-            {
-              active===3 && (
-                <div key={3} className='flex flex-col'>
-                  <span className='text-2xl text-white text-center'>Reviews</span>
-                  <div className='grid md:grid-cols-3 lg:grid-cols-4 gap-3 justify-items-center place-items-center p-4'>
-                      <div className='w-[150px] h-[200px] rounded-md'>
-                        <img src={PosterImg} className='w-full h-full object-cover rounded-md' alt="" />
-                      </div>
-                  </div>
-                </div>
-              )
-            }
+        {/* </div> */}
+
+        {/* User Info */}
+        <div className="flex justify-between pt-[100px] pb-5 md:pb-10 md:pt-5 pl-5 md:pl-[270px]">
+          <div className="flex flex-col space-y-1">
+            <span className="text-white text-4xl font-['Goldman']">{user?.name}</span>
+            <span className="text-[#e9e9e9] text-base font-['Golos Text']">Since {moment(user?.createdAt).format("MMM-YYYY")}</span>
+            <span className="w-[300px] md:w-[433px] text-[#e9e9e9] text-[10px] font-['Geologica']">
+              {user?.bio || "I'm a movie lover, I love to watch movies in any language. I love anime too; they have the best stories."}
+            </span>
+          </div>
+          <div className='pr-6 pt-2'>
+            <button
+              onClick={() => navigate(`/edit-profile`)}
+              className="flex items-center py-1.5 px-4 bg-[#46cec2]/80 rounded-[10px]"
+            >
+              <img src={editSVG} alt="" className='hidden sm:flex'/>
+              <span className="text-[#e9e9e9] text-[15px] font-['Geologica']">Edit</span>
+            </button>
           </div>
         </div>
       </div>
-    </>
-  )
-}
 
-export default Profile
+      {/* Stats & Watchlist Section */}
+      <div className="flex gap-3">
+        {/* Sidebar Buttons */}
+        <div className="flex flex-col gap-3">
+          {["Ratings", "Watchlist", "Reviews"].map((label, index) => (
+            <button
+              key={index}
+              onClick={() => setActive(index + 1)}
+              className={`flex flex-col justify-center items-center w-[261px] h-[143px] bg-[#2c2c2c] rounded-[15px] ${
+                active === index + 1 ? "border" : "border-0"
+              }`}
+            >
+              <span className="text-white text-xl font-geologica">{label}</span>
+              <span className="text-[#46cec2] text-5xl font-['Geologica']">
+                {index === 1 ? watchlistMovies.length.toString().padStart(2, "0") : "08"}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        {/* Active Content Section */}
+        <div className="bg-[#2c2c2c] rounded-[15px] w-full max-h-[40rem] overflow-auto custom-scrollbar">
+          {active === 1 && (
+            <div key={1} className="flex flex-col">
+              <span className="text-2xl text-white text-center">Ratings</span>
+              <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-3 justify-items-center p-4">
+                {[1, 2, 3, 4, 5, 6].map((m) => (
+                  <div key={m} className="w-[150px] h-[200px] rounded-md">
+                    <img src={PosterImg} className="w-full h-full object-cover rounded-md" alt="" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {active === 2 && (
+            <div key={2} className="flex flex-col">
+              <span className="text-2xl text-white text-center">Watchlist</span>
+              <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-3 justify-items-center p-4">
+                {watchlistMovies.map((movie) => (
+                  <div key={movie._id} className="group w-[150px] h-[200px] rounded-md">
+                    <img
+                      src={movie.movieId.images.poster}
+                      onClick={() => navigate(`/movies/${movie.movieId._id}`)}
+                      className="w-full h-full object-cover rounded-md cursor-pointer"
+                      alt=""
+                    />
+                    <button
+                      onClick={() => handleRemoveFromWatchlist(movie.movieId._id)}
+                      className="hidden group-hover:flex justify-center items-center h-10 w-full bg-[#46cec2] text-lg text-black font-semibold rounded-b-md"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {active === 3 && (
+            <div key={3} className="flex flex-col">
+              <span className="text-2xl text-white text-center">Reviews</span>
+              <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-3 justify-items-center p-4">
+                <div className="w-[150px] h-[200px] rounded-md">
+                  <img src={PosterImg} className="w-full h-full object-cover rounded-md" alt="" />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Profile;

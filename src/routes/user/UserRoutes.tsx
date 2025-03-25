@@ -11,7 +11,7 @@ import MovieCast from '../../pages/user/movies/MovieCast';
 import MovieReviews from '../../pages/user/movies/MovieReviews';
 import Profile from '../../pages/user/Profile';
 import EditProfile from '../../pages/user/EditProfile';
-import Store from '../../pages/admin/users/Store';
+import Store from '../../pages/user/Store';
 
 const UserRoutes: RouteObject[] = [
   // { path: '/language-selection', element: <Signin/>},

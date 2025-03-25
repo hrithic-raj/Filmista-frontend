@@ -2,10 +2,13 @@ import axios, { AxiosInstance } from "axios";
 // import store from "../redux/store";
 // import { setAccessToken } from "../redux/slices/authSlice";
 
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 const axiosInstance: AxiosInstance = axios.create({
   // baseURL: "http://localhost:5000/api",
   // baseURL: "http://54.227.151.80:5000/api",
-  baseURL: "https://filmista.ddns.net/api",
+  // baseURL: "https://filmista.ddns.net/api",
+  baseURL: backendURL,
   withCredentials: true,
 });
 
@@ -24,6 +27,7 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
+      console.log("aloo")
       originalRequest._retry = true;
       try {
         const res = await axiosInstance.post("/auth/refresh-token");

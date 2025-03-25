@@ -44,6 +44,7 @@ const MovieCard: React.FC<CardProps> = ({
         setHovered(false);
         setHoveredStar(null);
       }}
+      onClick={()=>onView(id)}
     >
       {/* Image */}
       <img
@@ -82,7 +83,7 @@ const MovieCard: React.FC<CardProps> = ({
               </div>
 
               {/* Rating */}
-              <div className="flex items-center gap-1">
+              <div className="hidden md:flex items-center gap-1">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
                     key={star}
@@ -108,7 +109,7 @@ const MovieCard: React.FC<CardProps> = ({
                     e.stopPropagation();
                     onView(id);
                   }}
-                  className="px-4 py-2 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
+                  className="hidden md:flex px-4 py-2 border border-[#fefefe] text-white rounded-[16px] font-['Geologica'] hover:text-[#5cfef0] hover:border-[#5cfef0]"
                 >
                   View Movie
                 </button>

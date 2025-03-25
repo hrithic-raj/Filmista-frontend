@@ -2,7 +2,7 @@
 // import downArrow from '../assets/images/down-arrow.png'
 // import hrjLogo from '../assets/images/hrjlogo.png'
 import { useNavigate } from 'react-router-dom';
-import { BellSVG, ExploreSVG, HomeSVG, SearchSVG, UserSVG, StoreSVG } from '../assets/svg/SVGs';
+import { ExploreSVG, HomeSVG, SearchSVG, UserSVG, StoreSVG } from '../assets/svg/SVGs';
 
 const Bottombar = () => {
     const navigate = useNavigate();

@@ -27,7 +27,6 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
-      console.log("aloo")
       originalRequest._retry = true;
       try {
         const res = await axiosInstance.post("/auth/refresh-token");

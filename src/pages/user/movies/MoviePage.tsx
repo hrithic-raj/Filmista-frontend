@@ -13,12 +13,18 @@ import rtArrow from '../../../assets/svg/arrow-rt.svg';
 import hrj from '../../../assets/images/hrjlogo.png';
 import likeSVG from '../../../assets/svg/like.svg';
 import dislikeSVG from '../../../assets/svg/dislike.svg';
+import likeFillSVG from '../../../assets/svg/like-fill.svg';
+import dislikeFillSVG from '../../../assets/svg/dislike-fill.svg';
 import IGenre from '../../../interfaces/GenreInterface';
 import ILanguage from '../../../interfaces/LanguageInterface';
 import { CastMember } from '../../../interfaces/MovieInterface';
 import { submitRating } from '../../../redux/slices/user/ratingSlice';
 import { addToWatchlist, removeFromWatchlist } from '../../../redux/slices/user/watchlistSlice';
 import LoadingPage from '../../../components/LoadingPage';
+import ReviewModal from '../../../components/modals/ReviewModal';
+import { dislikeReview, fetchReviews, likeReview } from '../../../redux/slices/user/reviewSlice';
+import { getUserInfo } from '../../../redux/slices/user/userSlice';
+import { RootState } from '../../../redux/store';
 
 
 const MoviePage: React.FC = () => {
@@ -29,13 +35,19 @@ const MoviePage: React.FC = () => {
   const {id} = useParams();
   const [rating, setRating] = useState<number>(averageRating|0);
   const [hover, setHover] = useState<number>(0);
-  // console.log(selectedMovie)
+  const [reviewModalOpen, setReviewModalOpen] = useState<boolean>(false);
+  const { user } = useAppSelector((state) => state.user);
+  const { reviews } = useAppSelector((state: RootState) => state.review || { reviews: [], status: "idle" });
+
   useEffect(()=>{
     if(id){
       dispatch(fetchMoviesById(id))
       dispatch(checkMovieInWatchlist(id))
+      dispatch(fetchReviews(id));
+      dispatch(getUserInfo());
     }
-  },[ rating, id])
+  },[ rating, id, dispatch])
+
   const genres = selectedMovie?.genres.slice(0,3).map((g : IGenre) => g.genre);
   const languages = selectedMovie?.languages.map((l : ILanguage) => l.language).join(', ');
   const director = selectedMovie?.cast.filter(c => c.role === 'Director');
@@ -62,7 +74,17 @@ const MoviePage: React.FC = () => {
       await dispatch(checkMovieInWatchlist(id));
     }
   }
-  // if(loading) return <LoadingPage/>
+  
+  const topReview = reviews.length
+  ? [...reviews].sort((a, b) => b.likes.length - a.likes.length)[0]
+  : null;
+  const handleLike = (reviewId: string) => {
+    dispatch(likeReview({ reviewId }));
+  };
+
+  const handleDislike = (reviewId: string) => {
+    dispatch(dislikeReview({ reviewId }));
+  };
 
   return (
     <>
@@ -192,48 +214,61 @@ const MoviePage: React.FC = () => {
                 <img src={rtArrow} alt="" />
                 <span className="text-white text-4xl font-normal font-['Geologica']">Reviews</span>
               </div>
-              <button className="flex justify-center items-center gap-2 bg-[#46cec2]/80 rounded-[15px] px-3">
+              <button onClick={()=>setReviewModalOpen(true)} className="flex justify-center items-center gap-2 bg-[#46cec2]/80 rounded-[15px] px-3">
                 <img src={RoundPlusSVG} alt="" />
                 <span className=" text-[#e9e9e9] text-[15px] font-normal font-['Geologica']">Review</span>
               </button>
+
+              {
+                reviewModalOpen && <ReviewModal movieId={id!} onClose={()=>setReviewModalOpen(false)} />
+              }
             </div>
-            <div className='flex flex-col justify-between border min-h-[20rem] max-h-[30rem] shadow-2xl rounded-[15px]'>
-              <div className='max-h-[26rem] overflow-auto custom-scrollbar pb-3'>
-                <div className='pt-5 pl-7 flex items-center gap-3'>
-                  <img src={hrj} className='border rounded-full w-12 h-12' alt="" />
-                  <span className="text-white text-xl font-normal font-['Geologica']">Hrithic raj</span>
-                </div>
-                <div className='pt-4 px-14'>
-                  <div className='flex gap-4'>
-                    <img src={rtArrow} className='w-3' alt="" />
-                    <span className="text-[#e9e9e9] text-xl font-bold font-['Geologica']">Highly Disappointing</span>
+            {
+              reviews && topReview ?(
+                <div className='flex flex-col justify-between border min-h-[20rem] max-h-[30rem] shadow-2xl rounded-[15px]'>
+                  <div className='max-h-[26rem] overflow-auto custom-scrollbar pb-3'>
+                    <div className='pt-5 pl-7 flex items-center gap-3'>
+                      <img src={topReview.user?.profilePicture || hrj} className='border rounded-full w-12 h-12' alt="" />
+                      <span className="text-white text-xl font-normal font-['Geologica']">{topReview.user.name}</span>
+                    </div>
+                    <div className='pt-4 px-14'>
+                      <div className='flex gap-4'>
+                        <img src={rtArrow} className='w-3' alt="" />
+                        <span className="text-[#e9e9e9] text-xl font-bold font-['Geologica']">{topReview.title}</span>
+                      </div>
+                      <div className='mt-3'>
+                        <span className="text-white text-[15px] font-normal font-['Geologica']">{topReview.content}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className='mt-3'>
-                    <span className="text-white text-[15px] font-normal font-['Geologica']">
-                    I absolutely loved the first Joker movie directed by Todd Phillips, but I have to say, what the hell were they thinking when they decided to go into the sequel. Unlike the first film, this movie has practically no story, but rather a series of strange delusional vignettes that were thrown together along with musical numbers that got old very fast and made the run time way longer than needed for how unentertaining it actually was. Joaquin Phoenix delivers a decent performance, but it's nowhere near as good as he was in the first film. I kept waiting in anticipation thinking this must be building towards some big moment that unfortunately never arrives, and instead was left with nothing but disappointment as the movie ends on a worse note than it began.I was on the fence when I watched the trailer, but now having seen it I kind of wish I wouldn't have. If you're a fan of the first movie, it's a pretty big toss up whether you'll like this one or not, but I wouldn't recommend it.
-                    </span>
-                    <span className="text-white text-[15px] font-normal font-['Geologica']">
-                    I absolutely loved the first Joker movie directed by Todd Phillips, but I have to say, what the hell were they thinking when they decided to go into the sequel. Unlike the first film, this movie has practically no story, but rather a series of strange delusional vignettes that were thrown together along with musical numbers that got old very fast and made the run time way longer than needed for how unentertaining it actually was. Joaquin Phoenix delivers a decent performance, but it's nowhere near as good as he was in the first film. I kept waiting in anticipation thinking this must be building towards some big moment that unfortunately never arrives, and instead was left with nothing but disappointment as the movie ends on a worse note than it began.I was on the fence when I watched the trailer, but now having seen it I kind of wish I wouldn't have. If you're a fan of the first movie, it's a pretty big toss up whether you'll like this one or not, but I wouldn't recommend it.
-                    </span>
+                  <div className='flex justify-between items-center bg-[#2c2c2c] w-full h-[4rem] rounded-b-[15px] px-4'>
+                    <div className='flex h-full gap-6 items-center'>
+                    <button onClick={() => handleLike(topReview._id)} className='flex gap-2 items-center'>
+                      {topReview.likes.includes(user?._id!)?(
+                        <img src={likeFillSVG} alt="" />
+                      ):(
+                        <img src={likeSVG} alt="" />
+                      )}
+                      <span className='text-[#46cec2]'>{topReview.likes.length}</span>
+                    </button>
+                    <button onClick={() => handleDislike(topReview._id)} className='flex gap-2 items-center'>
+                    {topReview.dislikes.includes(user?._id!)?(
+                        <img src={dislikeFillSVG} alt="" />
+                      ):(
+                        <img src={dislikeSVG} alt="" />
+                      )}
+                      <span className='text-[#46cec2]'>{topReview.dislikes.length}</span>
+                    </button>
                   </div>
-                </div>
-              </div>
-              <div className='flex justify-between items-center bg-[#2c2c2c] w-full h-[4rem] rounded-b-[15px] px-4'>
-                <div className='flex h-full gap-6 items-center'>
-                  <button className='flex gap-2 items-center'>
-                    <img src={likeSVG} alt="" />
-                    <span className='text-[#46cec2]'>34K</span>
-                  </button>
-                  <button className='flex gap-2 items-center'>
-                    <img src={dislikeSVG} alt="" />
-                    <span className='text-[#46cec2]'>5K</span>
-                  </button>
-                </div>
-                <button className='flex flex-col justify-center h-[65%] items-center bg-[#46cec2]/80 rounded-[15px] px-3'>
+                  <button onClick={()=>navigate(`/movies/reviews/${id}`)} className='flex flex-col justify-center h-[65%] items-center bg-[#46cec2]/80 rounded-[15px] px-3'>
                   <span className='text-[#e9e9e9]'>View More</span>
                 </button>
+                </div>
               </div>
-            </div>
+              ):(
+                <p>No reviews yet, add one</p>
+              )
+            }
           </div>
         </div>
       </div>

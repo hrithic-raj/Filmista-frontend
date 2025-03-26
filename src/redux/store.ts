@@ -10,6 +10,7 @@ import watchlistReducer from './slices/user/watchlistSlice';
 import languageReducer from './slices/user/languageSlice';
 import celebrityManagementReducer from './slices/admin/celebrityManagementSlice';
 import movieManagementReducer from './slices/admin/movieManagementSlice';
+import reviewReducer from './slices/user/reviewSlice';
 // import userInfoReducer from './slices/user/userInfoSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
     movie: movieReducer,
     rating: ratingReducer,
     watchlist: watchlistReducer,
+    review: reviewReducer,
 });
 
 const persistConfig = {

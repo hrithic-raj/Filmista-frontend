@@ -138,6 +138,7 @@ const HomePage: React.FC = () => {
               >
                 {movies.length>0 && movies.map((movie) => (
                   <MovieCard
+                    key={movie._id}
                     id={movie._id}
                     image={movie.images?.poster}
                     title={movie.title}
@@ -148,7 +149,7 @@ const HomePage: React.FC = () => {
                     onAddToWatchlist={handleAddToWatchlist}
                   />
                 ))}
-                {movies.length>0 && movies.map((movie) => (
+                {/* {movies.length>0 && movies.map((movie) => (
                   <MovieCard
                     id={movie._id}
                     image={movie.images?.poster}
@@ -159,7 +160,7 @@ const HomePage: React.FC = () => {
                     onView={handleViewMovie}
                     onAddToWatchlist={handleAddToWatchlist}
                   />
-                ))}
+                ))} */}
               </div>
             </div>
           </div>
@@ -173,6 +174,7 @@ const HomePage: React.FC = () => {
               >
                 {movies.length>0 && movies.map((movie) => (
                   <MovieCard
+                    key={movie._id}
                     id={movie._id.toString()}
                     image={movie.images?.poster}
                     title={movie.title}
@@ -183,7 +185,7 @@ const HomePage: React.FC = () => {
                     onAddToWatchlist={handleAddToWatchlist}
                   />
                 ))}
-                {movies.length>0 && movies.map((movie) => (
+                {/* {movies.length>0 && movies.map((movie) => (
                   <MovieCard
                     id={movie._id.toString()}
                     image={movie.images?.poster}
@@ -194,7 +196,7 @@ const HomePage: React.FC = () => {
                     onView={handleViewMovie}
                     onAddToWatchlist={handleAddToWatchlist}
                   />
-                ))}
+                ))} */}
               </div>
             </div>
           </div>

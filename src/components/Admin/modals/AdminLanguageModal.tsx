@@ -55,7 +55,7 @@ const AdminLanguageModal: React.FC<AdminLanguageModalProps> = ({ language, onClo
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-40">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-40">
       <div className="bg-[rgb(44,44,44)] p-6 rounded-lg shadow-lg lg:w-2/3 w-96">
         <h2 className="text-gray-100 text-xl font-bold mb-4">{language ? 'Edit Language' : 'Add Language'}</h2>
         <div className="mb-4">

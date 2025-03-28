@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
 import { useEffect } from "react";
 import { fetchWatchlist, removeFromWatchlist } from "../../redux/slices/user/watchlistSlice";
+import LoadingPage from "../../components/LoadingPage";
 // import { useState } from "react";
 
 const Watchlist = () => {
     const dispatch = useAppDispatch();
-    const { movies: watchlistMovies } = useAppSelector((state) => state.watchlist);
+    const { movies: watchlistMovies, loading } = useAppSelector((state) => state.watchlist);
   
     useEffect(() => {
       dispatch(fetchWatchlist());
@@ -17,9 +18,14 @@ const Watchlist = () => {
     };
   return (
     <div className="min-h-screen text-white p-6">
+      {loading && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+          <LoadingPage />
+        </div>
+      )}
       <h1 className="text-3xl font-bold mb-6">🎬 My Watchlist</h1>
 
-      {watchlistMovies.length === 0 ? (
+      {!loading && watchlistMovies.length === 0 ? (
         <div className="text-center mt-20">
           <h2 className="text-2xl font-semibold">Your watchlist is empty 😢</h2>
           <p className="text-gray-400 mt-2">Add movies to watch later!</p>

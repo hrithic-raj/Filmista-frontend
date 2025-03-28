@@ -18,18 +18,40 @@ const Navbar = () => {
   const {user} = useAppSelector((state)=>state.user);
   const {searchResults} = useAppSelector((state)=>state.movie);
   const inputRef = useRef<HTMLInputElement>(null)
+  const profileRef = useRef<HTMLDivElement>(null);
+  const profileButtonRef = useRef<HTMLDivElement>(null);
 
   useEffect(()=>{
     dispatch(getUserInfo())
   },[dispatch])
   
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(event.target as Node) &&
+        profileButtonRef.current &&
+        !profileButtonRef.current.contains(event.target as Node)
+      ) {
+        setTimeout(() => {
+          setIsProfile(false);
+        }, 50);
+      }
+    };
+  
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+  
+
   const handleSearch = async(e: React.ChangeEvent<HTMLInputElement>)=>{
     const query = e.target.value;
     setSearchQuery(query);
     if(query?.length>0){
       dispatch(searchMovies(query));
     }
-    console.log(searchResults)
   }
   
   const handleClick =(id:string)=>{
@@ -94,7 +116,7 @@ const Navbar = () => {
         </button>
       </div>
       <div className="relative h-[50px] bg-[#2c2c2c] rounded-[215.70px] pr-2">
-        <div onClick={()=>setIsProfile(!isProfile)} className='flex h-[50px] items-center px-1 gap-2 hover:cursor-pointer'>
+        <div ref={profileButtonRef} onClick={()=>setIsProfile((prev) => !prev)} className='flex h-[50px] items-center px-1 gap-2 hover:cursor-pointer'>
           <img
             src={user?.profilePicture || hrjLogo}
             alt="User Avatar"
@@ -115,15 +137,15 @@ const Navbar = () => {
 
         </div>
           {isProfile &&(
-            <div className='absolute top-16 right-0 w-3/4 min-w-[80px] h-[130px] rounded-[16px] bg-[#2c2c2c] border border-gray-300'>
-                <div className='flex flex-col justify-evenly items-center h-full'>
+            <div  ref={profileRef} className='absolute top-16 right-0 w-3/4 min-w-[80px] h-[150px] rounded-[16px] bg-[#2c2c2c]'>
+                <div className='flex flex-col justify-evenly items-center h-full gap-2 py-3'>
                   <button
                     onClick={()=>{
                       navigate('/profile');
                       setIsProfile(false);
                   }}
                   >
-                  <span className='font-fredoka'>View Profile</span>
+                  <span className='font-fredoka hover:text-[#5CFEF0]'>View Profile</span>
                   </button>
                   <hr className='text-gray-300'/>
                   <button 
@@ -131,13 +153,13 @@ const Navbar = () => {
                       navigate('/settings');
                       setIsProfile(false);
                   }}>
-                    <span className='font-fredoka'>Settings</span>
+                    <span className='font-fredoka hover:text-[#5CFEF0]'>Settings</span>
                   </button>
                   <hr className='text-gray-300'/>
                   <button 
                     onClick={handleSignout}
                   >
-                    <span className='font-fredoka'>Sign Out</span>
+                    <span className='font-fredoka hover:text-[#5CFEF0]'>Sign Out</span>
                   </button>
                 </div>
             </div>

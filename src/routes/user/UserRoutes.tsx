@@ -14,11 +14,13 @@ import EditProfile from '../../pages/user/EditProfile';
 import Store from '../../pages/user/Store';
 import Watchlist from '../../pages/user/Watchlist';
 import CelebrityProfile from '../../pages/celebrity/CelebrityProfile';
+import Explore from '../../pages/user/Explore';
 
 const UserRoutes: RouteObject[] = [
   // { path: '/language-selection', element: <Signin/>},
   // { path: '/genres-selection', element: <Signin/>},
   { path: '/', element: <Template><Home /></Template>},
+  { path: '/explore', element: <Template><Explore /></Template>},
   { path: '/movies/:id', element: <Template><MoviePage /></Template>},
   { path: '/movies/images/:id', element: <Template><MovieImages /></Template>},
   { path: '/movies/videos/:id', element: <Template><MovieVideos /></Template>},

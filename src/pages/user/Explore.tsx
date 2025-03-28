@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { fetchExploreMovies, setPage } from "../../redux/slices/user/movieSlice";
 import ExploreMovieCard from "../../components/cards/ExploreMovieCard";
+import LoadingPage from "../../components/LoadingPage";
+import { fetchExploreMovies, setPage } from "../../redux/slices/user/movieSlice";
 
 const Explore = () => {
   const dispatch= useAppDispatch();
-  const { movies, currentPage, totalPages, loading } = useAppSelector((state) => state.movie);
+  const { exploreMovies:movies, currentPage, totalPages, exploreLoading } = useAppSelector((state) => state.movie);
 
   useEffect(() => {
     dispatch(fetchExploreMovies(currentPage));
@@ -13,13 +14,18 @@ const Explore = () => {
 
   return (
     <div className="min-h-screen text-white p-6">
+      {exploreLoading && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+          <LoadingPage />
+        </div>
+      )}
     <h1 className="text-3xl font-bold mb-6">Explore Movies</h1>
 
     {/* Movies Grid */}
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {loading
+      {exploreLoading
         ? Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="w-full h-[300px] bg-gray-800 animate-pulse rounded-lg"></div>
+            <div key={i} className="w-full h-[300px] bg-[rgb(44,44,44)] animate-pulse rounded-lg"></div>
           ))
         : movies.map((movie) => <ExploreMovieCard key={movie._id} movie={movie} />)}
     </div>

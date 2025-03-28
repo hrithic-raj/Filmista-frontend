@@ -23,7 +23,7 @@ const Watchlist = () => {
           <LoadingPage />
         </div>
       )}
-      <h1 className="text-3xl font-bold mb-6">🎬 My Watchlist</h1>
+      <h1 className="text-3xl font-bold mb-6">My Watchlist</h1>
 
       {!loading && watchlistMovies.length === 0 ? (
         <div className="text-center mt-20">

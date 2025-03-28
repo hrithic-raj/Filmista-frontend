@@ -135,16 +135,17 @@ const movieSlice = createSlice({
     })
     .addCase(fetchExploreMovies.pending, (state) => {
       state.exploreLoading = true;
+      state.error = null;
     })
     .addCase(fetchExploreMovies.fulfilled, (state, action) => {
-      state.movies = action.payload.movies;
+      state.exploreMovies = action.payload.movies;
       state.totalPages = action.payload.totalPages;
       state.exploreLoading = false;
     })
     .addCase(fetchExploreMovies.rejected, (state, action: PayloadAction<any>) => {
       state.exploreLoading = false;
       state.error = action.payload || 'Failed to fetch movies by pagination';
-    });
+    })
   }
 });
 

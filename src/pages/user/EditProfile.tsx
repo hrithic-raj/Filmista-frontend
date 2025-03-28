@@ -65,10 +65,18 @@ const EditProfile: React.FC = () => {
         <div className='flex flex-col items-center bg-[#2c2c2c] pb-2 rounded-[15px]'>
           <div className='reletive h-[200px] md:h-[250px] w-full'>
             <img src={typeof banner === 'string' ? (banner!=='' ? banner : DefaultBanner) : URL.createObjectURL(banner)} className='h-full w-full object-cover rounded-t-[15px]' alt="" />
-            <div className='absolute rounded-full top-[25%] sm:top-[30%] md:top-[40%] ml-10 w-[100px] h-[100px] md:w-[120px] md:h-[120px]'>
+            {/* <div className='absolute rounded-full top-[25%] sm:top-[30%] md:top-[40%] ml-10 w-[100px] h-[100px] md:w-[120px] md:h-[120px]'>
                 <div className='bg-gradient-to-tr from-black rounded-full w-full h-full'/>
                 <img src={typeof profilePicture === 'string' ? (profilePicture!==''? profilePicture : hrj) : URL.createObjectURL(profilePicture)} className='absolute top-0 left-0 object-cover rounded-full z-6 border w-full h-full' alt="" />
+            </div> */}
+            <div className="absolute top-[25%] md:top-[35%] left-[20%] md:left-[30%] w-[120px] h-[120px] md:w-[150px] md:h-[150px] rounded-full border-4 border-[#2c2c2c] bg-black flex items-center justify-center">
+                <img 
+                    src={typeof profilePicture === 'string' ? (profilePicture!==''? profilePicture : hrj) : URL.createObjectURL(profilePicture)} 
+                    className="w-full h-full object-cover rounded-full" 
+                    alt="Profile" 
+                />
             </div>
+
           </div>
           <div className='flex flex-col md:flex-row gap-10 justify-between pt-[50px] pb-[20px] w-full'>
             <div className='flex flex-col pt-[40px] pl-10 gap-5 md:w-[40%]'>

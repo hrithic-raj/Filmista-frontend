@@ -4,18 +4,22 @@ import axiosInstance from '../../../utils/axiosInstance';
 
 interface MovieState {
   movies: IMovie[];
+  searchResults: IMovie[];
   selectedMovie: IMovie | null;
   isInWatchlist: Boolean;
   loading: Boolean;
+  searchLoading: Boolean;
   watchlistLoading: Boolean;
   error: string | null;
 }
 
 const initialState: MovieState = {
   movies: [],
+  searchResults: [],
   selectedMovie: null,
   isInWatchlist: false,
   loading: false,
+  searchLoading: false,
   watchlistLoading: false,
   error: null,
 };
@@ -42,6 +46,15 @@ export const checkMovieInWatchlist = createAsyncThunk('movie/checkMovieInWatchli
   try{
       const response = await axiosInstance.get(`/users/watchlist/check/${movieId}`);
       return response.data.isInWatchlist;
+  }catch(error: any){
+      console.error(error.response?.data?.message)
+      return rejectWithValue(error.response?.data?.message || "Failed to fetch genres");
+  }
+})
+export const searchMovies = createAsyncThunk('movie/searchMovies', async (query:string,{rejectWithValue})=>{
+  try{
+      const response = await axiosInstance.get(`/users/movies/search?query=${query}`);
+      return response.data.movies;
   }catch(error: any){
       console.error(error.response?.data?.message)
       return rejectWithValue(error.response?.data?.message || "Failed to fetch genres");
@@ -87,6 +100,18 @@ const movieSlice = createSlice({
       state.watchlistLoading = true;
       state.error = action.payload;
     })
+    .addCase(searchMovies.pending, (state) => {
+      state.searchLoading = true;
+      state.error = null;
+    })
+    .addCase(searchMovies.fulfilled, (state, action) => {
+      state.searchLoading = false;
+      state.searchResults = action.payload;
+    })
+    .addCase(searchMovies.rejected, (state, action: PayloadAction<any>) => {
+      state.searchLoading = false;
+      state.error = action.payload || 'Failed to fetch movies';
+    });
   }
 });
 

@@ -6,6 +6,8 @@ import AuthProtectedRoutes from './routes/auth/AuthProtectedRoute';
 import AuthRoutes from './routes/auth/AuthRoutes';
 import AdminRoutes from './routes/admin/AdminRoutes';
 import AdminProtectedRoutes from './routes/admin/AdminProtectedRoute';
+// import CelebrityProtectedRoutes from './routes/celebrity/CelebrityProtectedRoute';
+// import CelebrityRoutes from './routes/celebrity/CelebrityRoutes';
 
 const App: React.FC = () => {
  
@@ -27,6 +29,11 @@ const App: React.FC = () => {
             <Route key={index} path={path} element={element}/>
           ))}
       </Route>
+      {/* <Route element={<CelebrityProtectedRoutes/>}>
+          {CelebrityRoutes.length>0 && CelebrityRoutes.map(({path, element},index)=>(
+            <Route key={index} path={path} element={element}/>
+          ))}
+      </Route> */}
       <Route path="/auth/google/callback" element={<CallbackHandler/>} />
     </Routes>
     </>

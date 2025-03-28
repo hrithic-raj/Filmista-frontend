@@ -33,7 +33,7 @@ const CelebrityRequestModal: React.FC<ModalProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-40">
+    <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-[rgb(44,44,44)] p-6 rounded-lg shadow-lg lg:w-1/2 w-96">
         <h2 className="text-gray-100 text-xl font-bold mb-4">Celebrity Request</h2>
         <div className="mb-4">

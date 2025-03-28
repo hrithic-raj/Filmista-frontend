@@ -2,23 +2,45 @@ import upArrow from '../assets/images/icons/up-arrow.png'
 import downArrow from '../assets/images/icons/down-arrow.png'
 import hrjLogo from '../assets/images/hrjlogo.png'
 import { BellSVGNav, HeartSVGNav, LeftArrow, RightArrow, SearchSVG } from '../assets/svg/SVGs';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
 import { signout } from '../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { persistor } from '../redux/persistor';
 import { getUserInfo } from '../redux/slices/user/userSlice';
+import { searchMovies } from '../redux/slices/user/movieSlice';
 
 const Navbar = () => {
-  const [isProfile, setIsProfile] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [isProfile, setIsProfile] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const {user} = useAppSelector((state)=>state.user);
-  
+  const {searchResults} = useAppSelector((state)=>state.movie);
+  const inputRef = useRef<HTMLInputElement>(null)
+
   useEffect(()=>{
     dispatch(getUserInfo())
   },[dispatch])
   
+  const handleSearch = async(e: React.ChangeEvent<HTMLInputElement>)=>{
+    const query = e.target.value;
+    setSearchQuery(query);
+    if(query?.length>0){
+      dispatch(searchMovies(query));
+    }
+    console.log(searchResults)
+  }
+  
+  const handleClick =(id:string)=>{
+    setSearchQuery("");
+    navigate(`/movies/${id}`)
+  }
+  
+  const handleFocus = ()=>{
+    if(inputRef.current) inputRef.current.focus();
+  }
+
   const handleSignout = async()=>{
     await dispatch(signout());
     await persistor.purge();
@@ -38,13 +60,29 @@ const Navbar = () => {
             <RightArrow/>
           </button>
         </div>
-        <div className="flex justify-center items-center h-[50px] pr-5 bg-[#2c2c2c] rounded-[215.70px]">
+        <div className="relative flex justify-center items-center h-[50px] pr-5 bg-[#2c2c2c] rounded-[215.70px]">
           <input
             type="text"
+            ref={inputRef}
             placeholder="Search"
+            value={searchQuery}
+            onChange={handleSearch}
             className="h-[50px] min-w-[200px] sm:min-w-[250px] lg:min-w-[500px] rounded-[215.70px] bg-transparent px-7 text-sm outline-none placeholder:font-geologica placeholder:text-[#828282] placeholder:text-[18.84px] placeholder:opacity-90 placeholder:font-normal"
           />
-          <SearchSVG />
+          <div onClick={handleFocus}>
+            <SearchSVG />
+          </div>
+
+          {searchQuery?.length > 0 && searchResults?.length > 0 && (
+              <div className="absolute top-[60px] left-0 w-full bg-[#2c2c2c] rounded-xl shadow-lg max-h-[300px] overflow-y-auto">
+                {searchResults.map((movie) => (
+                  <div key={movie._id} className="flex items-center px-4 py-2 hover:bg-[#3a3a3a] cursor-pointer" onClick={()=>handleClick(movie._id)}>
+                    <img src={movie?.images?.poster} alt={movie.title} className="w-[50px] h-[50px] rounded-md object-cover mr-3" />
+                    <span className="text-white">{movie.title}</span>
+                  </div>
+                ))}
+              </div>
+            )}
         </div>
       </div>
       <div className='hidden sm:flex justify-between lg:space-x-5 sm:space-x-2'>

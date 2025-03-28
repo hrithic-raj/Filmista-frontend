@@ -18,7 +18,7 @@ const Sidebar = () => {
   .map((g) => g.genre) ?? [];
 
     return (
-    <div className='hidden sm:block h-screen w-[70px] lg:w-[257px] fixed  z-50 sm:ms-5 lg:ms-10'>
+    <div className='hidden sm:block h-screen w-[70px] lg:w-[257px] fixed z-50 sm:ms-5 lg:ms-10'>
       <aside className="bg-[rgb(44,44,44)] text-gray-100 h-[93%] rounded-[36px] p-4 lg:p-8">
         <div className='flex flex-col h-full mt-4 '>
           <div className="mb-12">
@@ -44,7 +44,7 @@ const Sidebar = () => {
                       <ExploreSVG/>
                       <span className="hidden lg:flex w-[64.30px] h-[23.63px] text-[#e9e9e9] text-base font-normal font-['Fredoka'] hover:text-[#5cfef0]">Explore</span>
                   </li>
-                  <li onClick={()=>navigate('/')} className="lg:flex items-center space-x-3 hover:cursor-pointer">
+                  <li onClick={()=>navigate('/watchlist')} className="lg:flex items-center space-x-3 hover:cursor-pointer">
                       <HeartSVG/>
                       <span className="hidden lg:flex w-[64.30px] h-[23.63px] text-[#e9e9e9] text-base font-normal font-['Fredoka'] hover:text-[#5cfef0]">Watchlist</span>
                   </li>

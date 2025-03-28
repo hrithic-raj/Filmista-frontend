@@ -12,6 +12,8 @@ import MovieReviews from '../../pages/user/movies/MovieReviews';
 import Profile from '../../pages/user/Profile';
 import EditProfile from '../../pages/user/EditProfile';
 import Store from '../../pages/user/Store';
+import Watchlist from '../../pages/user/Watchlist';
+import CelebrityProfile from '../../pages/celebrity/CelebrityProfile';
 
 const UserRoutes: RouteObject[] = [
   // { path: '/language-selection', element: <Signin/>},
@@ -23,11 +25,14 @@ const UserRoutes: RouteObject[] = [
   { path: '/movies/cast/:id', element: <Template><MovieCast /></Template>},
   { path: '/movies/reviews/:id', element: <Template><MovieReviews /></Template>},
   { path: '/settings', element: <Template><Settings /></Template>},
+  { path: '/watchlist', element: <Template><Watchlist /></Template>},
   { path: '/select-genres', element: <GenreSelector />},
   { path: '/select-languages', element: <LanguageSelector />},
   { path: '/profile', element: <Template><Profile /></Template>},
   { path: '/edit-profile', element: <Template><EditProfile /></Template>},
   { path: '/store', element: <Template><Store /></Template>},
+
+  { path: '/celebrity/:id', element: <Template><CelebrityProfile/></Template>}
 
 ];
 

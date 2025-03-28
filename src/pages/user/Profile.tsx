@@ -42,7 +42,7 @@ const Profile: React.FC = () => {
         {/* <div className="relative w-full border"> */}
           <div className="absolute top-[28%] left-2 md:left-[10px] w-[190px] h-[190px] md:w-[240px] md:h-[240px]">
             <div className="relative w-full h-full flex justify-center items-center">
-              <div className='relative w-[150px] h-[150px] md:w-[200px] md:h-[200px]'>
+              <div className='relative w-[160px] h-[160px] md:w-[200px] md:h-[200px]'>
                 {/* Profile Picture Background */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-black rounded-full" />
                 
@@ -91,7 +91,7 @@ const Profile: React.FC = () => {
       <div className="flex gap-3">
         {/* Sidebar Buttons */}
         <div className="flex flex-col gap-3">
-          {["Ratings", "Watchlist", "Reviews"].map((label, index) => (
+          {["Watchlist", "Ratings", "Reviews"].map((label, index) => (
             <button
               key={index}
               onClick={() => setActive(index + 1)}
@@ -101,7 +101,7 @@ const Profile: React.FC = () => {
             >
               <span className="text-white text-xl font-geologica">{label}</span>
               <span className="text-[#46cec2] text-5xl font-['Geologica']">
-                {index === 1 ? watchlistMovies.length.toString().padStart(2, "0") : "08"}
+                {index === 0 ? watchlistMovies.length.toString().padStart(2, "0") : "08"}
               </span>
             </button>
           ))}
@@ -110,18 +110,6 @@ const Profile: React.FC = () => {
         {/* Active Content Section */}
         <div className="bg-[#2c2c2c] rounded-[15px] w-full max-h-[40rem] overflow-auto custom-scrollbar">
           {active === 1 && (
-            <div key={1} className="flex flex-col">
-              <span className="text-2xl text-white text-center">Ratings</span>
-              <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-3 justify-items-center p-4">
-                {[1, 2, 3, 4, 5, 6].map((m) => (
-                  <div key={m} className="w-[150px] h-[200px] rounded-md">
-                    <img src={PosterImg} className="w-full h-full object-cover rounded-md" alt="" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-          {active === 2 && (
             <div key={2} className="flex flex-col">
               <span className="text-2xl text-white text-center">Watchlist</span>
               <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-3 justify-items-center p-4">
@@ -139,6 +127,18 @@ const Profile: React.FC = () => {
                     >
                       Remove
                     </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {active === 2 && (
+            <div key={1} className="flex flex-col">
+              <span className="text-2xl text-white text-center">Ratings</span>
+              <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-3 justify-items-center p-4">
+                {[1, 2, 3, 4, 5, 6].map((m) => (
+                  <div key={m} className="w-[150px] h-[200px] rounded-md">
+                    <img src={PosterImg} className="w-full h-full object-cover rounded-md" alt="" />
                   </div>
                 ))}
               </div>

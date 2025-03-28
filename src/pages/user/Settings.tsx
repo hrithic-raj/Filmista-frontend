@@ -18,7 +18,7 @@ const Settings: React.FC =()=> {
     <div>
         {user && user.role==='user' &&(
             <>
-                <button onClick={()=>setShowRequestModal(true)} className='border text-2xl text-white p-2 rounded-lg'>
+                <button onClick={()=>setShowRequestModal(true)} className='bg-[rgb(44,44,44)] text-2xl text-white p-3 rounded-xl'>
                     Request to become admin
                 </button>
                 {

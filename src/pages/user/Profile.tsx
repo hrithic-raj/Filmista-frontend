@@ -57,7 +57,8 @@ const Profile: React.FC = () => {
 
               {/* Animated Frame */}
               <img
-                src="https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/images/decorations/snakes_hug.png"
+                // src="https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/images/decorations/snakes_hug.png"
+                src="https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/public/decorations/fan_flourish.png"
                 className="absolute inset-0 w-full h-full object-cover "
                 alt=""
                 onContextMenu={(e) => e.preventDefault()}

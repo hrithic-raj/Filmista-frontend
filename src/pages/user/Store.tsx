@@ -2,19 +2,19 @@ import rtArrow from '../../assets/svg/arrow-rt.svg';
 import hrj from '../../assets/images/hrjlogo.png'
 const Store = () => {
     const frames = [
-        "https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/public/decorations/snakes_hug.png",
-        "https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/public/decorations/wizards_staff.png",
-        "https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/public/decorations/magical_potion.png",
-        "https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/public/decorations/bunny_zzzs.png",
-        "https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/public/decorations/dancing_fairies.png",
-        "https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/public/decorations/hood_dark.png",
-        "https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/public/decorations/hood_crimson.png",
-        "https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/public/decorations/autumn_crown.png",
-        "https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/public/decorations/sakura.png",
-        "https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/public/decorations/sakura_warrior.png",
-        "https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/public/decorations/blade_storm.png",
-        "https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/public/decorations/reynas_leer.png",
-        "https://cdn.jsdelivr.net/gh/itspi3141/discord-fake-avatar-decorations@main/public/decorations/a_hint_of_clove.png"
+        "https://img.avatardecoration.com/decorations/snakes_hug.png",
+        "https://img.avatardecoration.com/decorations/wizards_staff.png",
+        "https://img.avatardecoration.com/decorations/magical_potion.png",
+        "https://img.avatardecoration.com/decorations/bunny_zzzs.png",
+        "https://img.avatardecoration.com/decorations/dancing_fairies.png",
+        "https://img.avatardecoration.com/decorations/hood_dark.png",
+        "https://img.avatardecoration.com/decorations/hood_crimson.png",
+        "https://img.avatardecoration.com/decorations/autumn_crown.png",
+        "https://img.avatardecoration.com/decorations/sakura.png",
+        "https://img.avatardecoration.com/decorations/sakura_warrior.png",
+        "https://img.avatardecoration.com/decorations/blade_storm.png",
+        "https://img.avatardecoration.com/decorations/reynas_leer.png",
+        "https://img.avatardecoration.com/decorations/a_hint_of_clove.png"
     ]
   return (
     <div className='flex flex-col gap-2 pb-10'>

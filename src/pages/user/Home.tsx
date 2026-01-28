@@ -131,10 +131,10 @@ const HomePage: React.FC = () => {
 
         <section  className=" ">
           <div  className="relative mt-10">
-        <h2 className="text-xl font-bold mb-4 text-white">New Release</h2>
+            <h2 className="text-xl font-bold mb-4 text-white">New Release</h2>
             <div className="overflow-hidden w-full">
               <div
-                className="flex gap-2 overflow-x-auto custom-scrollbar"
+                className="flex gap-2 overflow-x-auto custom-scrollbar pb-2"
               >
                 {movies.length>0 && movies.map((movie) => (
                   <MovieCard
@@ -170,7 +170,7 @@ const HomePage: React.FC = () => {
         <h2 className="text-xl font-bold mb-4 text-white">Recomended for you</h2>
             <div className="overflow-hidden w-full">
               <div
-                className="flex gap-2 overflow-x-auto custom-scrollbar"
+                className="flex gap-2 overflow-x-auto custom-scrollbar pb-2"
               >
                 {movies.length>0 && movies.map((movie) => (
                   <MovieCard

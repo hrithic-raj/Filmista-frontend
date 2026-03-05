@@ -39,7 +39,11 @@ axiosInstance.interceptors.response.use(
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         console.error("Failed to refresh token", refreshError);
-        // window.location.href = "/signin";
+ 
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+
+        window.location.href = "/signin";
       }
     }
 

@@ -1,13 +1,8 @@
 import axios, { AxiosInstance } from "axios";
-// import store from "../redux/store";
-// import { setAccessToken } from "../redux/slices/authSlice";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 const axiosInstance: AxiosInstance = axios.create({
-  // baseURL: "http://localhost:5000/api",
-  // baseURL: "http://54.227.151.80:5000/api",
-  // baseURL: "https://filmista.ddns.net/api",
   baseURL: backendURL,
   withCredentials: true,
 });

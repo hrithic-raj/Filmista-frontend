@@ -1,6 +1,3 @@
-// import upArrow from '../assets/images/up-arrow.png'
-// import downArrow from '../assets/images/down-arrow.png'
-// import hrjLogo from '../assets/images/hrjlogo.png'
 import { useNavigate } from 'react-router-dom';
 import { ExploreSVG, HomeSVG, SearchSVG, UserSVG, StoreSVG } from '../assets/svg/SVGs';
 
